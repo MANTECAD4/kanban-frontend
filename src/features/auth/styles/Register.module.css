@@ -1,13 +1,31 @@
 .register-container {
   /* width: 100%; */
   display: grid;
-  grid-template-columns: 5fr 6fr;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "image"
+    "form";
+  /* height: calc(100dvh - 4rem); */
 }
 
 .register-img {
-  background-image: url("/auth/register-bg.webp");
+  grid-area: image;
+  background-image: url("bg-post-its.webp");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: center;
   color: rgba(127, 220, 130, 0.292);
+  padding-bottom: calc(100dvh * 0.2);
+}
+
+@media (width>=64rem) {
+  .register-container {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    grid-template-areas: "form image";
+    margin: 0;
+  }
+  .register-img {
+    background-image: url("/auth/register-bg.webp");
+  }
 }
