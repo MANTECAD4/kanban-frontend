@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+.layout {
+  background-image: url("/auth/pattern-background.svg");
+  height: 100dvh;
+}

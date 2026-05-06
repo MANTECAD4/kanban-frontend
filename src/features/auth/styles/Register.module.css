@@ -1,0 +1,13 @@
+.register-container {
+  /* width: 100%; */
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+}
+
+.register-img {
+  background-image: url("/auth/register-bg.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left center;
+  color: rgba(127, 220, 130, 0.292);
+}
