@@ -6,7 +6,7 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import styles from "../styles/Register.module.css";
+import styles from "../styles/Login.module.css";
 import {
   InputGroup,
   InputGroupAddon,
@@ -14,25 +14,23 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 
-export const Register = () => {
+export const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showPasswordConfirmation, setShowPasswordConfirmation] =
-    useState<boolean>(false);
 
   return (
     <div
-      className={`w-full min-h-dvh sm:min-h-auto  md:max-w-2xl lg:max-w-5xl bg-white shadow-2xl md:rounded-4xl overflow-hidden ${styles["register-container"]}`}
+      className={`w-full min-h-dvh sm:min-h-auto sm:my-4 lg:my-20 md:max-w-2xl lg:max-w-5xl bg-white shadow-2xl md:rounded-4xl overflow-hidden ${styles["register-container"]}`}
     >
-      <div className=" my-5 lg:my-10 ">
+      <div className=" my-10 lg:my-25 ">
         <div className=" py-3.5 px-5 sm:px-10">
-          <div className="flex flex-col gap-2 mb-6 md:mb-12">
+          <div className="flex flex-col gap-2 mb-6 md:mb-15">
             <h1 className="lg:text-center text-[clamp(1.4rem,4vw,2.25rem)] font-semibold">
-              Register
+              Login
             </h1>
             <p className="lg:text-center text-xs text-gray-500">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
@@ -41,13 +39,6 @@ export const Register = () => {
           </div>
           <FieldSet className="w-full">
             <FieldGroup className="flex flex-col gap-3.5">
-              <Field>
-                <FieldLabel htmlFor="name">Name</FieldLabel>
-                <Input id="name" type="text" placeholder="John Doe" required />
-                <FieldDescription className="text-xs">
-                  Must be at least 8 characters long.
-                </FieldDescription>
-              </Field>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
@@ -88,47 +79,15 @@ export const Register = () => {
                   Must be at least 8 characters long.
                 </FieldDescription>
               </Field>
-              <Field>
-                <FieldLabel htmlFor="password-confirmation">
-                  Confirm password
-                </FieldLabel>
-                <InputGroup>
-                  <InputGroupInput
-                    id="password-confirmation"
-                    placeholder="**********"
-                    type={showPasswordConfirmation ? "text" : "password"}
-                  />
-                  <InputGroupAddon align="inline-end">
-                    <InputGroupButton
-                      aria-label="Show password confirmation toggle"
-                      title={showPasswordConfirmation ? "hide" : "show"}
-                      size="icon-xs"
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setShowPasswordConfirmation((prev) => !prev)
-                      }
-                    >
-                      {showPasswordConfirmation ? (
-                        <Eye className="" />
-                      ) : (
-                        <EyeOff />
-                      )}
-                    </InputGroupButton>
-                  </InputGroupAddon>
-                </InputGroup>
-                <FieldDescription className="text-xs">
-                  Must be at least 8 characters long.
-                </FieldDescription>
-              </Field>
             </FieldGroup>
             <div className="mt-5 flex flex-col lg:gap-2 items-center">
               <Button className="w-10/12" type="submit">
-                Create Account
+                Sumbit
               </Button>
-              <Link to="/auth/login" className="w-10/12">
+              <Link to="/auth/register" className="w-10/12 ">
                 <Button className="w-full" variant={"link"}>
-                  <ArrowLeft className="" />
-                  Go back to Login
+                  Create an account
+                  <ArrowRight className="" />
                 </Button>
               </Link>
             </div>
@@ -137,7 +96,7 @@ export const Register = () => {
       </div>
       <div
         className={`flex items-center justify-center ${styles["register-img"]}`}
-      />
+      ></div>
     </div>
   );
 };

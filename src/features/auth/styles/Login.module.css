@@ -25,6 +25,6 @@
     margin: 0;
   }
   .register-img {
-    background-image: url("/auth/register-bg.webp");
+    background-image: url("/auth/login-bg.webp");
   }
 }
