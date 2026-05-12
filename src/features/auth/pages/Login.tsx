@@ -6,7 +6,6 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import styles from "../styles/Login.module.css";
 import {
   InputGroup,
   InputGroupAddon,
@@ -23,7 +22,7 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className=" py-3.5 px-5 sm:px-10">
+    <div className=" py-5 lg:py-15 px-5 sm:px-10">
       <div className="flex flex-col gap-2 mb-6 md:mb-15">
         <h1 className="lg:text-center text-[clamp(1.4rem,4vw,2.25rem)] font-semibold">
           Login

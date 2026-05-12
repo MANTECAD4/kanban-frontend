@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 .layout {
-  background-image: url("/auth/pattern-background.svg");
+  background-image: url("/images/auth/pattern-background.svg");
 
   min-height: 100dvh;
 }
 
 .register-img {
   grid-area: image;
-  background-image: url("bg-post-its.webp");
+  background-image: url("/images/bg-post-its.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: left center;
