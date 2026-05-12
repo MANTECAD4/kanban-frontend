@@ -1,7 +1,0 @@
-@import "tailwindcss";
-
-.layout {
-  background-image: url("/auth/pattern-background.svg");
-  min-height: 100dvh;
-  /* padding: 2rem 1rem; */
-}
