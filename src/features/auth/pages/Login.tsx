@@ -22,7 +22,7 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className=" py-5 lg:py-15 px-5 sm:px-10">
+    <div className="px-5 sm:px-10">
       <div className="flex flex-col gap-2 mb-6 md:mb-15">
         <h1 className="lg:text-center text-[clamp(1.4rem,4vw,2.25rem)] font-semibold">
           Login
@@ -33,13 +33,13 @@ export const Login = () => {
         </p>
       </div>
       <FieldSet className="w-full">
-        <FieldGroup className="flex flex-col gap-3.5">
+        <FieldGroup className="flex flex-col gap-5">
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input id="email" type="email" placeholder="example@gmail.com" />
-            <FieldDescription className="text-xs">
+            {/* <FieldDescription className="text-xs">
               Must be at least 8 characters long.
-            </FieldDescription>
+            </FieldDescription> */}
           </Field>
 
           <Field>
@@ -66,9 +66,9 @@ export const Login = () => {
                 </InputGroupButton>
               </InputGroupAddon>
             </InputGroup>
-            <FieldDescription className="text-xs">
+            {/* <FieldDescription className="text-xs">
               Must be at least 8 characters long.
-            </FieldDescription>
+            </FieldDescription> */}
           </Field>
         </FieldGroup>
         <div className="mt-5 flex flex-col lg:gap-2 items-center">
