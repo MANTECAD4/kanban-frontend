@@ -22,12 +22,12 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className="px-5 sm:px-10">
-      <div className="flex flex-col gap-2 mb-6 md:mb-15">
-        <h1 className="lg:text-center text-[clamp(1.4rem,4vw,2.25rem)] font-semibold">
+    <>
+      <div className="flex flex-col gap-2 mb-7 md:mb-15">
+        <h1 className="text-center text-[clamp(1.8rem,4vw,2.25rem)] font-semibold">
           Login
         </h1>
-        <p className="lg:text-center text-xs text-gray-500">
+        <p className="text-center text-xs text-gray-500">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
           molestiae omnis quos.
         </p>
@@ -72,17 +72,17 @@ export const Login = () => {
           </Field>
         </FieldGroup>
         <div className="mt-5 flex flex-col lg:gap-2 items-center">
-          <Button className="w-10/12" type="submit">
+          <Button size="lg" className="w-10/12" type="submit">
             Sumbit
           </Button>
           <Link to="/auth/register" className="w-10/12 ">
-            <Button className="w-full" variant={"link"}>
+            <Button size="lg" className="w-full" variant={"link"}>
               Create an account
               <ArrowRight className="" />
             </Button>
           </Link>
         </div>
       </FieldSet>
-    </div>
+    </>
   );
 };

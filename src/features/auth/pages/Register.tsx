@@ -23,12 +23,12 @@ export const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className="px-5 sm:px-10">
-      <div className="flex flex-col gap-2 lg:mb-10">
-        <h1 className="lg:text-center text-[clamp(1.4rem,4vw,2.25rem)] font-semibold">
+    <>
+      <div className="flex flex-col gap-2 mb-7 md:mb-15">
+        <h1 className="text-center text-[clamp(1.8rem,4vw,2.25rem)] font-semibold">
           Register
         </h1>
-        <p className="lg:text-center text-xs text-gray-700">
+        <p className="text-center text-xs text-gray-700">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
           molestiae omnis quos.
         </p>
@@ -103,7 +103,7 @@ export const Register = () => {
           </Link>
         </div>
       </FieldSet>
-    </div>
+    </>
   );
 };
 {
