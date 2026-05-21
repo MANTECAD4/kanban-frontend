@@ -1,3 +1,6 @@
+import { Link } from "react-router";
+import { useLogin } from "@/features/auth/hooks/useLogin";
+
 import {
   Field,
   FieldDescription,
@@ -5,18 +8,15 @@ import {
   FieldLabel,
   FieldSet,
 } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-
-import { ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
-import { useLogin } from "@/features/auth/hooks/useLogin";
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
 
 export const Login = () => {
   const {
