@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import styles from "../styles/AuthLayout.module.css";
-import { Lock, LockKeyhole, Pin } from "lucide-react";
+import { LockKeyhole, Pin } from "lucide-react";
 
 import { useLocation } from "react-router";
 export const AuthLayout = () => {

@@ -9,17 +9,17 @@ import {
 } from "@/components/ui/empty";
 import { BadgeX, ArrowBigLeftDash } from "lucide-react";
 import { Link } from "react-router";
-
+import styles from "../styles/NotFound.module.css";
 export const NotFound = () => {
   return (
-    <div className="min-h-dvh flex items-center">
+    <div className={`min-h-dvh flex items-center ${styles.screen}`}>
       <div className=" w-full flex  flex-col gap-4 items-center">
         <img
-          src="/images/sorting-thoghts.svg"
+          src="/illustrations/lost.svg"
           alt="Page not found"
           className="w-3/5 lg:w-2/5 "
         />
-        <Empty className="text-gray-600">
+        <Empty className="text-gray-800 dark:text-gray-300">
           <EmptyHeader>
             <EmptyMedia className="">
               <BadgeX className="w-8 h-8" />
