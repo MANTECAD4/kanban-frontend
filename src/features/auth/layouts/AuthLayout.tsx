@@ -3,14 +3,24 @@ import styles from "../styles/AuthLayout.module.css";
 import { LockKeyhole, Pin } from "lucide-react";
 
 import { useLocation } from "react-router";
+
+import { useThemeStore } from "@/providers/store/theme.store";
+import { cn } from "@/lib/utils";
+import { ToggleThemeButton } from "@/components/custom/ToggleThemeButton";
+
 export const AuthLayout = () => {
   const location = useLocation();
-  console.log(location);
+  const theme = useThemeStore((state) => state.theme);
   return (
     <div
-      className={`${styles["layout"]} min-h-dvh flex items-center justify-around`}
+      className={cn(
+        styles["layout"],
+        theme === "dark" ? styles["dark-mode"] : styles["light-mode"],
+        " min-h-dvh flex items-center justify-around",
+      )}
     >
-      <div className=" bg-white/60 max-w-md backdrop-blur-sm shadow-2xl py-15 relative px-6 lg:px-10 mx-5">
+      <ToggleThemeButton />
+      <div className="border-2 border-input rounded-xs bg-white/60 dark:bg-white/40 max-w-md backdrop-blur-sm shadow-2xl py-15 relative px-6 lg:px-10 mx-5">
         <Pin className="text-gray-500 fill-(--primary) rotate-45 w-9 h-9 absolute top-2 left-[50%] -translate-x-1/2" />
         <Outlet />
       </div>
@@ -38,12 +48,6 @@ export const AuthLayout = () => {
                 alt="auth image"
                 className="object-fill max-h-[calc(80dvh)] "
               />
-              {/* <div
-                className="absolute top-[30.25%] left-[23.5%] w-[4%] p-[4%] rounded-full bg-(--primary)
-          "
-              >
-                <LockKeyhole className="absolute stroke-white top-1/2 left-1/2 -translate-1/2 h-1/2 w-1/2" />
-              </div> */}
             </>
           )}
         </div>

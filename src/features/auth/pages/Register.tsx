@@ -34,7 +34,7 @@ export const Register = () => {
         <h1 className="text-center text-[clamp(1.8rem,4vw,2.25rem)] font-semibold">
           Register
         </h1>
-        <p className="text-center text-xs text-gray-700">
+        <p className="text-center text-xs text-gray-700 dark:text-gray-100">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
           molestiae omnis quos.
         </p>
@@ -52,7 +52,8 @@ export const Register = () => {
                     message: "Should be at least 3 characters long",
                   },
                 })}
-                className="placeholder:text-gray-700"
+                id="name"
+                className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
                 type="text"
                 placeholder="John Doe"
                 required
@@ -73,7 +74,7 @@ export const Register = () => {
                     message: "Invalid email",
                   },
                 })}
-                className="placeholder:text-gray-700"
+                className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
                 type="email"
                 placeholder="example@gmail.com"
               />
@@ -96,7 +97,7 @@ export const Register = () => {
                     },
                   })}
                   placeholder="**********"
-                  className="placeholder:text-gray-700"
+                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
                   type={showPassword ? "text" : "password"}
                 />
                 <InputGroupAddon align="inline-end">

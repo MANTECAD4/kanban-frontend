@@ -10,9 +10,20 @@ import {
 import { BadgeX, ArrowBigLeftDash } from "lucide-react";
 import { Link } from "react-router";
 import styles from "../styles/NotFound.module.css";
+import { cn } from "@/lib/utils";
+import { useThemeStore } from "@/providers/store/theme.store";
+import { ToggleThemeButton } from "@/components/custom/ToggleThemeButton";
 export const NotFound = () => {
+  const theme = useThemeStore((state) => state.theme);
   return (
-    <div className={`min-h-dvh flex items-center ${styles.screen}`}>
+    <div
+      className={cn(
+        styles.screen,
+        theme === "dark" ? styles["dark-mode"] : styles["ligth-mode"],
+        `min-h-dvh flex items-center`,
+      )}
+    >
+      <ToggleThemeButton />
       <div className=" w-full flex  flex-col gap-4 items-center">
         <img
           src="/illustrations/lost.svg"
@@ -25,7 +36,7 @@ export const NotFound = () => {
               <BadgeX className="w-8 h-8" />
             </EmptyMedia>
             <EmptyTitle className="text-2xl ">404 Not Found</EmptyTitle>
-            <EmptyDescription className="max-w-xs text-pretty">
+            <EmptyDescription className="max-w-xs text-pretty text-gray-700 dark:text-gray-100">
               No results found. Try searching something else.
             </EmptyDescription>
           </EmptyHeader>

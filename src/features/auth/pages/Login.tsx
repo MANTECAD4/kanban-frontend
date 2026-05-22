@@ -33,7 +33,7 @@ export const Login = () => {
         <h1 className="text-center text-[clamp(1.8rem,4vw,2.25rem)] font-semibold">
           Login
         </h1>
-        <p className="text-center text-xs text-gray-500">
+        <p className="text-center text-xs text-gray-700 dark:text-gray-100">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
           molestiae omnis quos.
         </p>
@@ -51,6 +51,7 @@ export const Login = () => {
                     message: "Invalid email",
                   },
                 })}
+                className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
                 // id="email"
                 autoComplete="email"
                 type="email"
@@ -74,6 +75,7 @@ export const Login = () => {
                       message: "Should be at least 8 characters",
                     },
                   })}
+                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
                   placeholder="**********"
                   autoComplete="current-password"
                   type={showPassword ? "text" : "password"}

@@ -1,11 +1,17 @@
 import "./index.css";
 import { RouterProvider } from "react-router";
 import { appRouter } from "@/providers/Router";
+import { ThemeProvider } from "@/providers/theme/ThemeProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 function App() {
   return (
     <>
-      <RouterProvider router={appRouter} />
+      <ThemeProvider>
+        <TooltipProvider>
+          <RouterProvider router={appRouter} />
+        </TooltipProvider>
+      </ThemeProvider>
     </>
   );
 }
