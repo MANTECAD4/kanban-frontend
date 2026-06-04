@@ -16,7 +16,14 @@ import {
 } from "@/components/ui/input-group";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Eye, EyeOff } from "lucide-react";
+import {
+  ArrowRight,
+  Eye,
+  EyeOff,
+  KeyRound,
+  Mail,
+  SquareAsterisk,
+} from "lucide-react";
 
 export const Login = () => {
   const {
@@ -27,9 +34,10 @@ export const Login = () => {
     onSubmitForm,
     register,
   } = useLogin();
+
   return (
     <>
-      <div className="flex flex-col gap-2 mb-7 md:mb-15">
+      <div className="flex flex-col gap-2 mb-7 md:mb-13">
         <h1 className="text-center text-[clamp(1.8rem,4vw,2.25rem)] font-semibold">
           Login
         </h1>
@@ -40,46 +48,44 @@ export const Login = () => {
       </div>
       <FieldSet>
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <FieldGroup className="flex flex-col gap-5">
-            <Field>
+          <FieldGroup className="flex flex-col gap-6">
+            <Field data-invalid={Boolean(errors.email)}>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                {...register("email", {
-                  required: { value: true, message: "An email is required" },
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Invalid email",
-                  },
-                })}
-                className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
-                // id="email"
-                autoComplete="email"
-                type="email"
-                placeholder="example@gmail.com"
-              />
+              <InputGroup>
+                <InputGroupInput
+                  {...register("email")}
+                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  // id="email"
+                  autoComplete="email"
+                  type="email"
+                  placeholder="example@gmail.com"
+                  aria-invalid={Boolean(errors.email)}
+                />
+                <InputGroupAddon>
+                  <Mail className="text-foreground/60" />
+                </InputGroupAddon>
+              </InputGroup>
               {errors.email && (
-                <FieldDescription className="text-xs font-semibold text-red-800">
+                <FieldDescription className="text-xs font-semibold text-destructive">
                   {errors.email.message}
                 </FieldDescription>
               )}
             </Field>
 
-            <Field>
+            <Field data-invalid={Boolean(errors.password)}>
               <FieldLabel htmlFor="password">Password</FieldLabel>
               <InputGroup>
                 <InputGroupInput
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 8,
-                      message: "Should be at least 8 characters",
-                    },
-                  })}
+                  {...register("password")}
                   className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
                   placeholder="**********"
                   autoComplete="current-password"
+                  aria-invalid={Boolean(errors.password)}
                   type={showPassword ? "text" : "password"}
                 />
+                <InputGroupAddon>
+                  <KeyRound className="text-foreground/60" />
+                </InputGroupAddon>
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     aria-label={"Show password toggle"}
@@ -89,26 +95,26 @@ export const Login = () => {
                     onClick={() => setShowPassword((prev) => !prev)}
                   >
                     {showPassword ? (
-                      <Eye className="" />
+                      <Eye className="text-foreground" />
                     ) : (
-                      <EyeOff className="" />
+                      <EyeOff className="text-foreground" />
                     )}
                   </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
               {errors.password && (
-                <FieldDescription className="text-xs font-semibold text-red-800">
+                <FieldDescription className="text-xs font-semibold text-destructive">
                   {errors.password.message}
                 </FieldDescription>
               )}
             </Field>
           </FieldGroup>
-          <div className="mt-5 flex flex-col lg:gap-2 items-center">
+          <div className="mt-10 flex flex-col gap-3 items-center">
             <Button size="lg" className="w-10/12" type="submit">
               Sumbit
             </Button>
             <Link to="/auth/register" className="w-10/12 ">
-              <Button size="lg" className="w-full" variant={"link"}>
+              <Button size="lg" className="w-full" variant={"outline"}>
                 Create an account
                 <ArrowRight className="" />
               </Button>

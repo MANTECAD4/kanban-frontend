@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/input-group";
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, KeyRound, Mail, User } from "lucide-react";
 import { useRegister } from "@/features/auth/hooks/useRegister";
 // import styles from "../styles/Register.module.css";
 
@@ -41,65 +41,63 @@ export const Register = () => {
       </div>
       <FieldSet className="">
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <FieldGroup className="flex flex-col gap-5">
-            <Field>
+          <FieldGroup className="flex flex-col gap-6">
+            <Field data-invalid={Boolean(errors.name)}>
               <FieldLabel htmlFor="name">Name</FieldLabel>
-              <Input
-                {...register("name", {
-                  required: { value: true, message: "A name is required" },
-                  minLength: {
-                    value: 3,
-                    message: "Should be at least 3 characters long",
-                  },
-                })}
-                id="name"
-                className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
-                type="text"
-                placeholder="John Doe"
-                required
-              />
+              <InputGroup>
+                <InputGroupInput
+                  {...register("name")}
+                  id="name"
+                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  type="text"
+                  placeholder="John Doe"
+                  aria-invalid={Boolean(errors.name)}
+                  required
+                />
+                <InputGroupAddon>
+                  <User className="text-foreground/50" />
+                </InputGroupAddon>
+              </InputGroup>
               {errors.name && (
-                <FieldDescription className="text-xs font-semibold text-red-800">
+                <FieldDescription className="text-xs font-semibold text-destructive">
                   {errors.name.message}
                 </FieldDescription>
               )}
             </Field>
-            <Field>
+            <Field data-invalid={Boolean(errors.email)}>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                {...register("email", {
-                  required: { value: true, message: "Email is required" },
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Invalid email",
-                  },
-                })}
-                className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
-                type="email"
-                placeholder="example@gmail.com"
-              />
+              <InputGroup>
+                <InputGroupInput
+                  {...register("email")}
+                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  type="email"
+                  placeholder="example@gmail.com"
+                  aria-invalid={Boolean(errors.email)}
+                />
+                <InputGroupAddon>
+                  <Mail className="text-foreground/50" />
+                </InputGroupAddon>
+              </InputGroup>
               {errors.email && (
-                <FieldDescription className="text-xs font-semibold text-red-800">
+                <FieldDescription className="text-xs font-semibold text-destructive">
                   {errors.email.message}
                 </FieldDescription>
               )}
             </Field>
 
-            <Field>
+            <Field data-invalid={Boolean(errors.password)}>
               <FieldLabel htmlFor="password">Password</FieldLabel>
               <InputGroup>
                 <InputGroupInput
-                  {...register("password", {
-                    required: { value: true, message: "Password is required" },
-                    minLength: {
-                      value: 8,
-                      message: "Needs at least 8 characters",
-                    },
-                  })}
-                  placeholder="**********"
+                  {...register("password")}
+                  placeholder={showPassword ? "password" : "**********"}
                   className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
                   type={showPassword ? "text" : "password"}
+                  aria-invalid={Boolean(errors.password)}
                 />
+                <InputGroupAddon>
+                  <KeyRound className="text-foreground/50" />
+                </InputGroupAddon>
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     aria-label={"Show password toggle"}
@@ -109,26 +107,27 @@ export const Register = () => {
                     onClick={() => setShowPassword((prev) => !prev)}
                   >
                     {showPassword ? (
-                      <Eye className="" />
+                      <Eye className="text-foreground/60" />
                     ) : (
-                      <EyeOff className="" />
+                      <EyeOff className="text-foreground/60" />
                     )}
                   </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
               {errors.password && (
-                <FieldDescription className="text-xs font-semibold text-red-800">
+                <FieldDescription className="text-xs font-semibold text-destructive">
                   {errors.password.message}
                 </FieldDescription>
               )}
             </Field>
           </FieldGroup>
-          <div className="mt-5 flex flex-col lg:gap-2 items-center">
+          <div className="mt-10 flex flex-col gap-3 items-center">
             <Button className="w-10/12" type="submit" size={"lg"}>
+              <User />
               Create Account
             </Button>
             <Link to="/auth/login" className="w-10/12">
-              <Button className="w-full" size={"lg"} variant={"link"}>
+              <Button className="w-full" size={"lg"} variant={"outline"}>
                 <ArrowLeft className="" />
                 Go back to Login
               </Button>
@@ -139,42 +138,3 @@ export const Register = () => {
     </>
   );
 };
-{
-  /* <Alert className="max-w-md bg-red-200" variant={"destructive"}>
-  <CheckCircle2Icon />
-  <AlertTitle>Account updated successfully</AlertTitle>
-  <AlertDescription>
-    Your profile information has been saved. Changes will be reflected
-    immediately.
-  </AlertDescription>
-</Alert> */
-}
-
-{
-  /* <Field>
-            <FieldLabel htmlFor="password-confirmation">
-              Confirm password
-            </FieldLabel>
-            <InputGroup>
-              <InputGroupInput
-                id="password-confirmation"
-                placeholder="**********"
-                type={showPasswordConfirmation ? "text" : "password"}
-              />
-              <InputGroupAddon align="inline-end">
-                <InputGroupButton
-                  aria-label="Show password confirmation toggle"
-                  title={showPasswordConfirmation ? "hide" : "show"}
-                  size="icon-xs"
-                  className="cursor-pointer"
-                  onClick={() => setShowPasswordConfirmation((prev) => !prev)}
-                >
-                  {showPasswordConfirmation ? <Eye className="" /> : <EyeOff />}
-                </InputGroupButton>
-              </InputGroupAddon>
-            </InputGroup>
-            <FieldDescription className="text-xs font-semibold text-red-800">
-              Must be at least 8 characters long.
-            </FieldDescription>
-          </Field> */
-}

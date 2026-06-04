@@ -1,15 +1,11 @@
 import { Outlet } from "react-router";
 import styles from "../styles/AuthLayout.module.css";
-import { LockKeyhole, Pin } from "lucide-react";
-
-import { useLocation } from "react-router";
 
 import { useThemeStore } from "@/providers/store/theme.store";
 import { cn } from "@/lib/utils";
 import { ToggleThemeButton } from "@/components/custom/ToggleThemeButton";
 
 export const AuthLayout = () => {
-  const location = useLocation();
   const theme = useThemeStore((state) => state.theme);
   return (
     <div
@@ -20,12 +16,14 @@ export const AuthLayout = () => {
       )}
     >
       <ToggleThemeButton />
-      <div className="border-2 border-input rounded-xs bg-white/60 dark:bg-white/40 max-w-md backdrop-blur-sm shadow-2xl py-15 relative px-6 lg:px-10 mx-5">
-        <Pin className="text-gray-500 fill-(--primary) rotate-45 w-9 h-9 absolute top-2 left-[50%] -translate-x-1/2" />
+      <div className=" rounded-lg bg-background/60 max-w-md backdrop-blur-sm shadow-2xl py-13 relative px-6 lg:px-10 mx-5">
         <Outlet />
       </div>
-      <div className="w-[40%] xl:w-[50%] hidden lg:flex justify-center">
-        <div className={`relative ${styles["register-img-container"]}`}>
+      <div className="w-[40%] xl:w-[50%] hidden lg:block ">
+        <div className="rounded-lg bg-background/40 w-full">
+          <h2 className="text-[clamp(1.4rem,4vw,1.8rem)] font-normal">Hola</h2>
+        </div>
+        {/* <div className={`relative ${styles["register-img-container"]}`}>
           {location.pathname.match(/login/i) ? (
             <>
               <img
@@ -42,15 +40,13 @@ export const AuthLayout = () => {
               </div>
             </>
           ) : (
-            <>
-              <img
-                src="/illustrations/register.svg"
-                alt="auth image"
-                className="object-fill max-h-[calc(80dvh)] "
-              />
-            </>
+            <img
+              src="/illustrations/register.svg"
+              alt="auth image"
+              className="object-fill max-h-[calc(80dvh)] "
+            />
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
