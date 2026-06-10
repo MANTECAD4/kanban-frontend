@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { toast } from "sonner";
-import type { AxiosError } from "axios";
 import axios from "axios";
 
 type Props = {

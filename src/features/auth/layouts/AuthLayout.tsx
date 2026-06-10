@@ -8,7 +8,7 @@ import { ToggleThemeButton } from "@/components/custom/ToggleThemeButton";
 import { Button } from "@/components/ui/button";
 import { FeatureCard } from "@/components/custom/FeatureCard";
 import { FingerprintPattern, Grip, ListTodo, Play } from "lucide-react";
-import { DragDropProvider, useDragDropMonitor } from "@dnd-kit/react";
+import { DragDropProvider } from "@dnd-kit/react";
 
 const features = [
   {

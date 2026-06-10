@@ -4,6 +4,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/features/auth/schemas/register.schema";
 import type { RegisterState } from "@/features/auth/interfaces/kanban/auth.interface";
+import { useSubmitRegisterQuery } from "@/features/auth/queries/useSubmitRegisterQuery";
 
 export const useRegister = () => {
   const {
@@ -15,9 +16,10 @@ export const useRegister = () => {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const submitRegisterMutation = useSubmitRegisterQuery();
 
   const onSubmitForm: SubmitHandler<RegisterState> = (data) => {
-    console.log(data);
+    submitRegisterMutation.mutate(data);
   };
 
   return {
