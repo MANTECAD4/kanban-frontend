@@ -4,20 +4,39 @@ import styles from "../styles/AuthLayout.module.css";
 import { useThemeStore } from "@/providers/store/theme.store";
 import { cn } from "@/lib/utils";
 import { ToggleThemeButton } from "@/components/custom/ToggleThemeButton";
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { Button } from "@/components/ui/button";
 import { FeatureCard } from "@/components/custom/FeatureCard";
-import { FingerprintPattern, Grip, ListTodo } from "lucide-react";
+import { FingerprintPattern, Grip, ListTodo, Play } from "lucide-react";
+import { DragDropProvider, useDragDropMonitor } from "@dnd-kit/react";
+
+const features = [
+  {
+    title: "Secure Authentication",
+    description:
+      "High-grade security with token-based authentication and encrypted data storage to keep your projects safe.",
+    icon: <FingerprintPattern className="m-2 text-foreground" />,
+    className: "",
+  },
+  {
+    title: "Drag & drop",
+    description:
+      "Effortlessly move tasks between columns with intuitive drag-and-drop. Reorder priorities in seconds.",
+    icon: <Grip className="m-2 text-foreground" />,
+    className: "-translate-y-10",
+  },
+  {
+    title: "Task Management",
+    description:
+      "Create, assign, and track tasks with due dates, labels, and progress tracking all in one place.",
+    icon: <ListTodo className="m-2 text-foreground" />,
+    className: "-translate-y-20",
+  },
+];
 
 export const AuthLayout = () => {
   const theme = useThemeStore((state) => state.theme);
+
   return (
     <div
       className={cn(
@@ -30,8 +49,8 @@ export const AuthLayout = () => {
       <div className=" rounded-lg bg-background/60 max-w-md backdrop-blur-sm shadow-2xl py-13 relative px-6 lg:px-10 mx-5">
         <Outlet />
       </div>
-      <div className="w-[55%] hidden lg:block  rounded-lg  px-5 py-10">
-        <div className="mb-12 ">
+      <div className="w-[55%] hidden lg:block  rounded-lg bg-purple-100 dark:bg-indigo-950 px-5 py-10">
+        <div className="mb-10 ">
           <h2 className="text-[clamp(1.4rem,4vw,1.8rem)] font-normal mb-5">
             Streamline your workflow with Kanban
           </h2>
@@ -40,52 +59,67 @@ export const AuthLayout = () => {
             progress, prioritize work, and keep projects moving forward with a
             simple and powerful Kanban board.
           </p>
-          <Button className="mt-8 ml-4">Try Kanban for free!</Button>
+          <div className="mt-4 flex gap-4">
+            <Button className="">
+              <svg viewBox="0 0 1024 1024" fill="none">
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
+                  transform="scale(64)"
+                  fill="#ffff"
+                />
+              </svg>
+              Check repository
+            </Button>
+
+            <Button className="">
+              <Play />
+              View Demo
+            </Button>
+          </div>
         </div>
         <div className="flex justify-between ">
-          <FeatureCard
-            title="Secure Authentication"
-            description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus reiciendis architecto eligendi in."
-            icon={<FingerprintPattern className="m-2 text-foreground" />}
-          />
-          <FeatureCard
-            title="Drag & drop"
-            description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus reiciendis architecto eligendi in."
-            className="-translate-y-10"
-            icon={<Grip className="m-2 text-foreground" />}
-          />
-          <FeatureCard
-            title="Task Management"
-            description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus reiciendis architecto eligendi in."
-            className="-translate-y-20"
-            icon={<ListTodo className="m-2 text-foreground" />}
-          />
+          <DragDropProvider>
+            {/* <DragMonitor /> */}
+            {features.map(({ title, description, icon }, index) => (
+              <FeatureCard
+                key={title}
+                title={title}
+                description={description}
+                icon={icon}
+                index={index}
+              />
+            ))}
+          </DragDropProvider>
         </div>
       </div>
-      {/* <div className={`relative ${styles["register-img-container"]}`}>
-          {location.pathname.match(/login/i) ? (
-            <>
-              <img
-                src="/illustrations/login.svg"
-                alt="auth image"
-                className="object-fill max-h-[calc(80dvh)] "
-              />
-
-              <div
-                className="absolute top-[15%] left-[17%] w-[12.5%] p-[12.5%] rounded-full bg-(--primary)
-          "
-              >
-                <LockKeyhole className="absolute stroke-white top-1/2 left-1/2 -translate-1/2 h-1/4 w-1/4" />
-              </div>
-            </>
-          ) : (
-            <img
-              src="/illustrations/register.svg"
-              alt="auth image"
-              className="object-fill max-h-[calc(80dvh)] "
-            />
-          )}
-        </div> */}
     </div>
   );
 };
+{
+  /* <div className={`relative ${styles["register-img-container"]}`}>
+    {location.pathname.match(/login/i) ? (
+      <>
+        <img
+          src="/illustrations/login.svg"
+          alt="auth image"
+          className="object-fill max-h-[calc(80dvh)] "
+        />
+
+        <div
+          className="absolute top-[15%] left-[17%] w-[12.5%] p-[12.5%] rounded-full bg-(--primary)
+    "
+        >
+          <LockKeyhole className="absolute stroke-white top-1/2 left-1/2 -translate-1/2 h-1/4 w-1/4" />
+        </div>
+      </>
+    ) : (
+      <img
+        src="/illustrations/register.svg"
+        alt="auth image"
+        className="object-fill max-h-[calc(80dvh)] "
+      />
+    )}
+  </div> */
+}

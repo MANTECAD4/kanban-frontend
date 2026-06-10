@@ -7,24 +7,27 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { toast } from "sonner";
+import type { AxiosError } from "axios";
+import axios from "axios";
 
 type Props = {
   children: ReactNode;
 };
 
 export const queryClient = new QueryClient({
+  defaultOptions: { mutations: { retry: false } },
   mutationCache: new MutationCache({
-    onSuccess: (data) => {
-      const message = (data as any).message;
-      toast.success(message);
-    },
     onError: (error) => {
-      console.log({ error });
-      const message =
-        (error as any).response?.data.error.message ||
-        error.message ||
-        "Something went wrong";
-      toast.error(message);
+      let title;
+      let message;
+      if (axios.isAxiosError(error)) {
+        title = error.response?.data.error.title ?? "Error";
+        message = error.response?.data.error.message || "Missing error details";
+      } else {
+        title = "Error";
+        message = "Something went wrong";
+      }
+      toast.error(title, { description: message });
     },
   }),
 });
