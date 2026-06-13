@@ -39,7 +39,7 @@ export const FeatureCard: FC<Props> = ({
       ref={cardRef}
       className={cn(
         elevation,
-        "rounded-md w-full max-w-50 pt-0 hover:cursor-grab hover:scale-102 hover:shadow-2xl transition-all duration-200",
+        "rounded-md w-full max-w-50 pt-0 hover:cursor-grab hover:scale-105 hover:shadow-primary shadow-2xl transition-all duration-200",
       )}
     >
       <div

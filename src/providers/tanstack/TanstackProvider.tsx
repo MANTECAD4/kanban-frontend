@@ -2,6 +2,7 @@ import type { FC, ReactNode } from "react";
 
 import {
   MutationCache,
+  QueryCache,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
@@ -14,19 +15,37 @@ type Props = {
 };
 
 export const queryClient = new QueryClient({
-  defaultOptions: { mutations: { retry: false } },
+  defaultOptions: { mutations: { retry: false }, queries: { retry: false } },
+  queryCache: new QueryCache({
+    onError: (error) => {
+      let title: string;
+      let message: string;
+      if (axios.isAxiosError(error)) {
+        title = error.response?.data.error.title;
+        message = error.response?.data.error.message;
+      } else {
+        title = "Server error";
+        message = error.message;
+      }
+      if (title && message) {
+        toast.error(title, { description: message });
+      }
+    },
+  }),
   mutationCache: new MutationCache({
     onError: (error) => {
-      let title;
-      let message;
+      let title: string;
+      let message: string;
       if (axios.isAxiosError(error)) {
-        title = error.response?.data.error.title ?? "Error";
-        message = error.response?.data.error.message || "Missing error details";
+        title = error.response?.data.error.title;
+        message = error.response?.data.error.message;
       } else {
-        title = "Error";
-        message = "Something went wrong";
+        title = "Server error";
+        message = error.message;
       }
-      toast.error(title, { description: message });
+      if (title && message) {
+        toast.error(title, { description: message });
+      }
     },
   }),
 });

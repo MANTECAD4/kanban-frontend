@@ -1,5 +1,6 @@
-import React from "react";
+import { useAuthStore } from "@/providers/store/auth.store";
 
 export const Dashboard = () => {
-  return <div>Dashboard</div>;
+  const name = useAuthStore((state) => state.name);
+  return <div>Dashboard - hello {name}</div>;
 };

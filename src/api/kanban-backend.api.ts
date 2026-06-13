@@ -2,7 +2,7 @@ import { useAuthStore } from "@/providers/store/auth.store";
 import axios from "axios";
 
 export const kanbanBackendApi = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: "http://localhost:5000/api",
   withCredentials: true,
 });
 
@@ -12,12 +12,6 @@ kanbanBackendApi.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log(
-      "Request:",
-      config.method,
-      config.url,
-      config.headers.Authorization,
-    );
 
     return config;
   },

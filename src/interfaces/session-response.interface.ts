@@ -1,4 +1,4 @@
-export interface RegisterResponse {
+export interface SessionResponse {
   ok: boolean;
   message: string;
   data: Data;

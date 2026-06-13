@@ -1,5 +1,4 @@
 import { submitRegisterData } from "@/features/auth/actions/submit-register.action";
-import type { RegisterResponse } from "@/interfaces/register-response.interface";
 import { useAuthStore } from "@/providers/store/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
@@ -15,7 +14,7 @@ export const useSubmitRegisterQuery = () => {
         accessToken,
         message,
         data: { user: userData },
-      } = data as RegisterResponse;
+      } = data;
       setSession({ accessToken, ...userData });
       toast.success(message);
       navigate("/");

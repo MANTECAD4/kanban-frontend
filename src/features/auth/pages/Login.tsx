@@ -14,16 +14,8 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowRight,
-  Eye,
-  EyeOff,
-  KeyRound,
-  Mail,
-  SquareAsterisk,
-} from "lucide-react";
+import { ArrowRight, Eye, EyeOff, KeyRound, Mail } from "lucide-react";
 
 export const Login = () => {
   const {
@@ -54,7 +46,7 @@ export const Login = () => {
               <InputGroup>
                 <InputGroupInput
                   {...register("email")}
-                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  className="placeholder:text-gray-500 "
                   // id="email"
                   autoComplete="email"
                   type="email"
@@ -77,7 +69,7 @@ export const Login = () => {
               <InputGroup>
                 <InputGroupInput
                   {...register("password")}
-                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  className="placeholder:text-gray-500 "
                   placeholder="**********"
                   autoComplete="current-password"
                   aria-invalid={Boolean(errors.password)}

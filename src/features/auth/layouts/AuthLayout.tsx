@@ -1,42 +1,17 @@
 import { Outlet } from "react-router";
 import styles from "../styles/AuthLayout.module.css";
 
-import { useThemeStore } from "@/providers/store/theme.store";
 import { cn } from "@/lib/utils";
 import { ToggleThemeButton } from "@/components/custom/ToggleThemeButton";
 
 import { Button } from "@/components/ui/button";
 import { FeatureCard } from "@/components/custom/FeatureCard";
-import { FingerprintPattern, Grip, ListTodo, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { DragDropProvider } from "@dnd-kit/react";
-
-const features = [
-  {
-    title: "Secure Authentication",
-    description:
-      "High-grade security with token-based authentication and encrypted data storage to keep your projects safe.",
-    icon: <FingerprintPattern className="m-2 text-foreground" />,
-    className: "",
-  },
-  {
-    title: "Drag & drop",
-    description:
-      "Effortlessly move tasks between columns with intuitive drag-and-drop. Reorder priorities in seconds.",
-    icon: <Grip className="m-2 text-foreground" />,
-    className: "-translate-y-10",
-  },
-  {
-    title: "Task Management",
-    description:
-      "Create, assign, and track tasks with due dates, labels, and progress tracking all in one place.",
-    icon: <ListTodo className="m-2 text-foreground" />,
-    className: "-translate-y-20",
-  },
-];
+import { useAuthLayout } from "@/features/auth/hooks/useAuthLayout";
 
 export const AuthLayout = () => {
-  const theme = useThemeStore((state) => state.theme);
-
+  const { theme, features } = useAuthLayout();
   return (
     <div
       className={cn(

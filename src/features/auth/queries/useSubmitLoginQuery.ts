@@ -1,5 +1,4 @@
 import { submitLogin } from "@/features/auth/actions/submit-login.action";
-import type { LoginResponse } from "@/interfaces/login-response.interface";
 import { useAuthStore } from "@/providers/store/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
@@ -15,7 +14,7 @@ export const useSubmitLoginQuery = () => {
         accessToken,
         message,
         data: { user },
-      } = data as LoginResponse;
+      } = data;
       setSession({ accessToken, ...user });
       toast.success(message);
       navigate("/");

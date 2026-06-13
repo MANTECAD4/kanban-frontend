@@ -1,4 +1,3 @@
-import { useAuthStore } from "@/providers/store/auth.store";
 import { Link, Outlet } from "react-router";
 
 export const KanbanLayout = () => {

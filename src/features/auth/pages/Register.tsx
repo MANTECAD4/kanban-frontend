@@ -6,7 +6,6 @@ import {
   FieldLabel,
   FieldSet,
 } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
@@ -34,7 +33,7 @@ export const Register = () => {
         <h1 className="text-center text-[clamp(1.8rem,4vw,2.25rem)] font-semibold">
           Register
         </h1>
-        <p className="text-center text-xs text-gray-700 dark:text-gray-100">
+        <p className="text-center text-xs text-gray-500 dark:text-gray-100">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
           molestiae omnis quos.
         </p>
@@ -48,7 +47,7 @@ export const Register = () => {
                 <InputGroupInput
                   {...register("name")}
                   id="name"
-                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  className="placeholder:text-gray-500 "
                   type="text"
                   placeholder="John Doe"
                   aria-invalid={Boolean(errors.name)}
@@ -69,7 +68,7 @@ export const Register = () => {
               <InputGroup>
                 <InputGroupInput
                   {...register("email")}
-                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  className="placeholder:text-gray-500"
                   type="email"
                   placeholder="example@gmail.com"
                   aria-invalid={Boolean(errors.email)}
@@ -91,7 +90,7 @@ export const Register = () => {
                 <InputGroupInput
                   {...register("password")}
                   placeholder={showPassword ? "password" : "**********"}
-                  className="placeholder:text-gray-700 dark:placeholder:text-gray-200"
+                  className="placeholder:text-gray-500 "
                   type={showPassword ? "text" : "password"}
                   aria-invalid={Boolean(errors.password)}
                 />
