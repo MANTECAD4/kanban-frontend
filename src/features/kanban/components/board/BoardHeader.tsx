@@ -7,10 +7,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export const BoardHeader = () => {
   return (
     <>
+      <SidebarTrigger className="" />
+
       <Separator orientation="vertical" />
       <Breadcrumb>
         <BreadcrumbList>

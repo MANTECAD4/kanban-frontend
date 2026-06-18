@@ -159,9 +159,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" className="relative" {...props}>
-      <SidebarTrigger className="absolute top-4 -right-6" />
-
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <Header />
       </SidebarHeader>
