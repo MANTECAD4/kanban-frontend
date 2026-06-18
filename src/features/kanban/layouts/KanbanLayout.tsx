@@ -8,8 +8,7 @@ export const KanbanLayout = () => {
     <>
       <SidebarProvider>
         <AppSidebar variant="floating" />
-        <main>
-          <SidebarTrigger />
+        <main className="w-full">
           <Outlet />
         </main>
       </SidebarProvider>

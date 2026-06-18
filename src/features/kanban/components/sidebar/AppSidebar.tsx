@@ -8,6 +8,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -158,7 +159,9 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" className="relative" {...props}>
+      <SidebarTrigger className="absolute top-4 -right-6" />
+
       <SidebarHeader>
         <Header />
       </SidebarHeader>

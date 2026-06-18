@@ -25,7 +25,8 @@ import {
   Gear,
 } from "@hugeicons/core-free-icons";
 import { useAuthStore } from "@/providers/store/auth.store";
-import { Settings } from "lucide-react";
+import { Moon, Settings, Sun } from "lucide-react";
+import { useThemeStore } from "@/providers/store/theme.store";
 
 export function NavUser({
   user,
@@ -39,6 +40,8 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const userName = useAuthStore((state) => state.name);
   const email = useAuthStore((state) => state.email);
+  const setTheme = useThemeStore((state) => state.setTheme);
+  const theme = useThemeStore((state) => state.theme);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -79,9 +82,20 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={SparklesIcon} strokeWidth={2} />
-                Upgrade to Pro
+              <DropdownMenuItem
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Sun />
+                    <p>Change to Light mode</p>
+                  </>
+                ) : (
+                  <>
+                    <Moon />
+                    <p>Change to Dark mode</p>
+                  </>
+                )}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
