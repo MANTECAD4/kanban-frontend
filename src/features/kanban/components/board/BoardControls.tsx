@@ -5,13 +5,13 @@ import { Kanban, ListTree, Plus } from "lucide-react";
 export const BoardControls = () => {
   return (
     <>
-      <Tabs defaultValue="preview">
-        <TabsList variant={"default"}>
-          <TabsTrigger className="w-25" value="preview">
+      <Tabs defaultValue="kanban" className="">
+        <TabsList variant={"line"}>
+          <TabsTrigger className="w-25 pb-3 text-sm" value="kanban">
             <Kanban />
             Kanban
           </TabsTrigger>
-          <TabsTrigger className="w-25" value="code">
+          <TabsTrigger className="w-25 pb-3 text-sm" value="list">
             <ListTree />
             List
           </TabsTrigger>
