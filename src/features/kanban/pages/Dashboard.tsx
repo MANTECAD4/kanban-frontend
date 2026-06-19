@@ -18,7 +18,7 @@ export const Dashboard = () => {
       <div className="flex items-center justify-between my-5 ">
         <BoardControls />
       </div>
-      <div className="h-full overflow-x-scroll ">
+      <div className="h-full ">
         <BoardContent />
       </div>
     </div>

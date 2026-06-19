@@ -75,8 +75,12 @@ export function NavUser({
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{userName}</span>
-                  <span className="truncate text-xs">{email}</span>
+                  <span className="text-foreground truncate font-medium">
+                    {userName}
+                  </span>
+                  <span className="text-foreground truncate text-xs">
+                    {email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
