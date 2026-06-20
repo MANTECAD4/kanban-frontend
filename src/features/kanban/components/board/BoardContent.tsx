@@ -6,7 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 export const BoardContent = () => {
   return (
     <>
-      <ScrollArea className="h-full ">
+      <div className="h-full overflow-x-scroll custom-scrollbar pb-2">
         <div className="flex gap-4 max-w-0 h-full ">
           <BoardColumn />
           <BoardColumn />
@@ -14,8 +14,8 @@ export const BoardContent = () => {
           <BoardColumn />
           <BoardColumn />
         </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+        {/* <ScrollBar orientation="horizontal" /> */}
+      </div>
     </>
   );
 };

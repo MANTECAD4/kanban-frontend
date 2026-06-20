@@ -13,6 +13,7 @@ import { CalendarClock, Ellipsis, Paperclip } from "lucide-react";
 import React from "react";
 
 export const TaskItem = () => {
+  // console.log("me renderice");
   return (
     <div className="flex flex-col p-3 bg-card border border-gray-200 dark:border-gray-700 rounded-xl">
       <div className="flex justify-between my-2">

@@ -7,7 +7,7 @@ import { Wallpaper } from "lucide-react";
 export const Dashboard = () => {
   const name = useAuthStore((state) => state.name);
   return (
-    <div className="flex flex-col flex-1 min-w-0 h-dvh pl-2 pr-4 py-4.5 ">
+    <div className="flex flex-col flex-1 min-w-0 h-dvh pl-2 pr-4 pt-4.5 pb-1 ">
       <div className="flex items-center gap-2 mb-3">
         <BoardHeader />
       </div>

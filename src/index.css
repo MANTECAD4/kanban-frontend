@@ -57,7 +57,7 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   /* --primary: #ed9da0; */
-  --primary: #c97b84;
+  --primary: oklch(66.825% 0.09769 12.533);
   --primary-foreground: hsl(0, 0%, 100%);
   /* --secondary: oklch(0.97 0 0); */
   --secondary: #a85751;
@@ -94,7 +94,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: #6c63fe;
+  --primary: oklch(59.657% 0.22256 279.847);
   /* --primary: #251351; */
   --primary-foreground: oklch(1 0 0); /* oklch(0.205 0 0); */
   /* --secondary: oklch(0.269 0 0); */
@@ -133,4 +133,15 @@
   html {
     @apply font-sans;
   }
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--primary) 100%, transparent)
+    rgba(1, 1, 1, 0);
+}
+.custom-scrollbar--transparent {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--primary) 60%, transparent)
+    rgba(1, 1, 1, 0);
 }
