@@ -15,7 +15,7 @@ export const Dashboard = () => {
         {/* <Wallpaper /> */}
         <h1 className="text-2xl font-semibold">Design for Landing Page</h1>
       </div>
-      <div className="flex items-center justify-between my-5 ">
+      <div className="flex items-center justify-between mt-8  ">
         <BoardControls />
       </div>
       <div className="h-full ">

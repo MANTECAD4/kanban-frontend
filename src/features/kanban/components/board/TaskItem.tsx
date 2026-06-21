@@ -9,13 +9,42 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Progress } from "@/components/ui/progress";
-import { CalendarClock, Ellipsis, Paperclip } from "lucide-react";
-import React from "react";
+import { useSortable } from "@dnd-kit/react/sortable";
+import {
+  CalendarClock,
+  Ellipsis,
+  Grid,
+  Grip,
+  Paperclip,
+  Pencil,
+} from "lucide-react";
+import type { FC } from "react";
 
-export const TaskItem = () => {
+interface Props {
+  columnTitle: string;
+  index: number;
+  id: `${string}-${string}-${string}-${string}-${string}`;
+  title: string;
+}
+
+export const TaskItem: FC<Props> = ({ id, index, title, columnTitle }) => {
+  const { handleRef, ref, isDragging } = useSortable({
+    id,
+    index,
+    type: "item",
+    accept: "item",
+    group: columnTitle,
+    transition: {
+      duration: 300,
+      easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    },
+  });
   // console.log("me renderice");
   return (
-    <div className="flex flex-col p-3 bg-card border border-gray-200 dark:border-gray-700 rounded-xl">
+    <div
+      ref={ref}
+      className="flex flex-col p-3 bg-card border border-gray-200 dark:border-gray-700 rounded-xl "
+    >
       <div className="flex justify-between my-2">
         <div className="flex gap-2">
           <Badge variant="outline">UI</Badge>
@@ -23,20 +52,20 @@ export const TaskItem = () => {
           <Badge variant="outline">React</Badge>
           <Badge variant="outline">Web Design</Badge>
         </div>
-        <Button className="rounded-full" variant={"ghost"}>
-          <Ellipsis />
+        <Button
+          ref={handleRef}
+          className="hover:cursor-grab"
+          variant={"outline"}
+        >
+          <Grip />
         </Button>
       </div>
       <h3 className="tezt-md font-semibold hover:underline cursor-pointer">
-        Implement Responsive Design
+        {title}
       </h3>
-      <div className="flex items-center gap-1 mt-1.5">
-        <CalendarClock className="size-3.5 " />
-        <p className="text-xs">Nov 12</p>
-      </div>
+
       <p className="text-sm mt-3">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        unde exercitationem eos illum, molestiae nesciunt.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p>
       <Field className="w-full mt-6 ">
         <FieldLabel htmlFor="progress-upload">
@@ -71,6 +100,10 @@ export const TaskItem = () => {
           <div className="flex items-center gap-1">
             <Paperclip className="size-3" />
             <span className="text-xs">5</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <CalendarClock className="size-3.5 " />
+            <p className="text-xs">Nov 12</p>
           </div>
         </div>
       </div>

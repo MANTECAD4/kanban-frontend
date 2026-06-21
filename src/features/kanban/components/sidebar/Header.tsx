@@ -6,7 +6,7 @@ export const Header = () => {
     <>
       <div className="flex gap-2 mt-2.5 items-center">
         <div className="flex aspect-square size-8 items-center justify-center text-sidebar-primary-foreground">
-          <FolderKanban />
+          <FolderKanban className="stroke-foreground stroke-2 size-5" />
         </div>
         <div className="grid flex-1 leading-tight">
           <span className="truncate text-lg font-semibold">My Kanban</span>
