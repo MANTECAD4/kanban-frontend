@@ -14,7 +14,27 @@ import { Button } from "@/shared/components/ui/button";
 import { Field, FieldLabel } from "@/shared/components/ui/field";
 import { Progress } from "@/shared/components/ui/progress";
 
-import { CalendarClock, Grip, Paperclip, Siren } from "lucide-react";
+import {
+  CalendarClock,
+  Grip,
+  MoveRight,
+  MoveUpRight,
+  Paperclip,
+  Siren,
+  SquareMousePointer,
+} from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shared/components/ui/dialog";
+import { Label } from "@/shared/components/ui/label";
+import { Input } from "@/shared/components/ui/input";
 
 interface Props {
   columnTitle: string;
@@ -51,7 +71,7 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
           <Badge variant="outline">Web Design</Badge>
         </div>
         <Button
-          ref={handleRef}
+          // ref={handleRef}
           className="hover:cursor-grab aspect-square size-7"
           variant={"outline"}
         >
@@ -59,9 +79,38 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
         </Button>
       </div>
       <div className="flex items-center gap-1">
-        <h3 className="tezt-md font-semibold hover:underline cursor-pointer">
-          {title} - {index}
-        </h3>
+        <Dialog>
+          <DialogTrigger asChild>
+            <h3 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
+              {title}
+            </h3>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription>
+                Anyone who has this link will be able to view this.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex items-center gap-2">
+              <div className="grid flex-1 gap-2">
+                <Label htmlFor="link" className="sr-only">
+                  Link
+                </Label>
+                <Input
+                  id="link"
+                  defaultValue="https://ui.shadcn.com/docs/installation"
+                  readOnly
+                />
+              </div>
+            </div>
+            <DialogFooter className="sm:justify-start">
+              <DialogClose asChild>
+                <Button type="button">Inspect</Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
       <div className="flex gap-2 mt-2">
         <div className="flex items-center gap-1">
@@ -101,18 +150,18 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
           </Avatar>
           <AvatarGroupCount>+3</AvatarGroupCount>
         </AvatarGroup>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center ">
           <div className="flex items-center gap-1">
             <Paperclip className="size-3" />
             <span className="text-xs">5</span>
           </div>
-          {/* <Badge
+          <Badge
             className="bg-green-100 border-green-500 text-green-500"
             variant={"outline"}
           >
             <Siren />
             Low
-          </Badge> */}
+          </Badge>
           {/* <Badge
             className="bg-yellow-100 border-yellow-500 text-yellow-500"
             variant={"outline"}
@@ -127,13 +176,13 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
             <Siren />
             High
           </Badge> */}
-          <Badge
+          {/* <Badge
             className="bg-red-100 border-red-500 text-red-500"
             variant={"outline"}
           >
             <Siren />
             Urgent
-          </Badge>
+          </Badge> */}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { TaskCard } from "@/features/projects/components/Kanban/TaskICard";
 import { useMemo, useState } from "react";
 import { move } from "@dnd-kit/helpers";
 import { KanbanColumn } from "@/features/projects/components/Kanban/KanbanColumn";
+import { AddTaskPlaceholder } from "@/features/projects/components/Kanban/AddTaskPlaceholder";
 
 const columns = [
   {
@@ -67,7 +68,7 @@ export const KanbanView = () => {
           setBoardColumns((items) => move(items, event));
         }}
       >
-        <div className="h-full overflow-x-scroll custom-scrollbar pb-2">
+        <div className="h-full  overflow-x-scroll custom-scrollbar pb-2">
           <div className="flex gap-10 max-w-0 h-full ">
             {Object.entries(boardColumns).map(([columnTitle, tasks]) => {
               return (
@@ -80,6 +81,7 @@ export const KanbanView = () => {
                       columnTitle={columnTitle}
                     />
                   ))}
+                  {/* <AddTaskPlaceholder /> */}
                 </KanbanColumn>
               );
             })}

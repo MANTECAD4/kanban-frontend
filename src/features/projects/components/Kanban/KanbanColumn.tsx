@@ -1,6 +1,5 @@
 import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
-import { TaskCard } from "@/features/projects/components/Kanban/TaskICard";
 import { useDroppable } from "@dnd-kit/react";
 import { Plus } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
@@ -15,7 +14,7 @@ interface Props {
 }
 
 export const KanbanColumn: FC<Props> = ({ title, children }) => {
-  const { isDropTarget, ref } = useDroppable({
+  const { ref } = useDroppable({
     id: title,
     type: "column",
     accept: "item",
@@ -44,7 +43,7 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
       <div
         ref={ref}
         className={cn(
-          " mt-3 h-full overflow-y-scroll custom-scrollbar--transparent ",
+          "mt-3 h-full overflow-y-scroll custom-scrollbar--transparent ",
         )}
       >
         <div className="flex flex-col gap-3 max-h-0">{children}</div>
