@@ -1,5 +1,5 @@
 import { submitRegisterData } from "@/features/auth/actions/submit-register.action";
-import { useAuthStore } from "@/providers/store/auth.store";
+import { useAuthStore } from "@/shared/providers/store/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";

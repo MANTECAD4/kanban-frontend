@@ -7,14 +7,14 @@ import {
   FieldGroup,
   FieldLabel,
   FieldSet,
-} from "@/components/ui/field";
+} from "@/shared/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/components/ui/input-group";
-import { Button } from "@/components/ui/button";
+} from "@/shared/components/ui/input-group";
+import { Button } from "@/shared/components/ui/button";
 import { ArrowRight, Eye, EyeOff, KeyRound, Mail } from "lucide-react";
 
 export const Login = () => {

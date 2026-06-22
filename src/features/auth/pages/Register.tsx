@@ -5,15 +5,15 @@ import {
   FieldGroup,
   FieldLabel,
   FieldSet,
-} from "@/components/ui/field";
+} from "@/shared/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/components/ui/input-group";
+} from "@/shared/components/ui/input-group";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { ArrowLeft, Eye, EyeOff, KeyRound, Mail, User } from "lucide-react";
 import { useRegister } from "@/features/auth/hooks/useRegister";
 // import styles from "../styles/Register.module.css";

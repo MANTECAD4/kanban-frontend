@@ -1,11 +1,11 @@
 import { Outlet } from "react-router";
 import styles from "../styles/AuthLayout.module.css";
 
-import { cn } from "@/lib/utils";
-import { ToggleThemeButton } from "@/components/custom/ToggleThemeButton";
+import { cn } from "@/shared/lib/utils";
+import { ToggleThemeButton } from "@/shared/components/custom/ToggleThemeButton";
 
-import { Button } from "@/components/ui/button";
-import { FeatureCard } from "@/components/custom/FeatureCard";
+import { Button } from "@/shared/components/ui/button";
+import { FeatureCard } from "@/shared/components/custom/FeatureCard";
 import { Play } from "lucide-react";
 import { DragDropProvider } from "@dnd-kit/react";
 import { useAuthLayout } from "@/features/auth/hooks/useAuthLayout";

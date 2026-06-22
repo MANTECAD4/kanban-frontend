@@ -1,4 +1,4 @@
-import { kanbanBackendApi } from "@/api/kanban-backend.api";
+import { kanbanBackendApi } from "@/shared/api/kanban-backend.api";
 import type { RegisterState } from "@/features/auth/interfaces/kanban/auth.interface";
 
 export const submitRegisterData = async (registerData: RegisterState) => {

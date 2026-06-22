@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import { useAuthStore } from "@/providers/store/auth.store";
-import { useThemeStore } from "@/providers/store/theme.store";
+import { useAuthStore } from "@/shared/providers/store/auth.store";
+import { useThemeStore } from "@/shared/providers/store/theme.store";
 
 import { useLoadSessionQuery } from "@/features/auth/queries/useLoadSessionQuery";
 import { FingerprintPattern, Grip, ListTodo } from "lucide-react";
