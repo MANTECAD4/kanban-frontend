@@ -1,3 +1,4 @@
+import { AddCategoryDialog } from "@/features/projects/components/AddCategoryDialog";
 import { KanbanView } from "@/features/projects/views/KanbanView";
 import { Button } from "@/shared/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
@@ -28,10 +29,12 @@ export const ProjectBody = () => {
           </TabsList>
         </Tabs>
         <div>
-          <Button>
-            <Plus />
-            Add column
-          </Button>
+          <AddCategoryDialog className="py-5">
+            <Button>
+              <Plus />
+              Add category
+            </Button>
+          </AddCategoryDialog>
         </div>
       </div>
       <div className="h-full">

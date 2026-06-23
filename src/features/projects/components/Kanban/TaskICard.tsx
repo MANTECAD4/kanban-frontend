@@ -35,6 +35,8 @@ import {
 } from "@/shared/components/ui/dialog";
 import { Label } from "@/shared/components/ui/label";
 import { Input } from "@/shared/components/ui/input";
+import { PriorityBadge } from "@/features/projects/components/PriorityBadge";
+import { TaskPriority } from "@/features/projects/interfaces/projetc.interface";
 
 interface Props {
   columnTitle: string;
@@ -71,7 +73,7 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
           <Badge variant="outline">Web Design</Badge>
         </div>
         <Button
-          // ref={handleRef}
+          ref={handleRef}
           className="hover:cursor-grab aspect-square size-7"
           variant={"outline"}
         >
@@ -155,34 +157,7 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
             <Paperclip className="size-3" />
             <span className="text-xs">5</span>
           </div>
-          <Badge
-            className="bg-green-100 border-green-500 text-green-500"
-            variant={"outline"}
-          >
-            <Siren />
-            Low
-          </Badge>
-          {/* <Badge
-            className="bg-yellow-100 border-yellow-500 text-yellow-500"
-            variant={"outline"}
-          >
-            <Siren />
-            Medium
-          </Badge>
-          <Badge
-            className="bg-orange-100 border-orange-500 text-orange-500"
-            variant={"outline"}
-          >
-            <Siren />
-            High
-          </Badge> */}
-          {/* <Badge
-            className="bg-red-100 border-red-500 text-red-500"
-            variant={"outline"}
-          >
-            <Siren />
-            Urgent
-          </Badge> */}
+          <PriorityBadge priority={TaskPriority.LOW} />
         </div>
       </div>
     </div>

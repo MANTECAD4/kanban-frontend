@@ -374,7 +374,7 @@ const IconPicker = React.forwardRef<
                   <h3 className="font-medium text-sm capitalize">
                     {categorizedIcons[item.categoryIndex].name}
                   </h3>
-                  <div className="h-[1px] bg-foreground/10 w-full" />
+                  <div className="h-px bg-foreground/10 w-full" />
                 </div>
               );
             }
@@ -453,13 +453,13 @@ const IconPicker = React.forwardRef<
             />
           )}
           {categorized && search.trim() === "" && (
-            <div className="flex flex-row gap-1 mt-2 overflow-x-auto pb-2">
+            <div className="flex flex-row gap-1 mt-2 overflow-x-auto custom-scrollbar pb-2">
               {categoryButtons}
             </div>
           )}
           <div
             ref={parentRef}
-            className="max-h-60 overflow-auto"
+            className="max-h-60 overflow-auto custom-scrollbar"
             style={{ scrollbarWidth: "thin" }}
           >
             {isLoading ? <IconsColumnSkeleton /> : renderVirtualContent()}

@@ -7,6 +7,7 @@ import { CollisionPriority } from "@dnd-kit/abstract";
 
 import type { FC, ReactNode } from "react";
 import { cn } from "@/shared/lib/utils";
+import { AddTaskDialog } from "@/features/projects/components/AddTaskDialog";
 
 interface Props {
   title: string;
@@ -32,12 +33,14 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
         </div>
         <div className="flex items-center gap-2">
           <Badge>49 Tasks</Badge>
-          <Button
-            className="flex justify-center items-center size-8 rounded-full"
-            variant={"ghost"}
-          >
-            <Plus className="size-4" />
-          </Button>
+          <AddTaskDialog category={{ name: title }}>
+            <Button
+              className="flex justify-center items-center size-8 rounded-full"
+              variant={"ghost"}
+            >
+              <Plus className="size-4" />
+            </Button>
+          </AddTaskDialog>
         </div>
       </div>
       <div
