@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const PriorityBadge: FC<Props> = ({ priority }) => {
-  if (priority === TaskPriority.LOW) {
+  if (priority === TaskPriority.Low) {
     return (
       <Badge
         className="bg-green-100 border-green-500 text-green-500"
@@ -19,7 +19,7 @@ export const PriorityBadge: FC<Props> = ({ priority }) => {
       </Badge>
     );
   }
-  if (priority === TaskPriority.MEDIUM) {
+  if (priority === TaskPriority.Medium) {
     return (
       <Badge
         className="bg-blue-100 border-blue-500 text-blue-500"
@@ -30,7 +30,7 @@ export const PriorityBadge: FC<Props> = ({ priority }) => {
       </Badge>
     );
   }
-  if (priority === TaskPriority.HIGH) {
+  if (priority === TaskPriority.High) {
     return (
       <Badge
         className="bg-yellow-100 border-yellow-500 text-yellow-500"
@@ -41,7 +41,7 @@ export const PriorityBadge: FC<Props> = ({ priority }) => {
       </Badge>
     );
   }
-  if (priority === TaskPriority.URGENT) {
+  if (priority === TaskPriority.Urgent) {
     return (
       <Badge
         className="bg-red-100 border-red-500 text-red-500"

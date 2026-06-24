@@ -7,7 +7,7 @@ import { CollisionPriority } from "@dnd-kit/abstract";
 
 import type { FC, ReactNode } from "react";
 import { cn } from "@/shared/lib/utils";
-import { AddTaskDialog } from "@/features/projects/components/AddTaskDialog";
+import { AddTaskDialog } from "@/features/projects/components/add-task/AddTaskDialog";
 
 interface Props {
   title: string;

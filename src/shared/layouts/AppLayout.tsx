@@ -9,12 +9,10 @@ import { Outlet } from "react-router";
 export const AppLayout = () => {
   return (
     <>
-      <SidebarProvider>
-        <AppSidebar variant="floating" />
-        <main className="w-full">
-          <Outlet />
-        </main>
-      </SidebarProvider>
+      <AppSidebar variant="floating" />
+      <main className="w-full">
+        <Outlet />
+      </main>
     </>
   );
 };

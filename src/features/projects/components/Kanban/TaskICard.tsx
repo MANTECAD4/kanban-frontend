@@ -157,7 +157,7 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
             <Paperclip className="size-3" />
             <span className="text-xs">5</span>
           </div>
-          <PriorityBadge priority={TaskPriority.LOW} />
+          <PriorityBadge priority={TaskPriority.Low} />
         </div>
       </div>
     </div>
