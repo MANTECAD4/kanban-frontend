@@ -39,14 +39,18 @@ export const AddTaskForm = () => {
 
       <div className="grid grid-cols-2 gap-2">
         <Field className="">
+          <Label htmlFor="start-date">Start date</Label>
+          <DueDateInput />
+        </Field>
+        <Field className="">
           <Label htmlFor="due-date">Due date</Label>
           <DueDateInput />
         </Field>
 
-        <Field className="">
+        {/* <Field className="">
           <Label htmlFor="asigness">Assignees</Label>
           <EditAssigneesFIeld />
-        </Field>
+        </Field> */}
       </div>
       <div className="flex flex-col gap-2 mt-2">
         <Label htmlFor="priority">Task priority</Label>

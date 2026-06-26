@@ -20,6 +20,7 @@ import {
   MoveRight,
   MoveUpRight,
   Paperclip,
+  Pencil,
   Siren,
   SquareMousePointer,
 } from "lucide-react";
@@ -83,9 +84,9 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
       <div className="flex items-center gap-1">
         <Dialog>
           <DialogTrigger asChild>
-            <h3 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
+            <h2 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
               {title}
-            </h3>
+            </h2>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
@@ -131,7 +132,23 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
         <Progress value={40} id="progress-upload" />
       </Field>
       <div className="flex justify-between mt-5">
-        <AvatarGroup className="grayscale">
+        <div className="flex gap-2 items-center ">
+          <PriorityBadge priority={TaskPriority.Low} />
+          <div className="flex items-center gap-1">
+            <Paperclip className="size-3" />
+            <span className="text-xs">5</span>
+          </div>
+        </div>
+        <Button variant="outline">
+          <Pencil /> Edit
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+{
+  /* <AvatarGroup className="grayscale">
           <Avatar size="sm">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
@@ -151,15 +168,5 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
             <AvatarFallback>ER</AvatarFallback>
           </Avatar>
           <AvatarGroupCount>+3</AvatarGroupCount>
-        </AvatarGroup>
-        <div className="flex gap-2 items-center ">
-          <div className="flex items-center gap-1">
-            <Paperclip className="size-3" />
-            <span className="text-xs">5</span>
-          </div>
-          <PriorityBadge priority={TaskPriority.Low} />
-        </div>
-      </div>
-    </div>
-  );
-};
+        </AvatarGroup> */
+}

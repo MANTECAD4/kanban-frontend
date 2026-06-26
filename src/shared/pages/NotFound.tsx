@@ -20,11 +20,11 @@ export const NotFound = () => {
       className={cn(
         styles.screen,
         theme === "dark" ? styles["dark-mode"] : styles["ligth-mode"],
-        `min-h-dvh flex items-center`,
+        `w-full min-h-dvh flex items-center `,
       )}
     >
       <ToggleThemeButton />
-      <div className=" w-full flex  flex-col gap-4 items-center">
+      <div className="w-full  flex  flex-col gap-4 items-center">
         <img
           src="/illustrations/lost.svg"
           alt="Page not found"

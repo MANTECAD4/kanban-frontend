@@ -10,7 +10,7 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { cn } from "@/shared/lib/utils";
-import type { LucideProps, LucideIcon } from "lucide-react";
+import { type LucideProps, type LucideIcon, Sparkles } from "lucide-react";
 import {
   DynamicIcon,
   dynamicIconImports,
@@ -439,7 +439,10 @@ const IconPicker = React.forwardRef<
                   {value || selectedIcon}
                 </>
               ) : (
-                triggerPlaceholder
+                <>
+                  <Sparkles />
+                  {triggerPlaceholder}
+                </>
               )}
             </Button>
           )}

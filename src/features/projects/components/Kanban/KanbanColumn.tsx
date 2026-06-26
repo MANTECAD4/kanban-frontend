@@ -22,7 +22,7 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
     collisionPriority: CollisionPriority.Low,
   });
   return (
-    <div className={cn("flex flex-col w-80 p-2 shrink-0 ")}>
+    <div className={cn("flex flex-col w-75  shrink-0 ")}>
       <div className="flex justify-between p-1 my-2 border border-gray-200 dark:border-gray-700 rounded-lg">
         <div className="flex items-center gap-2">
           <DynamicIcon
@@ -32,7 +32,7 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
           <h2 className="text-sm font-semibold">{title}</h2>
         </div>
         <div className="flex items-center gap-2">
-          <Badge>49 Tasks</Badge>
+          <Badge variant={"outline"}>49 Tasks</Badge>
           <AddTaskDialog category={{ name: title }}>
             <Button
               className="flex justify-center items-center size-8 rounded-full"
@@ -49,7 +49,7 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
           "mt-3 h-full overflow-y-scroll custom-scrollbar--transparent ",
         )}
       >
-        <div className="flex flex-col gap-3 max-h-0">{children}</div>
+        <div className="flex flex-col gap-3 max-h-10">{children}</div>
         {/* </div> */}
       </div>
     </div>

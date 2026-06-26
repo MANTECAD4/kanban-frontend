@@ -1,9 +1,11 @@
+import { useState } from "react";
+
 import { AddCategoryDialog } from "@/features/projects/components/AddCategoryDialog";
 import { KanbanView } from "@/features/projects/views/KanbanView";
+import { ListView } from "@/features/projects/views/ListView";
 import { Button } from "@/shared/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { Kanban, ListTree, Plus } from "lucide-react";
-import { useState } from "react";
 
 export const ProjectBody = () => {
   const [tasksView, setTasksView] = useState<string>("kanban");
@@ -18,11 +20,17 @@ export const ProjectBody = () => {
           }}
         >
           <TabsList variant={"line"}>
-            <TabsTrigger className="w-25 pb-3 text-sm" value="kanban">
+            <TabsTrigger
+              className="w-25 py-4 text-sm cursor-pointer"
+              value="kanban"
+            >
               <Kanban />
               Kanban
             </TabsTrigger>
-            <TabsTrigger className="w-25 pb-3 text-sm" value="list">
+            <TabsTrigger
+              className="w-25 py-4 text-sm cursor-pointer"
+              value="list"
+            >
               <ListTree />
               List
             </TabsTrigger>
@@ -37,8 +45,8 @@ export const ProjectBody = () => {
           </AddCategoryDialog>
         </div>
       </div>
-      <div className="h-full">
-        {tasksView === "kanban" ? <KanbanView /> : <div>list</div>}
+      <div className="h-full p-2">
+        {tasksView === "kanban" ? <KanbanView /> : <ListView />}
       </div>
     </>
   );

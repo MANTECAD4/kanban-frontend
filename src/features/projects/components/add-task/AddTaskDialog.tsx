@@ -1,54 +1,18 @@
 import { useState, type FC, type ReactNode } from "react";
 
-import { DueDateInput } from "@/features/projects/components/add-task/DueDateInput";
-import { EditAssigneesFIeld } from "@/features/projects/components/add-task/EditAssigneesFIeld";
-import { TagsSelector } from "@/features/projects/components/add-task/TagsSelector";
-
-import { TaskPriority } from "@/features/projects/interfaces/projetc.interface";
 import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
-import {
-  Field,
-  FieldContent,
-  FieldGroup,
-  FieldLabel,
-} from "@/shared/components/ui/field";
-import { Input } from "@/shared/components/ui/input";
-import { Label } from "@/shared/components/ui/label";
-import { Textarea } from "@/shared/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/shared/components/ui/radio-group";
 
-import {
-  ArrowLeft,
-  ArrowRight,
-  ChevronsUpDown,
-  ListTodo,
-  NotepadText,
-} from "lucide-react";
-import { SubtasksPopover } from "@/features/projects/components/add-task/SubtasksPopover";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/shared/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components/ui/card";
-import { Pattern } from "@/components/examples/c-stepper-7";
 import { AddTaskForm } from "@/features/projects/components/add-task/AddTaskForm";
+import { ManageSubtasksForm } from "@/features/projects/components/add-task/ManageSubtasksForm";
+
 import {
   Stepper,
   StepperContent,
@@ -60,7 +24,7 @@ import {
   StepperTitle,
   StepperTrigger,
 } from "@/shared/components/reui/stepper";
-import { ManageSubtasksForm } from "@/features/projects/components/add-task/ManageSubtasksForm";
+import { ArrowLeft, ArrowRight, ListTodo, NotepadText } from "lucide-react";
 
 interface Props {
   children: ReactNode;
@@ -154,6 +118,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
           <DialogFooter className="">
             <Button
               type="submit"
+              //@ts-expect-error
               disabled={stepperPage <= 1}
               onClick={handleBackBtn}
             >

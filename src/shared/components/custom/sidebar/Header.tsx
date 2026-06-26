@@ -1,4 +1,4 @@
-import { AddProjectPopover } from "@/features/projects/components/AddProjectPopover";
+import { AddProjectDialog } from "@/features/projects/components/AddProjectDIalog";
 
 import { SidebarMenuButton } from "@/shared/components/ui/sidebar";
 import { FolderKanban, Kanban, Plus } from "lucide-react";
@@ -14,13 +14,13 @@ export const Header = () => {
           <span className="truncate text-lg font-semibold">My Kanban</span>
         </div>
       </div>
-      <AddProjectPopover>
+      <AddProjectDialog>
         {/* Trigger Element as children*/}
         <SidebarMenuButton className="flex bg-primary-sidebar cursor-pointer truncate">
           <Plus />
           <p className="">Create project</p>
         </SidebarMenuButton>
-      </AddProjectPopover>
+      </AddProjectDialog>
     </>
   );
 };
