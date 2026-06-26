@@ -63,7 +63,7 @@ export const EditAssigneesFIeld = () => {
         </Avatar>
         <AvatarGroupCount className="text-foreground/80">+3</AvatarGroupCount>
       </AvatarGroup>
-      <Popover>
+      <Popover modal>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
@@ -72,7 +72,7 @@ export const EditAssigneesFIeld = () => {
             <Pencil />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="center" side="bottom">
+        <PopoverContent className="w-auto p-0" align="end" side="bottom">
           <Command className=" min-w-70 rounded-lg border">
             <CommandInput placeholder="Type someone's name..." />
             <CommandList>

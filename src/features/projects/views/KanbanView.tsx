@@ -1,9 +1,9 @@
 import { DragDropProvider } from "@dnd-kit/react";
-import { TaskCard } from "@/features/projects/components/Kanban/TaskICard";
+import { TaskCard } from "@/features/projects/components/kanban/TaskICard";
 import { useMemo, useState } from "react";
 import { move } from "@dnd-kit/helpers";
-import { KanbanColumn } from "@/features/projects/components/Kanban/KanbanColumn";
-import { AddTaskPlaceholder } from "@/features/projects/components/Kanban/AddTaskPlaceholder";
+import { KanbanColumn } from "@/features/projects/components/kanban/KanbanColumn";
+import { AddTaskPlaceholder } from "@/features/projects/components/kanban/AddTaskPlaceholder";
 
 const columns = [
   {

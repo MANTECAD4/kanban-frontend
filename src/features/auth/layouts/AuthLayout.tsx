@@ -17,7 +17,7 @@ export const AuthLayout = () => {
       className={cn(
         styles["layout"],
         theme === "dark" ? styles["dark-mode"] : styles["light-mode"],
-        " min-h-dvh flex items-center justify-around",
+        "w-full min-h-dvh flex items-center justify-around",
       )}
     >
       <ToggleThemeButton />

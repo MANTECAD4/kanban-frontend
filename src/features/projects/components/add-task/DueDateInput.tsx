@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { format } from "date-fns";
 import {
   Popover,
@@ -8,6 +8,10 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/shared/components/ui/calendar";
+
+interface Props {
+  children: ReactNode;
+}
 
 export const DueDateInput = () => {
   const [date, setDate] = useState<Date>();
