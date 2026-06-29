@@ -2,11 +2,11 @@ import "./index.css";
 import { RouterProvider } from "react-router";
 import { Toaster } from "sonner";
 import { DragDropProvider } from "@dnd-kit/react";
-import { TanstackProvider } from "@/shared/providers/tanstack/TanstackProvider";
-import { TooltipProvider } from "@/shared/components/ui/tooltip";
-import { appRouter } from "@/shared/providers/router/Router";
-import { ThemeProvider } from "@/shared/providers/theme/ThemeProvider";
-import { SidebarProvider } from "@/shared/components/ui/sidebar";
+import { TanstackProvider } from "@/providers/tanstack/TanstackProvider";
+import { TooltipProvider } from "@/components/shared/ui/tooltip";
+import { appRouter } from "@/providers/router/Router";
+import { ThemeProvider } from "@/providers/theme/ThemeProvider";
+import { SidebarProvider } from "@/components//shared/ui/sidebar";
 
 function App() {
   return (

@@ -1,0 +1,6 @@
+import type { LoginSchema } from "@/schemas/auth/login.schema";
+import type { RegisterSchema } from "@/schemas/auth/register.schema";
+import type z from "zod";
+
+export type RegisterState = z.infer<typeof RegisterSchema>;
+export type LoginState = z.infer<typeof LoginSchema>;
