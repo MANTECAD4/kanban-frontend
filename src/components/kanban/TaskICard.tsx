@@ -7,7 +7,13 @@ import { Button } from "@/components/shared/ui/button";
 import { Field, FieldLabel } from "@/components/shared/ui/field";
 import { Progress } from "@/components/shared/ui/progress";
 
-import { CalendarClock, Grip, Paperclip, Pencil } from "lucide-react";
+import {
+  CalendarClock,
+  ChevronRight,
+  Grip,
+  Paperclip,
+  Pencil,
+} from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -22,6 +28,7 @@ import { Label } from "@/components/shared/ui/label";
 import { Input } from "@/components/shared/ui/input";
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
 import { TaskPriority } from "@/interfaces/projetc.interface";
+import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 
 interface Props {
   columnTitle: string;
@@ -66,38 +73,9 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
         </Button>
       </div>
       <div className="flex items-center gap-1">
-        <Dialog>
-          <DialogTrigger asChild>
-            <h2 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
-              {title}
-            </h2>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
-              <DialogDescription>
-                Anyone who has this link will be able to view this.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="flex items-center gap-2">
-              <div className="grid flex-1 gap-2">
-                <Label htmlFor="link" className="sr-only">
-                  Link
-                </Label>
-                <Input
-                  id="link"
-                  defaultValue="https://ui.shadcn.com/docs/installation"
-                  readOnly
-                />
-              </div>
-            </div>
-            <DialogFooter className="sm:justify-start">
-              <DialogClose asChild>
-                <Button type="button">Inspect</Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <h2 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
+          {title}
+        </h2>
       </div>
       <div className="flex gap-2 mt-2">
         <div className="flex items-center gap-1">
@@ -123,9 +101,12 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
             <span className="text-xs">5</span>
           </div>
         </div>
-        <Button variant="outline">
-          <Pencil /> Edit
-        </Button>
+        <AddTaskDialog category={{ name: "lol" }}>
+          <Button variant="outline" className="">
+            <ChevronRight />
+            Inspect
+          </Button>
+        </AddTaskDialog>
       </div>
     </div>
   );

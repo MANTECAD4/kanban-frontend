@@ -2,7 +2,7 @@ import { DragDropProvider } from "@dnd-kit/react";
 import { useMemo, useState } from "react";
 import { move } from "@dnd-kit/helpers";
 import { KanbanColumn } from "@/components/kanban/KanbanColumn";
-import { TaskCard } from "@/components/task/TaskICard";
+import { TaskCard } from "@/components/kanban/TaskICard";
 
 const columns = [
   {

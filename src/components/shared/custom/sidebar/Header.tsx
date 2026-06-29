@@ -1,4 +1,4 @@
-import { AddProjectDialog } from "@/components/project/AddProjectDIalog";
+import { AddProjectDialog } from "@/components/project/AddProjectDialog";
 
 import { SidebarMenuButton } from "@/components/shared/ui/sidebar";
 import { FolderKanban, Kanban, Plus } from "lucide-react";

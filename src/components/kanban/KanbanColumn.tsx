@@ -21,7 +21,7 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
     collisionPriority: CollisionPriority.Low,
   });
   return (
-    <div className={cn("flex flex-col w-75  shrink-0 ")}>
+    <div className={cn("flex flex-col w-78  shrink-0 ")}>
       <div className="flex justify-between bg-background p-1 my-2 border border-gray-200 dark:border-gray-700 rounded-lg">
         <div className="flex items-center gap-2">
           <DynamicIcon
@@ -45,10 +45,10 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
       <div
         ref={ref}
         className={cn(
-          "mt-3 h-full overflow-y-scroll custom-scrollbar--transparent ",
+          "mt-3 h-full overflow-y-scroll custom-scrollbar--transparent",
         )}
       >
-        <div className="flex flex-col gap-3 max-h-10">{children}</div>
+        <div className="flex flex-col gap-3 max-h-10 pr-1">{children}</div>
         {/* </div> */}
       </div>
     </div>
