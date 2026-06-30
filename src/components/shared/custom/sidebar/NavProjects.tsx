@@ -15,6 +15,9 @@ import {
 } from "@/components/shared/ui/sidebar";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { DynamicIcon } from "lucide-react/dynamic";
+import { ChevronRight } from "lucide-react";
+import { Button } from "@/components/shared/ui/button";
 
 export function NavProjects({
   items,
@@ -42,17 +45,20 @@ export function NavProjects({
             className="group/collapsible"
           >
             <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon}
-                  <span>{item.title}</span>
-                  <HugeiconsIcon
-                    icon={ArrowRight01Icon}
-                    strokeWidth={2}
-                    className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
-                  />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
+              <div className="flex justify-between  text-xs font-semibold px-2 py-1">
+                <div className="flex gap-2 items-center">
+                  <DynamicIcon name="ad" className="size-5" />
+                  <p className="hover:underline cursor-pointer">{item.title}</p>
+                </div>
+                <CollapsibleTrigger asChild>
+                  <Button
+                    variant={"ghost"}
+                    className="aspect-square size-6 rounded-full"
+                  >
+                    <ChevronRight className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
               <CollapsibleContent>
                 <SidebarMenuSub>
                   {item.items?.map((subItem) => (
