@@ -3,6 +3,7 @@ import {
   IconColor,
   type CreateProjectState,
 } from "@/interfaces/project.dto";
+import { useSubmitProjectQuery } from "@/queries/project/useSubmitProjectQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { IconName } from "lucide-react/dynamic";
 import { useState } from "react";
@@ -67,9 +68,6 @@ const colors: Record<string, IconColorComponents> = {
 };
 3;
 export const useAddProject = () => {
-  const [selectedColor, setSelectedColor] = useState<string>("red");
-  const [selectedIcon, setSelectedIcon] = useState<IconName>("folder-kanban");
-
   const {
     register,
     reset,
@@ -81,23 +79,20 @@ export const useAddProject = () => {
     defaultValues: {
       name: "",
       description: "",
-      icon: "cat",
+      icon: "folder",
       iconColor: IconColor.RED,
     },
   });
+  const submitProjectQuery = useSubmitProjectQuery();
 
   const onSubmitForm: SubmitHandler<CreateProjectState> = (data) => {
-    console.log({ data });
+    submitProjectQuery.mutate(data);
   };
 
   return {
-    selectedColor,
-    selectedIcon,
     colors,
     errors,
     control,
-    setSelectedColor,
-    setSelectedIcon,
     onSubmitForm,
     register,
     handleSubmit,

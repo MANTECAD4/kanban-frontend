@@ -4,3 +4,16 @@ export enum TaskPriority {
   High = "HIGH",
   Urgent = "URGENT",
 }
+export interface CreateProjectResponse {
+  ok: boolean;
+  message: string;
+  project: Project;
+}
+
+interface Project {
+  id: number;
+  name: string;
+  description: string;
+  icon: string;
+  iconColor: string;
+}
