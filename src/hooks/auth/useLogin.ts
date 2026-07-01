@@ -10,7 +10,6 @@ export const useLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
-    trigger,
   } = useForm<LoginState>({
     resolver: zodResolver(LoginSchema),
   });

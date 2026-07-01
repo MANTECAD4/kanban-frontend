@@ -18,6 +18,7 @@ import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/shared/ui/button";
+import { Link } from "react-router";
 
 export function NavProjects({
   items,
@@ -48,7 +49,12 @@ export function NavProjects({
               <div className="flex justify-between  text-xs font-semibold px-2 py-1">
                 <div className="flex gap-2 items-center">
                   <DynamicIcon name="ad" className="size-5" />
-                  <p className="hover:underline cursor-pointer">{item.title}</p>
+                  <Link
+                    to={item.url}
+                    className="hover:underline cursor-pointer"
+                  >
+                    {item.title}
+                  </Link>
                 </div>
                 <CollapsibleTrigger asChild>
                   <Button
@@ -64,9 +70,9 @@ export function NavProjects({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link to={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

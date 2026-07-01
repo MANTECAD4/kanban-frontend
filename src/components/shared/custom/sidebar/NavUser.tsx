@@ -29,15 +29,7 @@ import { useAuthStore } from "@/providers/store/auth.store";
 import { Moon, Settings, Sun } from "lucide-react";
 import { useThemeStore } from "@/providers/store/theme.store";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar();
   const userName = useAuthStore((state) => state.name);
   const email = useAuthStore((state) => state.email);
@@ -74,7 +66,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={"user.avatar"} alt={"nanel"} />
                   <AvatarFallback className="rounded-lg text-foreground/80">
                     CN
                   </AvatarFallback>

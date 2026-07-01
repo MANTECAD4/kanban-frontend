@@ -24,10 +24,14 @@ export const appRouter = createBrowserRouter([
     path: "/",
     element: <PrivateRoute element={<AppLayout />} />,
     children: [
-      { index: true, element: <BoardPage /> },
+      { index: true, element: <div>dashboard</div> },
       {
-        path: "project",
+        path: "projects/:projectName",
         element: <ProjectPage />,
+      },
+      {
+        path: "boards/:boardName",
+        element: <BoardPage />,
       },
     ],
   },
