@@ -10,10 +10,18 @@ export interface CreateProjectResponse {
   project: Project;
 }
 
-interface Project {
+export interface GetProjectsResponse {
+  ok: boolean;
+  message: string;
+  projects: Project[];
+}
+
+export interface Project {
   id: number;
   name: string;
   description: string;
   icon: string;
   iconColor: string;
+  slug: string;
+  boards: null;
 }

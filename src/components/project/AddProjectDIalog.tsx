@@ -22,7 +22,7 @@ import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
 import { useAddProject } from "@/hooks/project/useAddProject";
 import { Palette } from "lucide-react";
-import { IconColor } from "@/interfaces/project.dto";
+import { IconColor } from "@/dtos/project.dto";
 import { Controller } from "react-hook-form";
 
 interface Props {

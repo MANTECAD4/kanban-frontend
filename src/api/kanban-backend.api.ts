@@ -8,6 +8,7 @@ export const kanbanBackendApi = axios.create({
 
 kanbanBackendApi.interceptors.request.use(
   (config) => {
+    // throw "lol";
     const token = useAuthStore.getState().accessToken;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -22,3 +23,21 @@ kanbanBackendApi.interceptors.request.use(
 // kanbanBackendApi.interceptors.request.use((config) =>{
 //   const token
 // });
+kanbanBackendApi.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.ChartConfig;
+
+    // if(error.response.status === 401 && error!originalRequest._retry){
+    //   try {
+    //     const
+    //   } catch (error) {
+
+    //   }
+    // }
+
+    return Promise.reject(error);
+  },
+);

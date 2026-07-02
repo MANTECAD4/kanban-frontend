@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
-import { Plus } from "lucide-react";
+import { Kanban, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { Badge } from "@/components/shared/ui/badge";
@@ -45,9 +45,12 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
       <div
         ref={ref}
         className={cn(
-          "mt-3 h-full overflow-y-scroll custom-scrollbar--transparent",
+          "relative mt-3 h-full overflow-y-scroll custom-scrollbar--transparent",
         )}
       >
+        <div className="absolute top-1/2 left-1/2 -z-10 -translate-1/2 flex flex-col items-center gap-3 text-muted-foreground">
+          <Kanban className=" size-20 stroke-muted-foreground" />
+        </div>
         <div className="flex flex-col gap-3 max-h-10 pr-1">{children}</div>
         {/* </div> */}
       </div>

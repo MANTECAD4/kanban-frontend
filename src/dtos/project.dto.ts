@@ -15,8 +15,16 @@ export enum IconColor {
 }
 
 export const CreateProjectSchema = z.object({
-  name: z.string().min(3),
-  description: z.string().nonempty(),
+  name: z
+    .string()
+    .trim()
+    .min(3)
+    .transform((value) => value.replace(/\s+/g, " ")),
+  description: z
+    .string()
+    .trim()
+    .nonempty()
+    .transform((value) => value.replace(/\s+/g, " ")),
   icon: z.enum(iconNames, { error: "Select a valid icon" }),
   iconColor: z.enum(IconColor, { error: "Pick a valid color" }),
 });

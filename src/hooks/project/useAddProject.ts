@@ -2,8 +2,9 @@ import {
   CreateProjectSchema,
   IconColor,
   type CreateProjectState,
-} from "@/interfaces/project.dto";
+} from "@/dtos/project.dto";
 import { useSubmitProjectQuery } from "@/queries/project/useSubmitProjectQuery";
+import { getSlugFromName } from "@/utils/getSlugFromName";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { IconName } from "lucide-react/dynamic";
 import { useState } from "react";
@@ -86,7 +87,8 @@ export const useAddProject = () => {
   const submitProjectQuery = useSubmitProjectQuery();
 
   const onSubmitForm: SubmitHandler<CreateProjectState> = (data) => {
-    submitProjectQuery.mutate(data);
+    const slug = getSlugFromName(data.name);
+    submitProjectQuery.mutate({ ...data, slug });
   };
 
   return {
