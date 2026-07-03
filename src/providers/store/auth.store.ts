@@ -12,6 +12,7 @@ interface AuthProps {
 
 interface AuthActions {
   setSession: (sessionProps: Omit<AuthProps, "authStatus">) => void;
+  setAccessToken: (token: string) => void;
   clearSession: () => void;
 }
 
@@ -27,6 +28,8 @@ const storeApi: StateCreator<AuthState, [["zustand/devtools", never]]> = (
   email: null,
   setSession: (sessionProps) =>
     set({ authStatus: "authenticated", ...sessionProps }, false, "setSession"),
+  setAccessToken: (token: string) =>
+    set({ accessToken: token }, false, "setAccessToken"),
   clearSession: () =>
     set(
       {

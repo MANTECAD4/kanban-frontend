@@ -1,7 +1,6 @@
 import { createProjectAction } from "@/actions/project/create-project.action";
-import { getApiError } from "@/utils/getApiError";
+import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -15,6 +14,7 @@ export const useSubmitProjectQuery = () => {
         project: { name },
       } = data;
       toast.success(message);
+      kanbanQueryClient.invalidateQueries({ queryKey: ["projects"] });
       navigate(`/projects/${name}`);
     },
     onError: (error) => {

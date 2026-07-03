@@ -15,8 +15,11 @@ type Props = {
   children: ReactNode;
 };
 
-export const queryClient = new QueryClient({
-  defaultOptions: { mutations: { retry: false }, queries: { retry: false } },
+export const kanbanQueryClient = new QueryClient({
+  defaultOptions: {
+    mutations: { retry: false },
+    queries: { staleTime: 1000 * 60 * 60, retry: false },
+  },
   queryCache: new QueryCache({
     onError: (error) => {
       const { title, message } = getApiError(error);
@@ -32,7 +35,7 @@ export const queryClient = new QueryClient({
 });
 export const TanstackProvider: FC<Props> = ({ children }) => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={kanbanQueryClient}>
       {/* App.tsx */}
       {children}
 

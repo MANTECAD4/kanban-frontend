@@ -3,6 +3,7 @@ import {
   IconColor,
   type CreateProjectState,
 } from "@/dtos/project.dto";
+import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
 import { useSubmitProjectQuery } from "@/queries/project/useSubmitProjectQuery";
 import { getSlugFromName } from "@/utils/getSlugFromName";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +16,7 @@ interface IconColorComponents {
   stroke: string;
   border: string;
 }
+
 const colors: Record<string, IconColorComponents> = {
   RED: {
     bg: "bg-red-600/20",
@@ -67,7 +69,7 @@ const colors: Record<string, IconColorComponents> = {
     border: "border-gray-600",
   },
 };
-3;
+
 export const useAddProject = () => {
   const {
     register,
@@ -86,7 +88,7 @@ export const useAddProject = () => {
   });
   const submitProjectQuery = useSubmitProjectQuery();
 
-  const onSubmitForm: SubmitHandler<CreateProjectState> = (data) => {
+  const onSubmitForm: SubmitHandler<CreateProjectState> = async (data) => {
     const slug = getSlugFromName(data.name);
     submitProjectQuery.mutate({ ...data, slug });
   };

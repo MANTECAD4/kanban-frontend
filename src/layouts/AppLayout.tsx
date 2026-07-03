@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/shared/custom/sidebar/AppSidebar";
+import { AppSidebar } from "@/components/sidebar/AppSidebar";
 
 import { Outlet } from "react-router";
 

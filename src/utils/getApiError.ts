@@ -24,7 +24,8 @@ export const getApiError = (error: any) => {
       message = "Try again later";
     }
   } else {
-    title = "Oops";
+    console.log({ error });
+    title = "Oopbbbbbbs";
     message = "Something went wrong. Try again later";
   }
   return { title, message };

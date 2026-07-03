@@ -1,7 +1,8 @@
-import { kanbanBackendApi } from "@/api/kanban-backend.api";
+import { kanbanApplicationApi } from "@/api/kanban-application.api";
 import type { GetProjectsResponse } from "@/interfaces/projetc.interface";
 
 export const getUserProjectsAction = async () => {
-  const { data } = await kanbanBackendApi.get<GetProjectsResponse>("/projects");
+  const { data } =
+    await kanbanApplicationApi.get<GetProjectsResponse>("/projects");
   return data;
 };
