@@ -26,11 +26,11 @@ export const appRouter = createBrowserRouter([
     children: [
       { index: true, element: <div>dashboard</div> },
       {
-        path: "projects/:projectName",
+        path: "projects/:projectSlug",
         element: <ProjectPage />,
       },
       {
-        path: "boards/:boardName",
+        path: "boards/:boardSlug",
         element: <BoardPage />,
       },
     ],

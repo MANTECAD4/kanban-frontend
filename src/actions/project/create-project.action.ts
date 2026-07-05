@@ -1,8 +1,8 @@
 import { kanbanApplicationApi } from "@/api/kanban-application.api";
-import type { CreateProjectState } from "@/dtos/project.dto";
-import type { CreateProjectResponse } from "@/interfaces/projetc.interface";
+import type { SubmitProjectState } from "@/dtos/project.dto";
+import type { CreateProjectResponse } from "@/interfaces/project.interface";
 
-export type CreateProjectSubmitData = CreateProjectState & { slug: string };
+export type CreateProjectSubmitData = SubmitProjectState & { slug: string };
 export const createProjectAction = async (
   sumbitData: CreateProjectSubmitData,
 ) => {

@@ -27,7 +27,7 @@ import {
 import { Label } from "@/components/shared/ui/label";
 import { Input } from "@/components/shared/ui/input";
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
-import { TaskPriority } from "@/interfaces/projetc.interface";
+import { TaskPriority } from "@/interfaces/project.interface";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 
 interface Props {

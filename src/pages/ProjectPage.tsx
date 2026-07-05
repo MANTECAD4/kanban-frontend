@@ -1,39 +1,75 @@
 import { AddBoardDialog } from "@/components/board/AddBoardDialog";
 import { BoardItemCard } from "@/components/project/BoardItemCard";
+import { DeleteProjectDialog } from "@/components/project/DeleteProjectDialog";
 import { EditProjectDialog } from "@/components/project/EditBoardDialog";
 import { RecentActivityCard } from "@/components/project/RecentActivityCard";
 import { TasksChart } from "@/components/project/TasksChart";
 import { UpcomingDates } from "@/components/project/UpcomingDates";
 import { Button } from "@/components/shared/ui/button";
+import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Separator } from "@/components/shared/ui/separator";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
-import { LayoutGrid, Pencil, Plus, Rocket, StickyNotePlus } from "lucide-react";
+import { useProject } from "@/hooks/project/useProject";
+import { cn } from "@/lib/utils";
+import { colors } from "@/utils/icon-colors";
+import {
+  LayoutGrid,
+  Pencil,
+  Plus,
+  Rocket,
+  Settings,
+  StickyNotePlus,
+  Trash,
+} from "lucide-react";
+import { DynamicIcon } from "lucide-react/dynamic";
+import { useParams } from "react-router";
 
 export const ProjectPage = () => {
+  const {
+    getProjectBySlugQuery: { data },
+  } = useProject();
+  if (!data) return;
   return (
     <div className=" flex flex-col h-full pl-2 pr-4  pb-10">
       <div className="bg-background backdrop-blur-xs pt-4">
         <SidebarTrigger className="" />
-        <div className="flex justify-between mb-4">
+        <div className="flex justify-between items-center mb-4">
           <div className="flex gap-4 items-center">
-            <div className="flex justify-center items-center size-12 border-2 rounded-lg bg-sky-700/20 border-sky-700">
-              <Rocket className="stroke-sky-700" />
+            <div
+              className={cn(
+                colors[data.project.iconColor].bg,
+                colors[data.project.iconColor].border,
+                "flex justify-center items-center size-12 border rounded-lg",
+              )}
+            >
+              <DynamicIcon
+                name={data.project.icon}
+                className={cn(colors[data.project.iconColor].stroke)}
+              />
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-3xl font-semibold">Kanban Application</h1>
+              <h1 className="text-3xl font-semibold">{data.project.name}</h1>
               <p className="text-sm text-muted-foreground">
-                A simple, intuitive fullstack application for task management!
+                {data.project.description}
               </p>
             </div>
           </div>
           <div className="flex gap-3">
-            <EditProjectDialog>
-              <Button>
-                <Pencil />
-              </Button>
-            </EditProjectDialog>
+            <ButtonGroup>
+              <DeleteProjectDialog project={data.project}>
+                <Button variant={"outline"} title="Delete project">
+                  <Trash />
+                </Button>
+              </DeleteProjectDialog>
+
+              <EditProjectDialog project={data.project}>
+                <Button variant={"outline"} title="Edit project data">
+                  <Pencil />
+                </Button>
+              </EditProjectDialog>
+            </ButtonGroup>
             <AddBoardDialog>
-              <Button>
+              <Button variant={"default"}>
                 <Plus /> New Board
               </Button>
             </AddBoardDialog>

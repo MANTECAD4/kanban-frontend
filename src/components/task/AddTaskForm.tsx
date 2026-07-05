@@ -1,6 +1,6 @@
 import { DueDateInput } from "@/components/task/DueDateInput";
 import { TagsSelector } from "@/components/task/TagsSelector";
-import { TaskPriority } from "@/interfaces/projetc.interface";
+import { TaskPriority } from "@/interfaces/project.interface";
 import {
   Field,
   FieldContent,

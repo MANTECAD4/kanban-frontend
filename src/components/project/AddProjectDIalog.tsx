@@ -24,6 +24,7 @@ import { useAddProject } from "@/hooks/project/useAddProject";
 import { Palette } from "lucide-react";
 import { IconColor } from "@/dtos/project.dto";
 import { Controller } from "react-hook-form";
+import { colors } from "@/utils/icon-colors";
 
 interface Props {
   children: ReactNode;
@@ -35,15 +36,8 @@ export const AddProjectDialog: FC<AddProjectDialogProps> = ({
   children,
   ...props
 }) => {
-  const {
-    colors,
-    errors,
-    onSubmitForm,
-    register,
-    reset,
-    handleSubmit,
-    control,
-  } = useAddProject();
+  const { errors, onSubmitForm, register, reset, handleSubmit, control } =
+    useAddProject();
   return (
     <Dialog {...props} onOpenChange={() => reset()}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -118,7 +112,7 @@ export const AddProjectDialog: FC<AddProjectDialogProps> = ({
                   </FieldDescription>
                 )}
               </Field>
-              <Field datatype-invalid={Boolean(errors.iconColor)}>
+              <Field data-invalid={Boolean(errors.iconColor)}>
                 <FieldLabel>Icon color</FieldLabel>
                 <Controller
                   control={control}

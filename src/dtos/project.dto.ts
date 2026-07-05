@@ -14,7 +14,9 @@ export enum IconColor {
   GRAY = "GRAY",
 }
 
-export const CreateProjectSchema = z.object({
+export const ProjectSchema = z.object({
+  id: z.number().int().min(1),
+  slug: z.string().nonempty(),
   name: z
     .string()
     .trim()
@@ -29,4 +31,7 @@ export const CreateProjectSchema = z.object({
   iconColor: z.enum(IconColor, { error: "Pick a valid color" }),
 });
 
-export type CreateProjectState = z.infer<typeof CreateProjectSchema>;
+export type Project = z.infer<typeof ProjectSchema>;
+
+export const SubmitProjectSchema = ProjectSchema.omit({ id: true, slug: true });
+export type SubmitProjectState = z.infer<typeof SubmitProjectSchema>;

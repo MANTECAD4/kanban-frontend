@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Badge } from "@/components/shared/ui/badge";
 import { Siren } from "lucide-react";
-import { TaskPriority } from "@/interfaces/projetc.interface";
+import { TaskPriority } from "@/interfaces/project.interface";
 
 interface Props {
   priority: TaskPriority;

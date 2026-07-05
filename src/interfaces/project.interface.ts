@@ -1,3 +1,5 @@
+import type { Project } from "@/dtos/project.dto";
+
 export enum TaskPriority {
   Low = "LOW",
   Medium = "MEDIUM",
@@ -15,13 +17,13 @@ export interface GetProjectsResponse {
   message: string;
   projects: Project[];
 }
-
-export interface Project {
-  id: number;
-  name: string;
-  description: string;
-  icon: string;
-  iconColor: string;
-  slug: string;
-  boards: null;
+export interface GetProjectBySlugResponse {
+  ok: boolean;
+  message: string;
+  project: Project;
+}
+export interface UpdateProjectResponse {
+  ok: boolean;
+  message: string;
+  project: Project;
 }
