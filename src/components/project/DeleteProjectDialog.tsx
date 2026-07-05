@@ -1,3 +1,5 @@
+import { type FC, type ReactNode } from "react";
+import { TriangleAlert } from "lucide-react";
 import { Button } from "@/components/shared/ui/button";
 import {
   Dialog,
@@ -11,7 +13,7 @@ import {
 } from "@/components/shared/ui/dialog";
 import { Separator } from "@/components/shared/ui/separator";
 import type { Project } from "@/dtos/project.dto";
-import React, { type FC, type ReactNode } from "react";
+import { useDeleteProject } from "@/hooks/project/useDeleteProject";
 
 interface Props {
   children: ReactNode;
@@ -20,25 +22,40 @@ interface Props {
 
 export const DeleteProjectDialog: FC<Props> = ({
   children,
-  project: { name },
+  project: { name, id: projectId },
 }) => {
+  const { submitProjectDeletion } = useDeleteProject();
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent showCloseButton={false} className="">
+      <DialogContent showCloseButton={false} className="py-5">
         <DialogHeader>
-          <DialogTitle>Delete "{name}" project</DialogTitle>
-          <DialogDescription>
-            All your boards and tasks will be lost forever!
+          <div className="flex size-12 justify-center items-center rounded-full border border-destructive bg-destructive/15 mx-auto">
+            <TriangleAlert className="stroke-destructive" />
+          </div>
+          <DialogTitle className="text-lg px-7 text-center my-4">
+            Delete "{name}" project
+          </DialogTitle>
+          <DialogDescription className="px-5">
+            When you delete a project, you lose access to all its boards and
+            tasks. This action cannot be undone.
           </DialogDescription>
-          <Separator className="my-3" />
-          <DialogFooter>
-            <DialogClose>
-              <Button variant={"ghost"}>Cancel</Button>
-            </DialogClose>
-            <Button variant={"destructive"}>Delete</Button>
-          </DialogFooter>
         </DialogHeader>
+        <Separator className="mb-2" />
+        <DialogFooter>
+          <DialogClose>
+            <Button size="lg" variant={"outline"}>
+              No, Keep it.
+            </Button>
+          </DialogClose>
+          <Button
+            size="lg"
+            variant={"destructive"}
+            onClick={() => submitProjectDeletion(projectId)}
+          >
+            Yes, Delete project.
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -20,7 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
-import { useAddProject } from "@/hooks/project/useAddProject";
+import { useCreateProject } from "@/hooks/project/useCreateProject";
 import { Palette } from "lucide-react";
 import { IconColor } from "@/dtos/project.dto";
 import { Controller } from "react-hook-form";
@@ -37,7 +37,7 @@ export const AddProjectDialog: FC<AddProjectDialogProps> = ({
   ...props
 }) => {
   const { errors, onSubmitForm, register, reset, handleSubmit, control } =
-    useAddProject();
+    useCreateProject();
   return (
     <Dialog {...props} onOpenChange={() => reset()}>
       <DialogTrigger asChild>{children}</DialogTrigger>

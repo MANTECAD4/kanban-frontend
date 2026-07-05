@@ -6,7 +6,7 @@ import {
 } from "@/dtos/project.dto";
 import { useCreateProjectQuery } from "@/queries/project/useCreatetProjectQuery";
 import { useUpdateProjectQuery } from "@/queries/project/useUpdateProjectQuery";
-import { getSlugFromName } from "@/utils/getSlugFromName";
+import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
@@ -35,7 +35,7 @@ export const useUpdateProject = ({
   const updateProjectMutation = useUpdateProjectQuery();
 
   const onSubmitForm: SubmitHandler<SubmitProjectState> = async (data) => {
-    const newSlug = getSlugFromName(data.name);
+    const newSlug = slugify(data.name);
     updateProjectMutation.mutate({
       projectData: { ...data, slug: newSlug },
       projectId,

@@ -27,3 +27,8 @@ export interface UpdateProjectResponse {
   message: string;
   project: Project;
 }
+export interface DeleteProjectResponse {
+  ok: boolean;
+  message: string;
+  project: Project;
+}

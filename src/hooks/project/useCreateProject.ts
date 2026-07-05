@@ -4,11 +4,11 @@ import {
   type SubmitProjectState,
 } from "@/dtos/project.dto";
 import { useCreateProjectQuery } from "@/queries/project/useCreatetProjectQuery";
-import { getSlugFromName } from "@/utils/getSlugFromName";
+import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
-export const useAddProject = () => {
+export const useCreateProject = () => {
   const {
     register,
     reset,
@@ -27,7 +27,7 @@ export const useAddProject = () => {
   const submitProjectQuery = useCreateProjectQuery();
 
   const onSubmitForm: SubmitHandler<SubmitProjectState> = async (data) => {
-    const slug = getSlugFromName(data.name);
+    const slug = slugify(data.name);
     submitProjectQuery.mutate({ ...data, slug });
   };
 
