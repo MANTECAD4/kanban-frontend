@@ -102,9 +102,9 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
           </div>
         </div>
         <AddTaskDialog category={{ name: "lol" }}>
-          <Button variant="outline" className="">
+          <Button size="icon" variant="outline" className="">
+            {/* Inspect */}
             <ChevronRight />
-            Inspect
           </Button>
         </AddTaskDialog>
       </div>

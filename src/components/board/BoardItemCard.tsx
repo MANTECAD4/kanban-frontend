@@ -8,31 +8,46 @@ import {
   Circle,
   CircleCheckBigIcon,
   CircleDot,
+  Ellipsis,
   Palette,
 } from "lucide-react";
+import type { BoardEntity } from "@/dtos/board.dtos";
+import { DynamicIcon } from "lucide-react/dynamic";
+import { cn } from "@/lib/utils";
+import { colors } from "@/utils/icon-colors";
+import { EditBoardDialog } from "@/components/board/EditBoardDialog";
 
 interface Props {
-  board: string;
+  board: BoardEntity;
 }
 
 export const BoardItemCard: FC<Props> = ({ board }) => {
+  const { id, description, icon, iconColor, name } = board;
   return (
     <div
-      key={board}
+      key={id}
       className="flex flex-col rounded-lg ring-1 ring-foreground/10 bg-background p-5"
     >
-      <div className="flex items-center gap-2">
-        <div className="flex justify-center items-center size-12 p-3 aspect-squre bg-sky-700/20 rounded-lg">
-          <Palette className="stroke-sky-700 size-5" />
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <div
+            className={cn(
+              colors[iconColor].bg,
+              colors[iconColor].border,
+              "flex justify-center items-center size-12 p-3 aspect-square rounded-full",
+            )}
+          >
+            <DynamicIcon name={icon} className={cn(colors[iconColor].stroke)} />
+          </div>
+          <h3>{name}</h3>
         </div>
-        <div>
-          <h3>{board}</h3>
-          {/* <Badge >5 tasks</Badge> */}
-        </div>
+        <EditBoardDialog board={board}>
+          <Button size={"icon"} variant={"ghost"}>
+            <Ellipsis />
+          </Button>
+        </EditBoardDialog>
       </div>
-      <p className="text-sm text-muted-foreground mt-3">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </p>
+      <p className="text-sm text-muted-foreground mt-3">{description}</p>
       <div className="flex flex-col gap-2 mt-5">
         <div className="flex justify-between text-xs text-muted-foreground">
           <p className="">Progress</p>

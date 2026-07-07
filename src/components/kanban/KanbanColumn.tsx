@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
-import { Kanban, Plus } from "lucide-react";
+import { Ellipsis, Kanban, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { Badge } from "@/components/shared/ui/badge";
@@ -34,7 +34,8 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
           <Badge variant={"outline"}>49 Tasks</Badge>
           <AddTaskDialog category={{ name: title }}>
             <Button
-              className="flex justify-center items-center size-8 rounded-full"
+              size="icon"
+              className="flex justify-center items-center"
               variant={"ghost"}
             >
               <Plus className="size-4" />

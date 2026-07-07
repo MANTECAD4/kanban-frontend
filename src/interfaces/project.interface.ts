@@ -1,4 +1,4 @@
-import type { Project } from "@/dtos/project.dto";
+import type { ProjectEntity } from "@/dtos/project.dto";
 
 export enum TaskPriority {
   Low = "LOW",
@@ -9,26 +9,26 @@ export enum TaskPriority {
 export interface CreateProjectResponse {
   ok: boolean;
   message: string;
-  project: Project;
+  project: ProjectEntity;
 }
 
 export interface GetProjectsResponse {
   ok: boolean;
   message: string;
-  projects: Project[];
+  projects: ProjectEntity[];
 }
 export interface GetProjectBySlugResponse {
   ok: boolean;
   message: string;
-  project: Project;
+  project: ProjectEntity;
 }
 export interface UpdateProjectResponse {
   ok: boolean;
   message: string;
-  project: Project;
+  project: ProjectEntity;
 }
 export interface DeleteProjectResponse {
   ok: boolean;
   message: string;
-  project: Project;
+  project: ProjectEntity;
 }

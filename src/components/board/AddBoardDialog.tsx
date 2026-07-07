@@ -5,8 +5,12 @@ import {
   DialogTrigger,
   Dialog,
 } from "@/components/shared/ui/dialog";
-import { DynamicIcon, type IconName } from "lucide-react/dynamic";
-import { Field, FieldLabel } from "@/components/shared/ui/field";
+import { type IconName } from "lucide-react/dynamic";
+import {
+  Field,
+  FieldDescription,
+  FieldLabel,
+} from "@/components/shared/ui/field";
 import { Input } from "@/components/shared/ui/input";
 import { Textarea } from "@/components/shared/ui/textarea";
 import { IconPicker } from "@/components/shared/ui/icon-picker";
@@ -17,163 +21,158 @@ import {
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
+import { colors } from "@/utils/icon-colors";
+import { Palette, Save } from "lucide-react";
+import { useCreateBoard } from "@/hooks/boards/useCreateBoard";
+import { Controller } from "react-hook-form";
 
 interface Props {
   children: ReactNode;
+  projectId: number;
 }
 
 type AddProjectDialogProps = Props & React.ComponentProps<typeof Dialog>;
 
-const colors = [
-  {
-    name: "red",
-    bg: "bg-red-700/20",
-    stroke: "stroke-red-700",
-    border: "border-red-700",
-  },
-  {
-    name: "orange",
-    bg: "bg-orange-700/20",
-    stroke: "stroke-orange-700",
-    border: "border-orange-700",
-  },
-  {
-    name: "yellow",
-    bg: "bg-yellow-700/20",
-    stroke: "stroke-yellow-700",
-    border: "border-yellow-700",
-  },
-  {
-    name: "green",
-    bg: "bg-green-700/20",
-    stroke: "stroke-green-700",
-    border: "border-green-700",
-  },
-  {
-    name: "sky",
-    bg: "bg-sky-700/20",
-    stroke: "stroke-sky-700",
-    border: "border-sky-700",
-  },
-  {
-    name: "cyan",
-    bg: "bg-cyan-700/20",
-    stroke: "stroke-cyan-700",
-    border: "border-cyan-700",
-  },
-  {
-    name: "indigo",
-    bg: "bg-indigo-700/20",
-    stroke: "stroke-indigo-700",
-    border: "border-indigo-700",
-  },
-  {
-    name: "purple",
-    bg: "bg-purple-700/20",
-    stroke: "stroke-purple-700",
-    border: "border-purple-700",
-  },
-  {
-    name: "pink",
-    bg: "bg-pink-700/20",
-    stroke: "stroke-pink-700",
-    border: "border-pink-700",
-  },
-  {
-    name: "gray",
-    bg: "bg-gray-700/20",
-    stroke: "stroke-gray-700",
-    border: "border-gray-700",
-  },
-];
-
 export const AddBoardDialog: FC<AddProjectDialogProps> = ({
   children,
+  projectId,
   ...props
 }) => {
-  const [selectedColor, setSelectedColor] = useState<string>("red");
-  const [selectedIcon, setSelectedIcon] = useState<IconName>("folder-kanban");
+  const { register, control, errors, onSumbitForm, reset } =
+    useCreateBoard(projectId);
+
   return (
-    <Dialog {...props}>
+    <Dialog {...props} onOpenChange={() => reset()}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-sm">
-        <div className="flex flex-col gap-4">
-          <div className="space-y-2">
-            <h4 className="leading-none font-bold text-md">Create board</h4>
-            <p className="text-xs">Group related tasks within a board</p>
-          </div>
+        <form onSubmit={onSumbitForm} className="flex flex-col gap-3">
           <div className="flex flex-col gap-4">
-            <Field className="flex flex-col gap-2">
-              <FieldLabel htmlFor="name">Board Name</FieldLabel>
-              <Input
-                id="name"
-                defaultValue=""
-                className=""
-                placeholder="Landing Page"
-              />
-            </Field>
-            <Field className="flex flex-col gap-2">
-              <FieldLabel htmlFor="name">Description</FieldLabel>
-              <Textarea
-                id="name"
-                defaultValue=""
-                className=""
-                placeholder="An application for easy and intuitive task management"
-              />
-            </Field>
-            <Field className="flex flex-col gap-2">
-              <FieldLabel htmlFor="name">Icon</FieldLabel>
-              <IconPicker
-                className="h-8 "
-                value={selectedIcon}
-                onValueChange={(value: IconName) => setSelectedIcon(value)}
-                modal
-              />
-            </Field>
-            <Field>
-              <FieldLabel>Icon color</FieldLabel>
-              <ToggleGroup
-                className="flex gap-2 flex-wrap"
-                variant="default"
-                type="single"
-                onValueChange={(value) => setSelectedColor(value)}
-                value={selectedColor}
+            <div className="space-y-2">
+              <h4 className="leading-none font-bold text-md">Create board</h4>
+              <p className="text-xs">Group related tasks within a board</p>
+            </div>
+            <div className="flex flex-col gap-4">
+              <Field
+                className="flex flex-col gap-2"
+                data-invalid={Boolean(errors.name)}
               >
-                {colors.map((color) => (
-                  <ToggleGroupItem
-                    key={color.name}
-                    className={cn(
-                      selectedColor === color.name
-                        ? "opacity-100"
-                        : "opacity-40",
-                      " hover:opacity-100 transition-opacity p-0",
-                    )}
-                    value={color.name}
-                    aria-label={`Select ${color.name}`}
-                    title={color.name}
-                  >
-                    <DynamicIcon
-                      name={selectedIcon}
-                      className={cn(
-                        color.bg,
-                        color.stroke,
-                        color.border,
-                        "border-2, size-7 p-1 rounded-full",
-                      )}
+                <FieldLabel htmlFor="name">Board Name</FieldLabel>
+                <Input
+                  {...register("name")}
+                  className=""
+                  placeholder="Landing Page"
+                  aria-invalid={Boolean(errors.name)}
+                  required
+                />
+                {errors.name && (
+                  <FieldDescription className="text-xs font-semibold text-destructive">
+                    {errors.name.message}
+                  </FieldDescription>
+                )}
+              </Field>
+              <Field
+                className="flex flex-col gap-2"
+                data-invalid={Boolean(errors.description)}
+              >
+                <FieldLabel htmlFor="name">Description</FieldLabel>
+                <Textarea
+                  {...register("description")}
+                  className=""
+                  placeholder="An application for easy and intuitive task management"
+                  aria-invalid={Boolean(errors.description)}
+                  required
+                />
+                {errors.description && (
+                  <FieldDescription className="text-xs font-semibold text-destructive">
+                    {errors.description.message}
+                  </FieldDescription>
+                )}
+              </Field>
+              <Field
+                className="flex flex-col gap-2"
+                data-invalid={Boolean(errors.icon)}
+              >
+                <FieldLabel htmlFor="name">Icon</FieldLabel>
+                <Controller
+                  control={control}
+                  name="icon"
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <IconPicker
+                      className="h-8 "
+                      onValueChange={onChange}
+                      value={value}
+                      onBlur={onBlur}
+                      ref={ref}
+                      modal
+                      aria-invalid={Boolean(errors.icon)}
                     />
-                  </ToggleGroupItem>
-                ))}
-              </ToggleGroup>
-            </Field>
+                  )}
+                />
+                {errors.icon && (
+                  <FieldDescription className="text-xs font-semibold text-destructive">
+                    {errors.icon.message}
+                  </FieldDescription>
+                )}
+              </Field>
+              <Field data-invalid={Boolean(errors.iconColor)}>
+                <FieldLabel>Icon color</FieldLabel>
+                <Controller
+                  control={control}
+                  name="iconColor"
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <ToggleGroup
+                      className="flex gap-2 flex-wrap"
+                      variant="default"
+                      type="single"
+                      onBlur={onBlur}
+                      ref={ref}
+                      onValueChange={onChange}
+                      value={value}
+                      aria-invalid={Boolean(errors.iconColor)}
+                    >
+                      {Object.entries(colors).map(([name, color]) => (
+                        <ToggleGroupItem
+                          key={name}
+                          className={cn(
+                            value === name ? "opacity-100" : "opacity-40",
+                            " hover:opacity-100 transition-opacity p-0",
+                          )}
+                          value={name}
+                          aria-label={`Select ${name}`}
+                          title={name}
+                        >
+                          <Palette
+                            className={cn(
+                              color.bg,
+                              color.stroke,
+                              color.border,
+                              "border-2, size-7 p-1 rounded-full",
+                            )}
+                          />
+                        </ToggleGroupItem>
+                      ))}
+                    </ToggleGroup>
+                  )}
+                />
+                {errors.iconColor && (
+                  <FieldDescription className="text-xs font-semibold text-destructive">
+                    {errors.iconColor.message}
+                  </FieldDescription>
+                )}
+              </Field>
+            </div>
           </div>
-        </div>
-        <Separator />
-        <div className="flex justify-end gap-3">
-          <DialogClose>
-            <Button variant={"outline"}>Cancel</Button>
-          </DialogClose>
-          <Button>Save</Button>
-        </div>
+          <Separator />
+          <div className="flex justify-end gap-3">
+            <DialogClose>
+              <Button variant={"outline"}>Cancel</Button>
+            </DialogClose>
+            <Button type="submit">
+              <Save />
+              Save
+            </Button>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   );

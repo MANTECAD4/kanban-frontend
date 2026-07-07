@@ -2,7 +2,7 @@ import {
   SubmitProjectSchema,
   IconColor,
   type SubmitProjectState,
-  type Project,
+  type ProjectEntity,
 } from "@/dtos/project.dto";
 import { useCreateProjectQuery } from "@/queries/project/useCreatetProjectQuery";
 import { useUpdateProjectQuery } from "@/queries/project/useUpdateProjectQuery";
@@ -15,7 +15,7 @@ export const useUpdateProject = ({
   id: projectId,
   slug,
   ...initialState
-}: Project) => {
+}: ProjectEntity) => {
   const {
     register,
     reset,

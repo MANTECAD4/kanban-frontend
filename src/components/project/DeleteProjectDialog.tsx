@@ -12,12 +12,12 @@ import {
   DialogTrigger,
 } from "@/components/shared/ui/dialog";
 import { Separator } from "@/components/shared/ui/separator";
-import type { Project } from "@/dtos/project.dto";
+import type { ProjectEntity } from "@/dtos/project.dto";
 import { useDeleteProject } from "@/hooks/project/useDeleteProject";
 
 interface Props {
   children: ReactNode;
-  project: Project;
+  project: ProjectEntity;
 }
 
 export const DeleteProjectDialog: FC<Props> = ({

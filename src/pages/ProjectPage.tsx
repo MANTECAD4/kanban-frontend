@@ -1,7 +1,7 @@
 import { AddBoardDialog } from "@/components/board/AddBoardDialog";
-import { BoardItemCard } from "@/components/project/BoardItemCard";
+import { BoardGrid } from "@/components/board/BoardGrid";
 import { DeleteProjectDialog } from "@/components/project/DeleteProjectDialog";
-import { EditProjectDialog } from "@/components/project/EditBoardDialog";
+import { EditProjectDialog } from "@/components/project/EditProjectDialog";
 import { RecentActivityCard } from "@/components/project/RecentActivityCard";
 import { TasksChart } from "@/components/project/TasksChart";
 import { UpcomingDates } from "@/components/project/UpcomingDates";
@@ -12,17 +12,8 @@ import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { useProject } from "@/hooks/project/useProject";
 import { cn } from "@/lib/utils";
 import { colors } from "@/utils/icon-colors";
-import {
-  LayoutGrid,
-  Pencil,
-  Plus,
-  Rocket,
-  Settings,
-  StickyNotePlus,
-  Trash,
-} from "lucide-react";
+import { Pencil, Plus, Trash } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { useParams } from "react-router";
 
 export const ProjectPage = () => {
   const {
@@ -68,7 +59,7 @@ export const ProjectPage = () => {
                 </Button>
               </EditProjectDialog>
             </ButtonGroup>
-            <AddBoardDialog>
+            <AddBoardDialog projectId={data.project.id}>
               <Button variant={"default"}>
                 <Plus /> New Board
               </Button>
@@ -85,37 +76,11 @@ export const ProjectPage = () => {
       </div>
 
       <div className=" mt-10">
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-between">
-            <div className="flex gap-2 items-center">
-              <LayoutGrid className="size-5" />
-              <h2>Boards (5)</h2>
-            </div>
-            <Button variant={"ghost"}>
-              <Plus /> Add new board
-            </Button>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            {boards.map((board) => (
-              <BoardItemCard board={board} />
-            ))}
-            <div className="flex flex-col justify-center items-center gap-3 rounded-lg ring-1 ring-foreground/10 bg-background p-5 h-58">
-              <StickyNotePlus className="stroke-muted-foreground size-8" />
-              <p className="text-muted-foreground">Add new task</p>
-            </div>
-          </div>
-        </div>
+        <BoardGrid projectId={data.project.id} />
       </div>
     </div>
   );
 };
-
-const boards = [
-  "Product Design",
-  "User Authentication",
-  "Docker deployment",
-  // "testing",
-];
 
 {
   /* <div className="flex flex-col gap-4">

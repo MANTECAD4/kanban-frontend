@@ -1,22 +1,9 @@
+import { IconColor } from "@/dtos/project.dto";
 import { iconNames } from "lucide-react/dynamic";
 import z from "zod";
 
-export enum IconColor {
-  RED = "RED",
-  ORANGE = "ORANGE",
-  YELLOW = "YELLOW",
-  GREEN = "GREEN",
-  SKY = "SKY",
-  CYAN = "CYAN",
-  INDIGO = "INDIGO",
-  PURPLE = "PURPLE",
-  PINK = "PINK",
-  GRAY = "GRAY",
-}
-
-export const ProjectSchema = z.object({
+export const BoardSchema = z.object({
   id: z.number().int().min(1),
-  userId: z.number().int().min(1),
   slug: z.string().nonempty(),
   name: z
     .string()
@@ -30,13 +17,15 @@ export const ProjectSchema = z.object({
     .transform((value) => value.replace(/\s+/g, " ")),
   icon: z.enum(iconNames, { error: "Select a valid icon" }),
   iconColor: z.enum(IconColor, { error: "Pick a valid color" }),
+
+  projectId: z.number().int().min(1),
 });
 
-export type ProjectEntity = z.infer<typeof ProjectSchema>;
-
-export const SubmitProjectSchema = ProjectSchema.omit({
+export const SubmitBoardSchema = BoardSchema.omit({
   id: true,
   slug: true,
-  userId: true,
+  projectId: true,
 });
-export type SubmitProjectState = z.infer<typeof SubmitProjectSchema>;
+
+export type BoardEntity = z.infer<typeof BoardSchema>;
+export type SubmitBoardState = z.infer<typeof SubmitBoardSchema>;

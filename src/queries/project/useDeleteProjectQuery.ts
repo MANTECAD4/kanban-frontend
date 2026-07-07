@@ -18,8 +18,8 @@ export const useDeleteProjectQuery = () => {
       kanbanQueryClient.invalidateQueries({ queryKey: ["projects"] });
       navigate("/");
     },
-    onError: (error) => {
-      console.log({ error: error.response });
-    },
+    // onError: (error) => {
+    //   console.log({ error: error.response });
+    // },
   });
 };

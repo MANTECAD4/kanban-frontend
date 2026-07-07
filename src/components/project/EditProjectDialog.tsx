@@ -20,7 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
-import { IconColor, type Project } from "@/dtos/project.dto";
+import { IconColor, type ProjectEntity } from "@/dtos/project.dto";
 import { colors } from "@/utils/icon-colors";
 import { Controller } from "react-hook-form";
 import { Palette } from "lucide-react";
@@ -28,7 +28,7 @@ import { useUpdateProject } from "@/hooks/project/useUpdateProject";
 
 interface Props {
   children: ReactNode;
-  project: Project;
+  project: ProjectEntity;
 }
 
 type AddProjectDialogProps = Props & React.ComponentProps<typeof Dialog>;
