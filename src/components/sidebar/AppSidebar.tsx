@@ -72,7 +72,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </CollapsibleTrigger>
                   </div>
                   <CollapsibleContent>
-                    <SidebarSubmenu projectId={project.id} />
+                    <SidebarSubmenu
+                      projectId={project.id}
+                      projectSlug={project.slug}
+                    />
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>

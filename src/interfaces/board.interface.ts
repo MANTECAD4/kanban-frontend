@@ -11,6 +11,11 @@ export interface UpdateBoardResponse {
   message: string;
   board: BoardEntity;
 }
+export interface GetBoardBySlugResponse {
+  ok: boolean;
+  message: string;
+  board: BoardEntity;
+}
 
 export interface GetBoardsResponse {
   ok: boolean;

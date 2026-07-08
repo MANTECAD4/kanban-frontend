@@ -30,7 +30,7 @@ export const appRouter = createBrowserRouter([
         element: <ProjectPage />,
       },
       {
-        path: "boards/:boardSlug",
+        path: "projects/:projectSlug/boards/:boardSlug",
         element: <BoardPage />,
       },
     ],
