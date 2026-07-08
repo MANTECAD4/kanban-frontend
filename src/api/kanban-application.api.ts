@@ -42,7 +42,7 @@ kanbanApplicationApi.interceptors.response.use(
         // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
         console.error("Token refresh failed:", refreshError);
         useAuthStore.getState().clearSession();
-        window.location.href = "/login";
+        window.location.href = "/auth/login";
         return Promise.reject(refreshError);
       }
     }

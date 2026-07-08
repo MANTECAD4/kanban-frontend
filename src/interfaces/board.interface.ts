@@ -6,6 +6,11 @@ export interface CreateBoardResponse {
   message: string;
   board: BoardEntity;
 }
+export interface UpdateBoardResponse {
+  ok: boolean;
+  message: string;
+  board: BoardEntity;
+}
 
 export interface GetBoardsResponse {
   ok: boolean;

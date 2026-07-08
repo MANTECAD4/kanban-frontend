@@ -28,6 +28,7 @@ import { DynamicIcon } from "lucide-react/dynamic";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/shared/ui/button";
 import { useGetUserProjectsQuery } from "@/queries/project/useGetUserProjectsQuery";
+import { SidebarSubmenu } from "@/components/sidebar/SidebarSubmenu";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data, isError } = useGetUserProjectsQuery();
@@ -43,9 +44,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             Projects
           </SidebarGroupLabel>
           <SidebarMenu>
-            {data!.projects.map((item) => (
+            {data.projects.map((project) => (
               <Collapsible
-                key={item.id}
+                key={project.id}
                 asChild
                 // defaultOpen={item.isActive}
                 className="group/collapsible"
@@ -53,12 +54,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuItem>
                   <div className="flex justify-between  text-xs font-semibold px-2 py-1">
                     <div className="flex gap-2 items-center">
-                      <DynamicIcon name={item.icon} className="size-5" />
+                      <DynamicIcon name={project.icon} className="size-5" />
                       <Link
-                        to={`projects/${item.slug}`}
+                        to={`projects/${project.slug}`}
                         className="hover:underline cursor-pointer"
                       >
-                        {item.name}
+                        {project.name}
                       </Link>
                     </div>
                     <CollapsibleTrigger asChild>
@@ -71,15 +72,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </CollapsibleTrigger>
                   </div>
                   <CollapsibleContent>
-                    <SidebarMenuSub>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuSubButton asChild>
-                          <Link to={"boards/lol"}>
-                            <span>lol</span>
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    </SidebarMenuSub>
+                    <SidebarSubmenu projectId={project.id} />
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>

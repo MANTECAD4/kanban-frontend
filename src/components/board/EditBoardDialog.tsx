@@ -51,8 +51,10 @@ export const EditBoardDialog: FC<AddProjectDialogProps> = ({
         <form onSubmit={onSumbitForm} className="flex flex-col gap-3">
           <div className="flex flex-col gap-4">
             <div className="space-y-2">
-              <h4 className="leading-none font-bold text-md">Create board</h4>
-              <p className="text-xs">Group related tasks within a board</p>
+              <h4 className="leading-none font-bold text-md">
+                Edit "{board.name}" board
+              </h4>
+              <p className="text-xs">{board.description}</p>
             </div>
             <div className="flex flex-col gap-4">
               <Field

@@ -9,13 +9,13 @@ import {
   CircleCheckBigIcon,
   CircleDot,
   Ellipsis,
-  Palette,
 } from "lucide-react";
 import type { BoardEntity } from "@/dtos/board.dtos";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { cn } from "@/lib/utils";
 import { colors } from "@/utils/icon-colors";
-import { EditBoardDialog } from "@/components/board/EditBoardDialog";
+import { EditBoardDialog } from "@/components/board/EditBoardDIalog";
+import { Link } from "react-router";
 
 interface Props {
   board: BoardEntity;
@@ -39,7 +39,9 @@ export const BoardItemCard: FC<Props> = ({ board }) => {
           >
             <DynamicIcon name={icon} className={cn(colors[iconColor].stroke)} />
           </div>
-          <h3>{name}</h3>
+          <h3 className="hover:underline cursor-pointer">
+            <Link to={`/boards/${board.slug}`}>{name}</Link>
+          </h3>
         </div>
         <EditBoardDialog board={board}>
           <Button size={"icon"} variant={"ghost"}>

@@ -3,8 +3,7 @@ import {
   type BoardEntity,
   type SubmitBoardState,
 } from "@/dtos/board.dtos";
-import { IconColor, type ProjectEntity } from "@/dtos/project.dto";
-import { useCreateBoardQuery } from "@/queries/boards/useCreateBoardQuery";
+import { useUpdateBoardQuery } from "@/queries/boards/useUpdateBoardQuery";
 import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -20,7 +19,7 @@ export const useUpdateBoard = (board: BoardEntity) => {
   } = useForm<SubmitBoardState>({
     resolver: zodResolver(SubmitBoardSchema),
   });
-
+  console.log({ board });
   useEffect(() => {
     if (board) {
       const { id, slug, projectId, ...rest } = board;
@@ -28,11 +27,11 @@ export const useUpdateBoard = (board: BoardEntity) => {
     }
   }, [board]);
 
-  //   const createBoardMutation = useCreateBoardQuery(projectId);
+  const updateBoardMutation = useUpdateBoardQuery(board.projectId);
 
   const onSumbitForm = handleSubmit((data) => {
     const slug = slugify(data.name);
-    // createBoardMutation.mutate({ ...data, slug, projectId });
+    updateBoardMutation.mutate({ ...data, slug, boardId: board.id });
   });
 
   return {
