@@ -1,3 +1,4 @@
+import { DeleteBoardDialog } from "@/components/board/DeleteBoardDialog";
 import { EditBoardDialog } from "@/components/board/EditBoardDialog";
 import { AddCategoryDialog } from "@/components/category/AddCategoryDialog";
 import {
@@ -12,25 +13,13 @@ import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Separator } from "@/components/shared/ui/separator";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/ui/tabs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/shared/ui/tooltip";
+
 import { useBoard } from "@/hooks/boards/useBoard";
 import { KanbanView } from "@/views/KanbanView";
 import { ListView } from "@/views/ListView";
-import {
-  Kanban,
-  ListTree,
-  Palette,
-  Pencil,
-  Plus,
-  Settings,
-  Trash,
-} from "lucide-react";
+import { Kanban, ListTree, Pencil, Plus, Trash } from "lucide-react";
 import { useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link } from "react-router";
 
 export const BoardPage = () => {
   const { projectSlug, projectName, getBoardQuery } = useBoard();
@@ -70,9 +59,14 @@ export const BoardPage = () => {
                 <Pencil />
               </Button>
             </EditBoardDialog>
-            <Button variant="outline" size="icon-sm">
-              <Trash />
-            </Button>
+            <DeleteBoardDialog
+              board={getBoardQuery.data.board}
+              projectSlug={projectSlug}
+            >
+              <Button variant="outline" size="icon-sm">
+                <Trash />
+              </Button>
+            </DeleteBoardDialog>
           </ButtonGroup>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -106,7 +100,7 @@ export const BoardPage = () => {
           </TabsList>
         </Tabs>
         <div>
-          <AddCategoryDialog className="py-5">
+          <AddCategoryDialog className="" boardId={getBoardQuery.data.board.id}>
             <Button variant="ghost">
               <Plus />
               Add category

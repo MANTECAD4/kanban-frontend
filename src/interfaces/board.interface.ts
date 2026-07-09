@@ -1,5 +1,4 @@
 import type { BoardEntity } from "@/dtos/board.dtos";
-import type { ProjectEntity } from "@/dtos/project.dto";
 
 export interface CreateBoardResponse {
   ok: boolean;
@@ -12,6 +11,11 @@ export interface UpdateBoardResponse {
   board: BoardEntity;
 }
 export interface GetBoardBySlugResponse {
+  ok: boolean;
+  message: string;
+  board: BoardEntity;
+}
+export interface DeleteBoardResponse {
   ok: boolean;
   message: string;
   board: BoardEntity;
