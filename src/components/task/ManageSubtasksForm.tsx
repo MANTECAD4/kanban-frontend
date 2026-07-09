@@ -1,4 +1,5 @@
 import { Button } from "@/components/shared/ui/button";
+import { ButtonGroup } from "@/components/shared/ui/button-group";
 import {
   Empty,
   EmptyDescription,
@@ -8,7 +9,7 @@ import {
 } from "@/components/shared/ui/empty";
 import { Input } from "@/components/shared/ui/input";
 import { Separator } from "@/components/shared/ui/separator";
-import { Plus, StickyNoteX } from "lucide-react";
+import { Pencil, Plus, Save, StickyNoteX, Trash } from "lucide-react";
 const subtasks = [
   "Fix z-index issue in modal",
   "Change add task form presentation",
@@ -37,7 +38,7 @@ export const ManageSubtasksForm = () => {
         </div>
       </div>
       {/* <Separator /> */}
-      <Empty>
+      {/* <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
             <StickyNoteX />
@@ -48,14 +49,15 @@ export const ManageSubtasksForm = () => {
             some of them.
           </EmptyDescription>
         </EmptyHeader>
-      </Empty>
+      </Empty> */}
 
-      {/* <div className="flex flex-col gap-2 pr-1 max-h-50 overflow-y-scroll custom-scrollbar ">
+      <div className="flex flex-col gap-2 pr-1 max-h-50 overflow-y-scroll custom-scrollbar ">
         {subtasks.map((subtask) => (
           <div
             key={subtask}
             className="flex justify-between gap-2 items-center rounded-md py-1.5 text-sm"
           >
+            {/* <Checkbox */}
             <Input
               value={subtask}
               readOnly
@@ -63,9 +65,6 @@ export const ManageSubtasksForm = () => {
             />
 
             <ButtonGroup>
-              <Button variant="outline" size="icon">
-                <Save />
-              </Button>
               <Button variant="outline" size="icon">
                 <Pencil />
               </Button>
@@ -75,8 +74,7 @@ export const ManageSubtasksForm = () => {
             </ButtonGroup>
           </div>
         ))}
-      </div> */}
-      <Separator />
+      </div>
     </div>
   );
 };

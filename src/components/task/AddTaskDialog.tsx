@@ -24,6 +24,9 @@ import {
 import { ArrowLeft, ArrowRight, ListTodo, NotepadText } from "lucide-react";
 import { AddTaskForm } from "@/components/task/AddTaskForm";
 import { ManageSubtasksForm } from "@/components/task/ManageSubtasksForm";
+import { DynamicIcon, type IconName } from "lucide-react/dynamic";
+import { TagsSelector } from "@/components/task/TagsSelector";
+import { Separator } from "@/components/shared/ui/separator";
 
 interface Props {
   children: ReactNode;
@@ -34,24 +37,35 @@ interface Props {
 }
 
 type AddTaskDIalogProps = Props;
+interface Step {
+  title: string;
+  icon: IconName;
+  content: ReactNode;
+}
+
+const steps: Step[] = [
+  {
+    title: "Task Data",
+    icon: "notepad-text",
+    content: <AddTaskForm />,
+  },
+  {
+    title: "Tags",
+    icon: "tags",
+    content: <TagsSelector />,
+  },
+  {
+    title: "Subtasks (Optional)",
+    icon: "list-todo",
+    content: <ManageSubtasksForm />,
+  },
+];
 
 export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
   children,
   category: { name },
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const steps = [
-    {
-      title: "Task Data",
-      icon: <NotepadText className="size-3.5" />,
-      content: <AddTaskForm />,
-    },
-    {
-      title: "Subtasks (Optional)",
-      icon: <ListTodo className="size-3.5" />,
-      content: <ManageSubtasksForm />,
-    },
-  ];
 
   const [stepperPage, setStepperPage] = useState<number>(1);
 
@@ -59,7 +73,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
     setStepperPage((page) => (page <= 1 ? 1 : page - 1));
   };
   const handleNextBtn = () => {
-    setStepperPage((page) => (steps.length ? steps.length : page + 1));
+    setStepperPage((page) => (page >= steps.length ? steps.length : page + 1));
   };
 
   return (
@@ -87,7 +101,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
                     asChild
                   >
                     <StepperIndicator className=" rounded-full">
-                      {step.icon}
+                      <DynamicIcon name={step.icon} className="size-3.5" />
                     </StepperIndicator>
                     <StepperTitle>{step.title}</StepperTitle>
                     {/* <StepperDescription className="text-xs">
@@ -114,6 +128,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
               ))}
             </StepperPanel>
           </Stepper>
+          <Separator className="my-3" />
           <DialogFooter className="">
             <Button
               type="submit"

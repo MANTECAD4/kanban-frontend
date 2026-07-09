@@ -19,7 +19,7 @@ export const useUpdateBoard = (board: BoardEntity) => {
   } = useForm<SubmitBoardState>({
     resolver: zodResolver(SubmitBoardSchema),
   });
-  console.log({ board });
+
   useEffect(() => {
     if (board) {
       const { id, slug, projectId, ...rest } = board;
@@ -27,7 +27,7 @@ export const useUpdateBoard = (board: BoardEntity) => {
     }
   }, [board]);
 
-  const updateBoardMutation = useUpdateBoardQuery(board.projectId);
+  const updateBoardMutation = useUpdateBoardQuery(board.projectId, board.slug);
 
   const onSumbitForm = handleSubmit((data) => {
     const slug = slugify(data.name);

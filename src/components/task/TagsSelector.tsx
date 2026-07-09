@@ -2,7 +2,7 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/shared/ui/toggle-group";
-const tags: string[] = ["UI", "React", "Web Design", "Backend", "API"];
+import { TaskTag } from "@/interfaces/task.interface";
 
 export const TagsSelector = () => {
   return (
@@ -10,14 +10,14 @@ export const TagsSelector = () => {
       type="multiple"
       size="sm"
       variant="outline"
-      className="flex flex-wrap max-h-20 overflow-y-scroll custom-scrollbar--transparent pb-1"
+      className="flex flex-wrap justify-center gap-3 pb-1"
     >
-      {tags.map((tag) => (
+      {Object.values(TaskTag).map((tag) => (
         <ToggleGroupItem
           key={tag}
-          className="rounded-full px-3 "
+          className="rounded-full"
           value={tag}
-          aria-label="Toggle top"
+          aria-label={`Toggle ${tag}`}
         >
           {tag}
         </ToggleGroupItem>

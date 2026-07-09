@@ -1,3 +1,4 @@
+import { EditBoardDialog } from "@/components/board/EditBoardDialog";
 import { AddCategoryDialog } from "@/components/category/AddCategoryDialog";
 import {
   Breadcrumb,
@@ -7,13 +8,27 @@ import {
   BreadcrumbSeparator,
 } from "@/components/shared/ui/breadcrumb";
 import { Button } from "@/components/shared/ui/button";
+import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Separator } from "@/components/shared/ui/separator";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/ui/tabs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/shared/ui/tooltip";
 import { useBoard } from "@/hooks/boards/useBoard";
 import { KanbanView } from "@/views/KanbanView";
 import { ListView } from "@/views/ListView";
-import { Kanban, ListTree, Plus } from "lucide-react";
+import {
+  Kanban,
+  ListTree,
+  Palette,
+  Pencil,
+  Plus,
+  Settings,
+  Trash,
+} from "lucide-react";
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 
@@ -23,35 +38,49 @@ export const BoardPage = () => {
   if (!projectName || !getBoardQuery.data) return;
   return (
     <div className="flex flex-col h-dvh pl-2 pr-4 pt-4.5 pb-1 ">
-      <div className="flex items-center gap-2 mb-3">
-        <SidebarTrigger className="" />
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-2 mb-3">
+          <SidebarTrigger className="" />
 
-        <Separator orientation="vertical" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <Link to={`/projects/${projectSlug}`} className="text-gray-400">
-                {projectName}
-              </Link>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{getBoardQuery.data.board.name}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+          <Separator orientation="vertical" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <Link to={`/projects/${projectSlug}`} className="text-gray-400">
+                  {projectName}
+                </Link>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{getBoardQuery.data.board.name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <h1 className="text-2xl font-semibold">
-          {getBoardQuery.data.board.name}
-        </h1>
-        {/* <div className="flex justify-center items-center size-12 p-3 aspect-squre bg-sky-700/20 rounded-full">
-          <Palette className="stroke-sky-700 size-5" />
-        </div> */}
+      <div className="flex flex-col items-start gap-2 pb-8 group/header">
+        <div className="flex gap-2 items-center">
+          <h1 title="Edit board" className="text-2xl font-semibold text-start ">
+            {getBoardQuery.data.board.name}
+          </h1>
+          <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity focus-within:opacity-100">
+            <EditBoardDialog board={getBoardQuery.data.board}>
+              <Button variant="outline" size="icon-sm">
+                <Pencil />
+              </Button>
+            </EditBoardDialog>
+            <Button variant="outline" size="icon-sm">
+              <Trash />
+            </Button>
+          </ButtonGroup>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          {getBoardQuery.data.board.description}
+        </p>
       </div>
 
-      <div className="flex items-center justify-between mt-8  ">
+      <div className="flex items-center justify-between">
         <Tabs
           className=""
           value={tasksView}
@@ -78,7 +107,7 @@ export const BoardPage = () => {
         </Tabs>
         <div>
           <AddCategoryDialog className="py-5">
-            <Button>
+            <Button variant="ghost">
               <Plus />
               Add category
             </Button>

@@ -3,7 +3,7 @@ import { useAuthStore } from "@/providers/store/auth.store";
 import axios from "axios";
 
 export const kanbanApplicationApi = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://localhost:4000/api",
   withCredentials: true,
 });
 

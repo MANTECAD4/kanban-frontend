@@ -8,6 +8,7 @@ import { PrivateRoute } from "@/providers/router/PrivateRoute";
 import { PublicRoute } from "@/providers/router/PublicRoute";
 import { BoardPage } from "@/pages/BoardPage";
 import { ProjectPage } from "@/pages/ProjectPage";
+import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 
 export const appRouter = createBrowserRouter([
   {
@@ -24,7 +25,16 @@ export const appRouter = createBrowserRouter([
     path: "/",
     element: <PrivateRoute element={<AppLayout />} />,
     children: [
-      { index: true, element: <div>dashboard</div> },
+      {
+        index: true,
+        element: (
+          <div>
+            {" "}
+            <SidebarTrigger />
+            dashboard
+          </div>
+        ),
+      },
       {
         path: "projects/:projectSlug",
         element: <ProjectPage />,

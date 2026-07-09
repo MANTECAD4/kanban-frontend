@@ -64,10 +64,10 @@ export const AddTaskForm = () => {
           ))}
         </RadioGroup>
       </div>
-      <Field>
+      {/* <Field>
         <FieldLabel>Tags</FieldLabel>
         <TagsSelector />
-      </Field>
+      </Field> */}
     </FieldGroup>
   );
 };
