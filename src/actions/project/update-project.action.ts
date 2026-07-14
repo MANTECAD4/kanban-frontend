@@ -11,7 +11,6 @@ export const updateProjectAction = async ({
   projectId: number;
   projectData: UpdateProjectData;
 }) => {
-  console.log({ projectData });
   const { data } = await kanbanApplicationApi.put<UpdateProjectResponse>(
     `/projects/${projectId}`,
     projectData,

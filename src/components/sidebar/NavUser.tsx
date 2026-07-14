@@ -99,21 +99,7 @@ export function NavUser() {
                 )}
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={CheckmarkBadgeIcon} strokeWidth={2} />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={CreditCardIcon} strokeWidth={2} />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <HugeiconsIcon icon={NotificationIcon} strokeWidth={2} />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />

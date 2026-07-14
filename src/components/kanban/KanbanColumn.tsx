@@ -1,38 +1,56 @@
 import type { FC, ReactNode } from "react";
 import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
-import { Ellipsis, Kanban, Plus } from "lucide-react";
+import { Kanban, Pencil, Plus, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { Badge } from "@/components/shared/ui/badge";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import { Button } from "@/components/shared/ui/button";
+import { ButtonGroup } from "@/components/shared/ui/button-group";
+import type { CategoryEntity } from "@/dtos/category.dto";
+import type { TaskEntity } from "@/dtos/task.dto";
+import { TaskCard } from "@/components/kanban/TaskCard";
 
 interface Props {
-  title: string;
-  children: ReactNode;
+  category: CategoryEntity;
+  tasks: TaskEntity[];
 }
 
-export const KanbanColumn: FC<Props> = ({ title, children }) => {
+export const KanbanColumn: FC<Props> = ({ category, tasks }) => {
+  if (!category) return;
   const { ref } = useDroppable({
-    id: title,
+    id: category.name,
     type: "column",
     accept: "item",
     collisionPriority: CollisionPriority.Low,
   });
   return (
-    <div className={cn("flex flex-col w-78  shrink-0 ")}>
-      <div className="flex justify-between bg-background p-1 my-2 border border-gray-200 dark:border-gray-700 rounded-lg">
+    <div className={cn("flex flex-col w-82  shrink-0 ")}>
+      <div className="group/header flex justify-between bg-background py-1 px-2 my-2 border border-gray-200 dark:border-gray-700 rounded-lg">
         <div className="flex items-center gap-2">
           <DynamicIcon
-            name={"loader"}
-            className="size-5 stroke-2 stroke-primary"
+            name={category.icon}
+            className="size-5 stroke-2 stroke-primary shrink-0"
           />
-          <h2 className="text-sm font-semibold">{title}</h2>
+          <h2 className="text-sm font-semibold" title={category.name}>
+            {category.name.slice(0, 23)}
+            {category.name.length >= 23 ? "..." : ""}
+          </h2>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge variant={"outline"}>49 Tasks</Badge>
-          <AddTaskDialog category={{ name: title }}>
+        <div className="flex items-center gap-1">
+          <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity">
+            <Button size="icon-sm" variant={"outline"}>
+              <Pencil />
+            </Button>
+            <Button size="icon-sm" variant={"outline"}>
+              <Trash />
+            </Button>
+          </ButtonGroup>
+          <Badge variant={"outline"}>{tasks.length} Tasks</Badge>
+          <AddTaskDialog
+            category={{ name: category.name, categoryId: category.id }}
+          >
             <Button
               size="icon"
               className="flex justify-center items-center"
@@ -52,8 +70,16 @@ export const KanbanColumn: FC<Props> = ({ title, children }) => {
         <div className="absolute top-1/2 left-1/2 -z-10 -translate-1/2 flex flex-col items-center gap-3 text-muted-foreground">
           <Kanban className=" size-20 stroke-muted-foreground" />
         </div>
-        <div className="flex flex-col gap-3 max-h-10 pr-1">{children}</div>
-        {/* </div> */}
+        <div className="flex flex-col gap-3 max-h-10 pr-1">
+          {tasks.map((task, i) => (
+            <TaskCard
+              key={task.id}
+              index={i}
+              task={task}
+              category={{ name: category.name, categoryId: category.id }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

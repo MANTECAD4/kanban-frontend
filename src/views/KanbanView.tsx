@@ -1,87 +1,55 @@
 import { DragDropProvider } from "@dnd-kit/react";
-import { useMemo, useState } from "react";
+import { useEffect, useState, type FC } from "react";
 import { move } from "@dnd-kit/helpers";
 import { KanbanColumn } from "@/components/kanban/KanbanColumn";
-import { TaskCard } from "@/components/kanban/TaskICard";
+import { useQuery } from "@tanstack/react-query";
+import { getCategoriesAction } from "@/actions/category/get-categories.action";
+import type { TaskEntity } from "@/dtos/task.dto";
 
-const columns = [
-  {
-    id: crypto.randomUUID(),
-    title: "In progress",
-    icon: "loader",
-    tasks: [
-      {
-        id: crypto.randomUUID(),
-        title: "Implement responsive design",
-      },
-      {
-        id: crypto.randomUUID(),
-        title: "Improve performace",
-      },
-      {
-        id: crypto.randomUUID(),
-        title: "Finish JWT auth",
-      },
-    ],
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Under inspection",
-    icon: "scan-search",
-    tasks: [
-      {
-        id: crypto.randomUUID(),
-        title: "Implement Drag & Drop Feature",
-      },
-      {
-        id: crypto.randomUUID(),
-        title: "Adapt componen's styling",
-      },
-      {
-        id: crypto.randomUUID(),
-        title: "Implement responsive design",
-      },
-    ],
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Finished",
-    icon: "circle-check",
-    tasks: [],
-  },
-];
-export const KanbanView = () => {
-  const data = useMemo(() => {
-    const keys: Record<string, any> = {};
-    columns.forEach((column) => (keys[column.title] = column.tasks));
+interface Props {
+  boardId: number;
+}
+export const KanbanView: FC<Props> = ({ boardId }) => {
+  const { data: categoriesData } = useQuery({
+    queryFn: () => getCategoriesAction(boardId),
+    queryKey: ["in-board", boardId, "categories"],
+  });
 
-    return structuredClone(keys);
-  }, [columns]);
+  const [boardColumns, setBoardColumns] = useState({});
+  useEffect(() => {
+    if (categoriesData) {
+      const columns: Record<string, any> = {};
+      categoriesData.categories.forEach(
+        (category) => (columns[category.name] = category.tasks),
+      );
+      setBoardColumns(columns);
+    }
+  }, [categoriesData]);
 
-  const [boardColumns, setBoardColumns] = useState(data);
+  if (!boardColumns || !categoriesData) return;
 
   return (
     <>
       <DragDropProvider
         onDragOver={(event) => {
-          setBoardColumns((items) => move(items, event));
+          {
+            setBoardColumns((items) => move(items, event));
+          }
         }}
       >
         <div className="h-full  overflow-x-scroll custom-scrollbar pb-2">
           <div className="flex gap-10 max-w-0 h-full ">
-            {Object.entries(boardColumns).map(([columnTitle, tasks]) => {
+            {Object.entries(boardColumns).map(([categoryName, tasks]) => {
+              const categoryRegister = categoriesData.categories.find(
+                (category) => category.name === categoryName,
+              );
+              if (!categoryRegister) return;
               return (
-                <KanbanColumn key={columnTitle} title={columnTitle}>
-                  {tasks.map((task, i) => (
-                    <TaskCard
-                      key={task.id}
-                      index={i}
-                      {...task}
-                      columnTitle={columnTitle}
-                    />
-                  ))}
-                  {/* <AddTaskPlaceholder /> */}
-                </KanbanColumn>
+                <KanbanColumn
+                  key={categoryName}
+                  category={categoryRegister}
+                  tasks={tasks as TaskEntity[]}
+                />
               );
             })}
           </div>

@@ -7,43 +7,26 @@ import { Button } from "@/components/shared/ui/button";
 import { Field, FieldLabel } from "@/components/shared/ui/field";
 import { Progress } from "@/components/shared/ui/progress";
 
-import {
-  CalendarClock,
-  ChevronRight,
-  Grip,
-  Paperclip,
-  Pencil,
-} from "lucide-react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/shared/ui/dialog";
-import { Label } from "@/components/shared/ui/label";
-import { Input } from "@/components/shared/ui/input";
+import { CalendarClock, ChevronRight, Grip, Paperclip } from "lucide-react";
+
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
 import { TaskPriority } from "@/interfaces/project.interface";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
+import type { TaskEntity } from "@/dtos/task.dto";
 
 interface Props {
-  columnTitle: string;
+  category: { name: string; categoryId: number };
   index: number;
-  id: `${string}-${string}-${string}-${string}-${string}`;
-  title: string;
+  task: TaskEntity;
 }
 
-export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
+export const TaskCard: FC<Props> = ({ task, index, category }) => {
   const { handleRef, ref } = useSortable({
-    id,
+    id: task.id,
     index,
     type: "item",
     accept: "item",
-    group: columnTitle,
+    group: category.name,
     transition: {
       duration: 300,
       easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
@@ -54,15 +37,16 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
     <div
       ref={ref}
       className={cn(
-        "flex flex-col p-3 bg-background border border-gray-200 dark:border-gray-700 rounded-xl  ",
+        "flex flex-col p-3 bg-background border border-gray-200 dark:border-gray-700 rounded-xl",
       )}
     >
       <div className="flex justify-between my-2">
         <div className="flex gap-2">
-          <Badge variant="outline">UI</Badge>
-          <Badge variant="outline">Bug</Badge>
-          <Badge variant="outline">React</Badge>
-          <Badge variant="outline">Web Design</Badge>
+          {task.tags.map((tag) => (
+            <Badge key={tag} variant="outline">
+              {tag}
+            </Badge>
+          ))}
         </div>
         <Button
           ref={handleRef}
@@ -74,18 +58,21 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
       </div>
       <div className="flex items-center gap-1">
         <h2 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
-          {title}
+          {task.title}
         </h2>
       </div>
       <div className="flex gap-2 mt-2">
         <div className="flex items-center gap-1">
           <CalendarClock className="size-3.5 " />
-          <p className="text-xs">Nov 12</p>
+          <p className="text-xs">
+            {new Date(task.dueDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}
+          </p>
         </div>
       </div>
-      <p className="text-sm mt-3">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </p>
+      <p className="text-sm mt-3">{task.description}</p>
       <Field className="w-full mt-6 ">
         <FieldLabel htmlFor="progress-upload">
           <span>Subtasks's completion</span>
@@ -95,16 +82,16 @@ export const TaskCard: FC<Props> = ({ id, index, title, columnTitle }) => {
       </Field>
       <div className="flex justify-between mt-5">
         <div className="flex gap-2 items-center ">
-          <PriorityBadge priority={TaskPriority.Low} />
+          <PriorityBadge priority={task.priority} />
           <div className="flex items-center gap-1">
             <Paperclip className="size-3" />
             <span className="text-xs">5</span>
           </div>
         </div>
-        <AddTaskDialog category={{ name: "lol" }}>
-          <Button size="icon" variant="outline" className="">
-            {/* Inspect */}
+        <AddTaskDialog category={category}>
+          <Button size="icon-lg" variant="outline" className="">
             <ChevronRight />
+            {/* Inspect */}
           </Button>
         </AddTaskDialog>
       </div>

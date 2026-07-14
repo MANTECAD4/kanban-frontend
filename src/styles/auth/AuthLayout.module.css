@@ -4,6 +4,7 @@
   background-attachment: fixed;
   background-size: cover;
   transition: background-image 0.25s;
+  background-repeat: no-repeat;
 }
 .light-mode {
   background-color: #6c63fe;

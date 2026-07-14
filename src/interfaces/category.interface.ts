@@ -5,3 +5,11 @@ export interface CreateCategoryResponse {
   message: string;
   category: CategoryEntity;
 }
+export interface GetCategoriesResponse {
+  ok: boolean;
+  message: string;
+  categories: CategoryEntity[];
+  meta: {
+    total: number;
+  };
+}

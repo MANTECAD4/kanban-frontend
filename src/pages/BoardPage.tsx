@@ -109,7 +109,11 @@ export const BoardPage = () => {
         </div>
       </div>
       <div className="h-full p-2">
-        {tasksView === "kanban" ? <KanbanView /> : <ListView />}
+        {tasksView === "kanban" ? (
+          <KanbanView boardId={getBoardQuery.data.board.id} />
+        ) : (
+          <ListView />
+        )}
       </div>
     </div>
   );
