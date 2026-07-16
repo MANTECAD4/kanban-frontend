@@ -1,6 +1,6 @@
 import { DeleteBoardDialog } from "@/components/board/DeleteBoardDialog";
 import { EditBoardDialog } from "@/components/board/EditBoardDialog";
-import { AddCategoryDialog } from "@/components/category/AddCategoryDialog";
+import { AddCategoryPopover } from "@/components/category/AddCategoryPopover";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,9 +22,10 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 export const BoardPage = () => {
-  const { projectSlug, projectName, getBoardQuery } = useBoard();
+  const { projectSlug, getProjectQuery, getBoardQuery } = useBoard();
   const [tasksView, setTasksView] = useState<string>("kanban");
-  if (!projectName || !getBoardQuery.data) return;
+
+  if (!getProjectQuery.data || !getBoardQuery.data) return;
   return (
     <div className="flex flex-col h-dvh pl-2 pr-4 pt-4.5 pb-1 ">
       <div className="flex justify-between items-center">
@@ -36,7 +37,7 @@ export const BoardPage = () => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <Link to={`/projects/${projectSlug}`} className="text-gray-400">
-                  {projectName}
+                  {getProjectQuery.data.project.name}
                 </Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -100,12 +101,15 @@ export const BoardPage = () => {
           </TabsList>
         </Tabs>
         <div>
-          <AddCategoryDialog className="" boardId={getBoardQuery.data.board.id}>
+          <AddCategoryPopover
+            className=""
+            boardId={getBoardQuery.data.board.id}
+          >
             <Button variant="ghost">
               <Plus />
               Add category
             </Button>
-          </AddCategoryDialog>
+          </AddCategoryPopover>
         </div>
       </div>
       <div className="h-full p-2">

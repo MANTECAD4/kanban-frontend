@@ -8,17 +8,18 @@ export const useBoard = () => {
 
   const getProjectQuery = useQuery({
     queryFn: () => getProjectBySlugAction(projectSlug),
-    queryKey: ["boards", boardSlug],
-    enabled: boardSlug !== "",
+    queryKey: ["projects", projectSlug],
+    enabled: projectSlug !== "",
   });
   const getBoardQuery = useQuery({
-    queryFn: () => getBoardBySlugAction(boardSlug),
+    queryFn: () =>
+      getBoardBySlugAction(boardSlug, getProjectQuery.data?.project.id ?? 0),
     queryKey: ["boards", boardSlug],
-    enabled: boardSlug !== "",
+    enabled: boardSlug !== "" && getProjectQuery.data !== undefined,
   });
   return {
     projectSlug,
-    projectName: getProjectQuery.data?.project.name ?? "No name",
+    getProjectQuery,
     getBoardQuery,
   };
 };

@@ -12,6 +12,7 @@ import { CalendarClock, ChevronRight, Grip, Paperclip } from "lucide-react";
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import type { TaskEntity } from "@/dtos/task.dto";
+import { useTaskCard } from "@/hooks/kanban/useTaskCard";
 
 interface Props {
   category: { name: string; categoryId: number };
@@ -20,18 +21,7 @@ interface Props {
 }
 
 export const TaskCard: FC<Props> = ({ task, index, category }) => {
-  const { handleRef, ref, isDragging } = useSortable({
-    id: task.id,
-    index,
-    type: "item",
-    accept: "item",
-    group: category.name,
-    transition: {
-      duration: 300,
-      easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-    },
-  });
-
+  const { handleRef, ref, isDragging } = useTaskCard({ task, category, index });
   return (
     <div
       ref={ref}
@@ -55,11 +45,9 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
           <Grip />
         </Button>
       </div>
-      {category.name} - {index} - {isDragging ? "dragging" : ""}
-      {category.categoryId} - {task.statusColumnId}
       <div className="flex items-center gap-1">
         <h2 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
-          {task.title}
+          {task.title} - {}
         </h2>
       </div>
       <div className="flex gap-2 mt-2">

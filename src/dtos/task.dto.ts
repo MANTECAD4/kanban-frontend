@@ -34,7 +34,7 @@ export const TaskSchema = z.object({
   dueDate: z.date(),
   priority: z.enum(TaskPriority),
   tags: z.array(z.enum(TaskTag)),
-  statusColumnId: z.int().min(1),
+  categoryId: z.int().min(1),
 });
 
 export const FormTaskSchema = z.object({
@@ -43,7 +43,7 @@ export const FormTaskSchema = z.object({
   dueDay: z.date(),
   dueTime: z.iso.time(),
   priority: z.enum(TaskPriority),
-  tags: z.array(z.enum(TaskTag)),
+  tags: z.array(z.enum(TaskTag)).min(1),
 });
 
 export type TaskEntity = z.infer<typeof TaskSchema>;

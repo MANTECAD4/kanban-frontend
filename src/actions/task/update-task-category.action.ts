@@ -5,14 +5,13 @@ interface UpdateTaskColumnData {
   categoryId: number;
 }
 
-export const updateTaskColumnAction = async ({
+export const updateTaskCategoryAction = async ({
   taskId,
   categoryId,
 }: UpdateTaskColumnData) => {
-  const { data } = await kanbanApplicationApi.put(
-    `/tasks/${taskId}/status-column`,
+  const { data } = await kanbanApplicationApi.put(`/tasks/${taskId}/category`, {
     categoryId,
-  );
+  });
 
   return data;
 };

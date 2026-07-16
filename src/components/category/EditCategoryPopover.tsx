@@ -1,14 +1,5 @@
 import { Button } from "@/components/shared/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/shared/ui/dialog";
+
 import {
   Field,
   FieldDescription,
@@ -29,19 +20,19 @@ import {
 import { Separator } from "@/components/shared/ui/separator";
 import { useAddCategory } from "@/hooks/category/useAddCategory";
 import { cn } from "@/lib/utils";
-import { Save, X, XCircle } from "lucide-react";
+import { Save, XCircle } from "lucide-react";
 import React, { type FC, type ReactNode } from "react";
 import { Controller } from "react-hook-form";
 
 interface Props {
   children: ReactNode;
-  className: string;
+  className?: string;
   boardId: number;
 }
 
-type AddCategortDialogProps = Props & React.ComponentProps<typeof Dialog>;
+type AddCategortDialogProps = Props & React.ComponentProps<typeof Popover>;
 
-export const AddCategoryDialog: FC<AddCategortDialogProps> = ({
+export const EditCategoryPopover: FC<AddCategortDialogProps> = ({
   children,
   className,
   boardId,

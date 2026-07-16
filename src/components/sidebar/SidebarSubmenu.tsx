@@ -1,13 +1,14 @@
+import { getBoardsAction } from "@/actions/boards/get-boards.action";
 import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/shared/ui/sidebar";
-import { useGetBoardsQuery } from "@/queries/boards/useGetBoardsQuery";
+import { useQuery } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
 import type { FC } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 interface Props {
   projectId: number;
@@ -16,13 +17,14 @@ interface Props {
 
 export const SidebarSubmenu: FC<Props> = ({ projectId, projectSlug }) => {
   const navigate = useNavigate();
-  const { data, isFetching } = useGetBoardsQuery(projectId);
+  const { data, isFetching } = useQuery({
+    queryFn: () => getBoardsAction(projectId),
+    queryKey: ["in-project", projectId, "boards"],
+  });
   if (!data) return;
   if (isFetching) return;
   <SidebarMenuSubItem>
-    <SidebarMenuSubButton asChild>
-      <Loader />
-    </SidebarMenuSubButton>
+    <SidebarMenuSubButton asChild></SidebarMenuSubButton>
   </SidebarMenuSubItem>;
   return (
     <SidebarMenuSub>

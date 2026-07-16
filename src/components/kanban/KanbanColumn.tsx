@@ -11,6 +11,8 @@ import { ButtonGroup } from "@/components/shared/ui/button-group";
 import type { CategoryEntity } from "@/dtos/category.dto";
 import type { TaskEntity } from "@/dtos/task.dto";
 import { TaskCard } from "@/components/kanban/TaskCard";
+import { DeleteCategoryDialog } from "@/components/category/DeleteCategoryDialog";
+import { EditCategoryPopover } from "@/components/category/EditCategoryPopover";
 
 interface Props {
   category: CategoryEntity;
@@ -40,12 +42,16 @@ export const KanbanColumn: FC<Props> = ({ category, tasks }) => {
         </div>
         <div className="flex items-center gap-1">
           <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity">
-            <Button size="icon-sm" variant={"outline"}>
-              <Pencil />
-            </Button>
-            <Button size="icon-sm" variant={"outline"}>
-              <Trash />
-            </Button>
+            <EditCategoryPopover>
+              <Button size="icon-sm" variant={"outline"}>
+                <Pencil />
+              </Button>
+            </EditCategoryPopover>
+            <DeleteCategoryDialog category={category}>
+              <Button size="icon-sm" variant={"outline"}>
+                <Trash />
+              </Button>
+            </DeleteCategoryDialog>
           </ButtonGroup>
           <Badge variant={"outline"}>{tasks.length} Tasks</Badge>
           <AddTaskDialog
