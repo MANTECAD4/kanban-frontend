@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { useSortable } from "@dnd-kit/react/sortable";
 import { cn } from "@/lib/utils";
 
 import { Badge } from "@/components/shared/ui/badge";
@@ -21,7 +20,7 @@ interface Props {
 }
 
 export const TaskCard: FC<Props> = ({ task, index, category }) => {
-  const { handleRef, ref, isDragging } = useTaskCard({ task, category, index });
+  const { handleRef, ref } = useTaskCard({ task, category, index });
   return (
     <div
       ref={ref}

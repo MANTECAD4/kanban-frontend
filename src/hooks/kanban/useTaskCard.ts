@@ -33,7 +33,6 @@ export const useTaskCard = ({
 
   useEffect(() => {
     if (!isDragging) {
-      console.log("actualizando ");
       updateTaskCategoryMutation.mutate({
         taskId: taskId,
         categoryId: categoryId,

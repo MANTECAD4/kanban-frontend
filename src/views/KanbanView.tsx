@@ -1,6 +1,5 @@
 import { useEffect, useState, type FC } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
-import { useLocation } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { move } from "@dnd-kit/helpers";
 

@@ -12,19 +12,21 @@ import {
   DialogTrigger,
 } from "@/components/shared/ui/dialog";
 import { Separator } from "@/components/shared/ui/separator";
-import { useDeleteProject } from "@/hooks/project/useDeleteProject";
 import type { CategoryEntity } from "@/dtos/category.dto";
+import { useDeleteCategory } from "@/hooks/category/useDeleteCategory";
 
 interface Props {
   children: ReactNode;
   category: CategoryEntity;
+  boardId: number;
 }
 
 export const DeleteCategoryDialog: FC<Props> = ({
   children,
-  category: { name, id: projectId },
+  category: { name, id: categoryId },
+  boardId,
 }) => {
-  const { submitProjectDeletion } = useDeleteProject();
+  const { submitCategoryDeletion } = useDeleteCategory(boardId);
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -51,7 +53,7 @@ export const DeleteCategoryDialog: FC<Props> = ({
           <Button
             size="lg"
             variant={"destructive"}
-            onClick={() => submitProjectDeletion(projectId)}
+            onClick={() => submitCategoryDeletion(categoryId)}
           >
             Yes, Delete category.
           </Button>

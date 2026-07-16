@@ -47,7 +47,10 @@ export const KanbanColumn: FC<Props> = ({ category, tasks }) => {
                 <Pencil />
               </Button>
             </EditCategoryPopover>
-            <DeleteCategoryDialog category={category}>
+            <DeleteCategoryDialog
+              category={category}
+              boardId={category.boardId}
+            >
               <Button size="icon-sm" variant={"outline"}>
                 <Trash />
               </Button>

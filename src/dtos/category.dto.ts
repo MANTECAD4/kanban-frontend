@@ -7,6 +7,7 @@ export const CategorySchema = z.object({
   name: z.string().min(3),
   icon: z.enum(iconNames, "Select a valid icon"),
   tasks: z.array(TaskSchema),
+  boardId: z.int().min(1),
 });
 
 export const SubmitCategorySchema = CategorySchema.omit({
