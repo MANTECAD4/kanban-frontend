@@ -11,9 +11,6 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/shared/ui/sidebar";
 import { Header } from "@/components/sidebar/Header";
@@ -27,11 +24,15 @@ import { Link } from "react-router";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/shared/ui/button";
-import { useGetUserProjectsQuery } from "@/queries/project/useGetUserProjectsQuery";
 import { SidebarSubmenu } from "@/components/sidebar/SidebarSubmenu";
+import { useQuery } from "@tanstack/react-query";
+import { getUserProjectsAction } from "@/actions/project/get-user-projects.action";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data, isError } = useGetUserProjectsQuery();
+  const { data, isError } = useQuery({
+    queryKey: ["projects"],
+    queryFn: getUserProjectsAction,
+  });
   if (isError || data === undefined) return;
   return (
     <Sidebar {...props}>

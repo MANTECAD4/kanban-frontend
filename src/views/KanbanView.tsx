@@ -26,6 +26,10 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
     }
   }, [categoriesData]);
 
+  // useEffect(() => {
+
+  // }, [boardColumns]);
+
   if (!boardColumns || !categoriesData) return;
 
   return (

@@ -19,12 +19,7 @@ import {
   useSidebar,
 } from "@/components/shared/ui/sidebar";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  CheckmarkBadgeIcon,
-  CreditCardIcon,
-  NotificationIcon,
-  LogoutIcon,
-} from "@hugeicons/core-free-icons";
+import { LogoutIcon } from "@hugeicons/core-free-icons";
 import { useAuthStore } from "@/providers/store/auth.store";
 import { Moon, Settings, Sun } from "lucide-react";
 import { useThemeStore } from "@/providers/store/theme.store";

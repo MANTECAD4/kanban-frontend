@@ -10,13 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/shared/ui/dialog";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar1Icon,
-  Save,
-  XCircle,
-} from "lucide-react";
+import { Calendar1Icon, Save, XCircle } from "lucide-react";
 import { Separator } from "@/components/shared/ui/separator";
 import {
   ToggleGroup,
@@ -29,7 +23,6 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/shared/ui/field";
-import { Label } from "@/components/shared/ui/label";
 import { Input } from "@/components/shared/ui/input";
 import { Textarea } from "@/components/shared/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/shared/ui/radio-group";
@@ -42,10 +35,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/shared/ui/popover";
-import { CalendarIcon } from "@hugeicons/core-free-icons";
 import { format } from "date-fns";
 import { Calendar } from "@/components/shared/ui/calendar";
-import { colors } from "../../utils/icon-colors";
 
 interface Props {
   children: ReactNode;
@@ -78,7 +69,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
           {/* <Pattern /> */}
           <FieldGroup className="flex flex-col gap-3">
             <Field data-invalid={Boolean(errors.title)}>
-              <Label htmlFor="title">Title</Label>
+              <FieldLabel htmlFor="title">Title</FieldLabel>
               <Input
                 {...register("title")}
                 className=""
@@ -92,7 +83,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
             </Field>
 
             <Field data-invalid={Boolean(errors.description)}>
-              <Label htmlFor="description">Description</Label>
+              <FieldLabel htmlFor="description">Description</FieldLabel>
               <Textarea
                 {...register("description")}
                 placeholder="Adapt dashboard page for small screen sizes"
@@ -107,7 +98,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
 
             <div className="grid grid-cols-2 gap-2">
               <Field className="" data-invalid={Boolean(errors.dueDay)}>
-                <Label htmlFor="start-date">Due date</Label>
+                <FieldLabel htmlFor="start-date">Due date</FieldLabel>
                 <Controller
                   control={control}
                   name="dueDay"
@@ -163,7 +154,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
               data-invalid={Boolean(errors.priority)}
               className="flex flex-col gap-2 mt-2"
             >
-              <Label htmlFor="priority">Task priority</Label>
+              <FieldLabel htmlFor="priority">Task priority</FieldLabel>
               <Controller
                 control={control}
                 name="priority"
@@ -200,10 +191,10 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
               )}
             </Field>
             <Field
-              className="flex flex-col gap-4 mt-2"
+              className="flex flex-col mt-2"
               data-invalid={Boolean(errors.tags)}
             >
-              <Label htmlFor="description">Tags</Label>
+              <FieldLabel htmlFor="description">Tags</FieldLabel>
               <Controller
                 control={control}
                 name="tags"

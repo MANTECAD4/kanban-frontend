@@ -10,7 +10,6 @@ import { Progress } from "@/components/shared/ui/progress";
 import { CalendarClock, ChevronRight, Grip, Paperclip } from "lucide-react";
 
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
-import { TaskPriority } from "@/interfaces/project.interface";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import type { TaskEntity } from "@/dtos/task.dto";
 
@@ -21,7 +20,7 @@ interface Props {
 }
 
 export const TaskCard: FC<Props> = ({ task, index, category }) => {
-  const { handleRef, ref } = useSortable({
+  const { handleRef, ref, isDragging } = useSortable({
     id: task.id,
     index,
     type: "item",
@@ -32,7 +31,7 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
       easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
     },
   });
-  // console.log("me renderice");
+
   return (
     <div
       ref={ref}
@@ -56,6 +55,8 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
           <Grip />
         </Button>
       </div>
+      {category.name} - {index} - {isDragging ? "dragging" : ""}
+      {category.categoryId} - {task.statusColumnId}
       <div className="flex items-center gap-1">
         <h2 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
           {task.title}

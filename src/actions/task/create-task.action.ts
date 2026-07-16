@@ -8,7 +8,7 @@ export const createTaskAction = async ({
   ...submitData
 }: CreateTaskSubmitData) => {
   const { data } = await kanbanApplicationApi.post<CreateTaskResponse>(
-    `/tasks/in-column/${categoryId}`,
+    `/tasks/in-category/${categoryId}`,
     submitData,
   );
   return data;

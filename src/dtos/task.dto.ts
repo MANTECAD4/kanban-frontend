@@ -34,6 +34,7 @@ export const TaskSchema = z.object({
   dueDate: z.date(),
   priority: z.enum(TaskPriority),
   tags: z.array(z.enum(TaskTag)),
+  statusColumnId: z.int().min(1),
 });
 
 export const FormTaskSchema = z.object({

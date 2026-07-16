@@ -3,7 +3,7 @@ import type { GetCategoriesResponse } from "@/interfaces/category.interface";
 
 export const getCategoriesAction = async (boardId: number) => {
   const { data } = await kanbanApplicationApi.get<GetCategoriesResponse>(
-    `/status-columns/in-board/${boardId}`,
+    `/categories/in-board/${boardId}`,
   );
   return data;
 };

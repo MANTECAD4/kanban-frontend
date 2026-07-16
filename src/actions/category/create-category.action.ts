@@ -9,7 +9,7 @@ export const createCategoryAction = async ({
   ...submitData
 }: CreateCategoryData) => {
   const { data } = await kanbanApplicationApi.post<CreateCategoryResponse>(
-    `/status-columns/in-board/${boardId}`,
+    `/categories/in-board/${boardId}`,
     submitData,
   );
   return data;

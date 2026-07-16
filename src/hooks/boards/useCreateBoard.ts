@@ -1,9 +1,12 @@
+import { createBoardAction } from "@/actions/boards/create-board.action";
 import { SubmitBoardSchema, type SubmitBoardState } from "@/dtos/board.dtos";
 import { IconColor } from "@/dtos/project.dto";
-import { useCreateBoardQuery } from "@/queries/boards/useCreateBoardQuery";
+import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
 import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export const useCreateBoard = (projectId: number) => {
   const {
@@ -22,7 +25,16 @@ export const useCreateBoard = (projectId: number) => {
     },
   });
 
-  const createBoardMutation = useCreateBoardQuery(projectId);
+  const createBoardMutation = useMutation({
+    mutationFn: createBoardAction,
+    onSuccess: (data) => {
+      const { message } = data;
+      toast.success(message);
+      kanbanQueryClient.invalidateQueries({
+        queryKey: ["in-project", projectId, "boards"],
+      });
+    },
+  });
 
   const onSumbitForm = handleSubmit((data) => {
     const slug = slugify(data.name);

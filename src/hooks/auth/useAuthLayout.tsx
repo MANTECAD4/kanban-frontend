@@ -4,7 +4,8 @@ import { useAuthStore } from "@/providers/store/auth.store";
 import { useThemeStore } from "@/providers/store/theme.store";
 
 import { FingerprintPattern, Grip, ListTodo } from "lucide-react";
-import { useLoadSessionQuery } from "@/queries/auth/useLoadSessionQuery";
+import { loadSession } from "@/actions/auth/load-session.action";
+import { useQuery } from "@tanstack/react-query";
 
 const features = [
   {
@@ -33,7 +34,10 @@ const features = [
 export const useAuthLayout = () => {
   const theme = useThemeStore((state) => state.theme);
   const setSession = useAuthStore((state) => state.setSession);
-  const { status, data: sessionData } = useLoadSessionQuery();
+  const { status, data: sessionData } = useQuery({
+    queryFn: loadSession,
+    queryKey: ["load-session"],
+  });
   useEffect(() => {
     if (status === "success") {
       const {
