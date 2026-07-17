@@ -42,7 +42,7 @@ export const KanbanColumn: FC<Props> = ({ category, tasks }) => {
         </div>
         <div className="flex items-center gap-1">
           <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity">
-            <EditCategoryPopover>
+            <EditCategoryPopover category={category}>
               <Button size="icon-sm" variant={"outline"}>
                 <Pencil />
               </Button>

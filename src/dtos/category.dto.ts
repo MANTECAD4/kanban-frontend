@@ -12,6 +12,7 @@ export const CategorySchema = z.object({
 
 export const SubmitCategorySchema = CategorySchema.omit({
   id: true,
+  boardId: true,
   tasks: true,
 });
 

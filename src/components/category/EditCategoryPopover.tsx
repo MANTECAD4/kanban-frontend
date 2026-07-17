@@ -18,7 +18,8 @@ import {
   PopoverTrigger,
 } from "@/components/shared/ui/popover";
 import { Separator } from "@/components/shared/ui/separator";
-import { useAddCategory } from "@/hooks/category/useAddCategory";
+import type { CategoryEntity } from "@/dtos/category.dto";
+import { useEditCategory } from "@/hooks/category/useEditCategory";
 import { cn } from "@/lib/utils";
 import { Save, XCircle } from "lucide-react";
 import React, { type FC, type ReactNode } from "react";
@@ -27,7 +28,7 @@ import { Controller } from "react-hook-form";
 interface Props {
   children: ReactNode;
   className?: string;
-  boardId: number;
+  category: CategoryEntity;
 }
 
 type AddCategortDialogProps = Props & React.ComponentProps<typeof Popover>;
@@ -35,11 +36,11 @@ type AddCategortDialogProps = Props & React.ComponentProps<typeof Popover>;
 export const EditCategoryPopover: FC<AddCategortDialogProps> = ({
   children,
   className,
-  boardId,
+  category,
   ...props
 }) => {
-  const { register, errors, reset, control, submitForn } =
-    useAddCategory(boardId);
+  const { register, errors, reset, control, submitForm } =
+    useEditCategory(category);
   return (
     <Popover {...props} onOpenChange={() => reset()}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -48,7 +49,7 @@ export const EditCategoryPopover: FC<AddCategortDialogProps> = ({
         side="left"
         align="center"
       >
-        <form className="flex flex-col gap-4" onSubmit={submitForn}>
+        <form className="flex flex-col gap-4" onSubmit={submitForm}>
           <PopoverHeader>
             <PopoverTitle className="text-sm">Add category</PopoverTitle>
             <PopoverDescription className="text-foreground text-xs">
@@ -111,7 +112,7 @@ export const EditCategoryPopover: FC<AddCategortDialogProps> = ({
             </PopoverClose>
             <Button type="submit">
               <Save />
-              Create category
+              Save changes
             </Button>
           </div>
         </form>

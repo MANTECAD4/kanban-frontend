@@ -5,6 +5,11 @@ export interface CreateCategoryResponse {
   message: string;
   category: CategoryEntity;
 }
+export interface UpdateCategoryResponse {
+  ok: boolean;
+  message: string;
+  category: CategoryEntity;
+}
 
 export interface DeleteCategoryResponse {
   ok: boolean;
