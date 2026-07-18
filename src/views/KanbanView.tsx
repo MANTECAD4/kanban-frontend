@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
 import { useQuery } from "@tanstack/react-query";
 import { move } from "@dnd-kit/helpers";
@@ -6,6 +6,7 @@ import { move } from "@dnd-kit/helpers";
 import { KanbanColumn } from "@/components/kanban/KanbanColumn";
 import { getCategoriesAction } from "@/actions/category/get-categories.action";
 import type { TaskEntity } from "@/dtos/task.dto";
+import { useDraggingGlobalStore } from "@/providers/store/dragging.store";
 
 interface Props {
   boardId: number;
@@ -21,7 +22,14 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
     staleTime: 0,
   });
 
-  const [boardColumns, setBoardColumns] = useState({});
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const setIsDraggingGlobal = useDraggingGlobalStore(
+    (state) => state.setIsDraggingGlobal,
+  );
+  const [boardColumns, setBoardColumns] = useState<Record<string, any>>({});
+  const [columnOrder, setColumnOrder] = useState<string[]>([]);
+
   useEffect(() => {
     if (categoriesData) {
       const columns: Record<string, any> = {};
@@ -29,6 +37,7 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
         (category) => (columns[category.name] = category.tasks),
       );
       setBoardColumns(columns);
+      setColumnOrder(() => Object.keys(columns));
     }
   }, [categoriesData]);
 
@@ -40,14 +49,26 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
     <>
       <DragDropProvider
         onDragOver={(event) => {
-          {
-            setBoardColumns((items) => move(items, event));
-          }
+          setBoardColumns((items) => move(items, event));
+        }}
+        onDragStart={() => {
+          setIsDraggingGlobal(true);
+        }}
+        onDragEnd={(event) => {
+          const { source, target } = event.operation;
+          setIsDraggingGlobal(false);
+
+          if (event.canceled || !source || source.type !== "column") return;
+
+          setColumnOrder((columns) => move(columns, event));
         }}
       >
-        <div className="h-full  overflow-x-scroll custom-scrollbar pb-2">
-          <div className="flex gap-10 max-w-0 h-full ">
-            {Object.entries(boardColumns).map(([categoryName, tasks]) => {
+        <div
+          ref={containerRef}
+          className="h-full  overflow-x-scroll custom-scrollbar pb-2"
+        >
+          <div className="flex gap-10 max-w-0 h-full">
+            {columnOrder.map((categoryName, index) => {
               const categoryRegister = categoriesData!.categories.find(
                 (category) => category.name === categoryName,
               );
@@ -56,7 +77,9 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
                 <KanbanColumn
                   key={categoryName}
                   category={categoryRegister}
-                  tasks={tasks as TaskEntity[]}
+                  tasks={boardColumns[categoryName] as unknown as TaskEntity[]}
+                  index={index}
+                  container={containerRef}
                 />
               );
             })}

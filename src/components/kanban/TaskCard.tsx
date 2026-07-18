@@ -28,6 +28,7 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
         "flex flex-col p-3 bg-background border border-gray-200 dark:border-gray-700 rounded-xl",
       )}
     >
+      {index}
       <div className="flex justify-between my-2">
         <div className="flex gap-2">
           {task.tags.map((tag) => (
@@ -46,7 +47,7 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
       </div>
       <div className="flex items-center gap-1">
         <h2 className="tezt-md font-semibold hover:underline hover:text-blue-400 cursor-pointer">
-          {task.title} - {}
+          {task.title}
         </h2>
       </div>
       <div className="flex gap-2 mt-2">
