@@ -6,6 +6,7 @@ export const CategorySchema = z.object({
   id: z.int().min(1),
   name: z.string().min(3),
   icon: z.enum(iconNames, "Select a valid icon"),
+  order: z.int().min(0),
   tasks: z.array(TaskSchema),
   boardId: z.int().min(1),
 });

@@ -33,6 +33,7 @@ export const TaskSchema = z.object({
   description: z.string().nonempty(),
   dueDate: z.date(),
   priority: z.enum(TaskPriority),
+  order: z.int().min(0),
   tags: z.array(z.enum(TaskTag)),
   categoryId: z.int().min(1),
 });

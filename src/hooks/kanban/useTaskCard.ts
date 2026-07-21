@@ -1,5 +1,7 @@
 import { updateTaskCategoryAction } from "@/actions/task/update-task-category.action";
+import { updateTaskOrderAction } from "@/actions/task/update-task-order.action";
 import type { TaskEntity } from "@/dtos/task.dto";
+import { useDraggingStore } from "@/providers/store/dragging.store";
 import { useSortable } from "@dnd-kit/react/sortable";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -15,7 +17,7 @@ export const useTaskCard = ({
   category: { categoryId, name: categoryName },
   index,
 }: Props) => {
-  const { handleRef, ref, isDropping, isDragging } = useSortable({
+  const { handleRef, ref, isDragging } = useSortable({
     id: taskId,
     index,
     type: "item",
@@ -30,6 +32,11 @@ export const useTaskCard = ({
   const updateTaskCategoryMutation = useMutation({
     mutationFn: updateTaskCategoryAction,
   });
+  const updateTaskOrderMutation = useMutation({
+    mutationFn: updateTaskOrderAction,
+  });
+
+  const isDraggingGlobal = useDraggingStore((state) => state.isDraggingColumn);
 
   useEffect(() => {
     if (!isDragging) {
@@ -40,10 +47,14 @@ export const useTaskCard = ({
     }
   }, [isDragging, categoryId, taskId]);
 
+  useEffect(() => {
+    if (!isDraggingGlobal) {
+      updateTaskOrderMutation.mutate({ taskId, order: index });
+    }
+  }, [isDraggingGlobal, index, taskId]);
+
   return {
     handleRef,
     ref,
-    isDragging,
-    isDropping,
   };
 };

@@ -8,12 +8,14 @@ interface ApiError {
 export const getApiError = (error: any) => {
   let title;
   let message;
+  let code = "";
 
   if (axios.isAxiosError(error)) {
     if (error.response) {
       // Server responded with an error
       title = error.response.data.error.title;
       message = error.response.data.error.message;
+      code = error.response.data.error.code;
     } else if (error.request) {
       // Request made, but no response
       title = "Server conection failed";
@@ -28,5 +30,5 @@ export const getApiError = (error: any) => {
     title = "Oops!";
     message = "Something went wrong. Try again later";
   }
-  return { title, message };
+  return { title, message, code };
 };

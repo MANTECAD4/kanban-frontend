@@ -22,13 +22,15 @@ export const kanbanQueryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (error) => {
-      const { title, message } = getApiError(error);
+      const { title, message, code } = getApiError(error);
+      console.log({ error: code });
       toast.error(title, { description: message });
     },
   }),
   mutationCache: new MutationCache({
     onError: (error) => {
-      const { title, message } = getApiError(error);
+      const { title, message, code } = getApiError(error);
+      console.log({ error: code });
       toast.error(title, { description: message });
     },
   }),

@@ -1,4 +1,4 @@
-import type { FC, ReactNode, RefObject } from "react";
+import { useEffect, type FC, type ReactNode, type RefObject } from "react";
 import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import {
@@ -35,6 +35,9 @@ import {
 import { useSortable } from "@dnd-kit/react/sortable";
 import { RestrictToHorizontalAxis } from "@dnd-kit/abstract/modifiers";
 import { RestrictToElement } from "@dnd-kit/dom/modifiers";
+import { useDraggingStore } from "@/providers/store/dragging.store";
+import { useMutation } from "@tanstack/react-query";
+import { updateCategoryOrderAction } from "@/actions/category/update-category-order.action";
 
 interface Props {
   category: CategoryEntity;
@@ -55,7 +58,7 @@ export const KanbanColumn: FC<Props> = ({
     id: category.name,
     type: "column",
     accept: ["item", "column"],
-    collisionPriority: CollisionPriority.High,
+    collisionPriority: CollisionPriority.Low,
     modifiers: [
       RestrictToHorizontalAxis,
       RestrictToElement.configure({
@@ -63,6 +66,20 @@ export const KanbanColumn: FC<Props> = ({
       }),
     ],
   });
+
+  const insDraggingGlobal = useDraggingStore((state) => state.isDraggingColumn);
+  const updateCategoryOrderMutation = useMutation({
+    mutationFn: updateCategoryOrderAction,
+  });
+  useEffect(() => {
+    if (!insDraggingGlobal) {
+      updateCategoryOrderMutation.mutate({
+        categoryId: category.id,
+        order: index,
+      });
+    }
+  }, [insDraggingGlobal, index, category.id]);
+
   return (
     <div
       className={cn("flex flex-col w-82  shrink-0  bg-background")}

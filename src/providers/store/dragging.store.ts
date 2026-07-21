@@ -2,11 +2,13 @@ import { create, type StateCreator } from "zustand";
 import { devtools } from "zustand/middleware";
 
 interface DraggingProps {
-  isDraggingGlobal: boolean;
+  isDraggingColumn: boolean;
+  isDraggingTask: boolean;
 }
 
 interface DraggingActions {
-  setIsDraggingGlobal: (value: boolean) => void;
+  setIsDraggingColumn: (value: boolean) => void;
+  setIsDraggingTask: (value: boolean) => void;
 }
 
 type DraggingState = DraggingProps & DraggingActions;
@@ -14,11 +16,12 @@ type DraggingState = DraggingProps & DraggingActions;
 const storeApi: StateCreator<DraggingState, [["zustand/devtools", never]]> = (
   set,
 ) => ({
-  isDraggingGlobal: false,
-  setIsDraggingGlobal: (value: boolean) =>
-    set({ isDraggingGlobal: value }, false, "setIsDraggingGlobal"),
+  isDraggingColumn: false,
+  isDraggingTask: false,
+  setIsDraggingColumn: (value: boolean) =>
+    set({ isDraggingColumn: value }, false, "setIsDraggingColumn"),
+  setIsDraggingTask: (value: boolean) =>
+    set({ isDraggingTask: value }, false, "setIsDraggingTask"),
 });
 
-export const useDraggingGlobalStore = create<DraggingState>()(
-  devtools(storeApi),
-);
+export const useDraggingStore = create<DraggingState>()(devtools(storeApi));

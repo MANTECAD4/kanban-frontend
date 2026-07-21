@@ -6,7 +6,7 @@ import { move } from "@dnd-kit/helpers";
 import { KanbanColumn } from "@/components/kanban/KanbanColumn";
 import { getCategoriesAction } from "@/actions/category/get-categories.action";
 import type { TaskEntity } from "@/dtos/task.dto";
-import { useDraggingGlobalStore } from "@/providers/store/dragging.store";
+import { useDraggingStore } from "@/providers/store/dragging.store";
 
 interface Props {
   boardId: number;
@@ -24,8 +24,8 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const setIsDraggingGlobal = useDraggingGlobalStore(
-    (state) => state.setIsDraggingGlobal,
+  const setIsDraggingGlobal = useDraggingStore(
+    (state) => state.setIsDraggingColumn,
   );
   const [boardColumns, setBoardColumns] = useState<Record<string, any>>({});
   const [columnOrder, setColumnOrder] = useState<string[]>([]);
@@ -55,9 +55,9 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
           setIsDraggingGlobal(true);
         }}
         onDragEnd={(event) => {
-          const { source, target } = event.operation;
           setIsDraggingGlobal(false);
 
+          const { source, target } = event.operation;
           if (event.canceled || !source || source.type !== "column") return;
 
           setColumnOrder((columns) => move(columns, event));

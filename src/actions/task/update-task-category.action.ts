@@ -9,9 +9,12 @@ export const updateTaskCategoryAction = async ({
   taskId,
   categoryId,
 }: UpdateTaskColumnData) => {
-  const { data } = await kanbanApplicationApi.put(`/tasks/${taskId}/category`, {
-    categoryId,
-  });
+  const { data } = await kanbanApplicationApi.patch(
+    `/tasks/${taskId}/change-category`,
+    {
+      categoryId,
+    },
+  );
 
   return data;
 };
