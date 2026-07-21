@@ -49,18 +49,17 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
     <>
       <DragDropProvider
         onDragOver={(event) => {
+          const { source } = event.operation;
           setBoardColumns((items) => move(items, event));
+          if (!source || source.type !== "column") return;
+
+          setColumnOrder((columns) => move(columns, event));
         }}
         onDragStart={() => {
           setIsDraggingGlobal(true);
         }}
         onDragEnd={(event) => {
           setIsDraggingGlobal(false);
-
-          const { source, target } = event.operation;
-          if (event.canceled || !source || source.type !== "column") return;
-
-          setColumnOrder((columns) => move(columns, event));
         }}
       >
         <div
