@@ -1,4 +1,3 @@
-import { TaskPriority } from "@/interfaces/project.interface";
 import {
   Avatar,
   AvatarFallback,
@@ -13,6 +12,7 @@ import { Ellipsis, Plus } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
+import { TaskPriority } from "@/dtos/task.dto";
 
 const categories = [
   {

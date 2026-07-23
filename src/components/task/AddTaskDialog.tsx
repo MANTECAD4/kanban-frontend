@@ -26,8 +26,7 @@ import {
 import { Input } from "@/components/shared/ui/input";
 import { Textarea } from "@/components/shared/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/shared/ui/radio-group";
-import { TaskPriority } from "@/interfaces/project.interface";
-import { TaskTag } from "@/dtos/task.dto";
+import { TaskPriority, TaskTag } from "@/dtos/task.dto";
 import { useAddTask } from "@/hooks/tasks/useAddTask";
 import { Controller } from "react-hook-form";
 import {

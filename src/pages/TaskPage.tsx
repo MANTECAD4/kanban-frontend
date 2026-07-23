@@ -1,5 +1,6 @@
 import { getBoardBySlugAction } from "@/actions/boards/get-board-by-slug.action";
 import { getProjectBySlugAction } from "@/actions/project/get-project.by-slug.action";
+import { getTaskBySlugAction } from "@/actions/task/get-task-by-slug.action";
 import { Badge } from "@/components/shared/ui/badge";
 import {
   Breadcrumb,
@@ -30,7 +31,7 @@ import { DynamicIcon } from "lucide-react/dynamic";
 import { Link, useParams } from "react-router";
 
 export const TaskPage = () => {
-  const { projectSlug = "", boardSlug = "" } = useParams();
+  const { projectSlug = "", boardSlug = "", taskSlug = "" } = useParams();
   const getProjectQuery = useQuery({
     queryFn: () => getProjectBySlugAction(projectSlug),
     queryKey: ["projects", projectSlug],
@@ -40,10 +41,17 @@ export const TaskPage = () => {
     queryFn: () =>
       getBoardBySlugAction(boardSlug, getProjectQuery.data?.project.id ?? 0),
     queryKey: ["boards", boardSlug],
-    enabled: projectSlug !== "" && getProjectQuery.data !== undefined,
+    enabled: boardSlug !== "" && getProjectQuery.data !== undefined,
+  });
+  const getTaskQuery = useQuery({
+    queryFn: () =>
+      getTaskBySlugAction(getBoardQuery.data?.board.id ?? 0, taskSlug),
+    queryKey: ["tasks", taskSlug],
+    enabled: projectSlug !== "" && getBoardQuery.data !== undefined,
   });
 
-  if (!getBoardQuery.data || !getProjectQuery.data) return;
+  if (!getBoardQuery.data || !getProjectQuery.data || !getTaskQuery.data)
+    return;
 
   return (
     <div className="flex flex-col min-h-dvh pl-2 pr-4 py-4.5  max-w-7xl mx-auto">
@@ -69,33 +77,37 @@ export const TaskPage = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>My task</BreadcrumbPage>
+              <BreadcrumbPage>{getTaskQuery.data.task.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </div>
       <div className="px-8">
         <div className="flex flex-col items-start gap-2 pb-8 group/header">
-          <div className="flex items-center gap-1 border border-primary text-primary bg-primary/20 py-1 px-2 rounded-full">
+          {/* <div className="flex items-center gap-1 border border-primary text-primary bg-primary/20 py-1 px-2 rounded-full">
             <DynamicIcon name={"loader"} className="size-3.5" />
             <p className="text-xs">In progress</p>
-          </div>
+          </div> */}
           <h1 title="Edit board" className="text-3xl font-semibold text-start ">
-            {getBoardQuery.data.board.name}
+            {getTaskQuery.data.task.title}
           </h1>
           <p className="text-xs text-muted-foreground">
-            Created at Tue, Jul 28, 2026
+            Created at{" "}
+            {new Date(getTaskQuery.data.task.createdAt).toLocaleDateString(
+              "en-US",
+              {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              },
+            )}
           </p>
         </div>
         <div className="grid gap-8" style={{ gridTemplateColumns: "8fr 4fr" }}>
           <div className=" flex flex-col gap-4 ">
             <h2 className=" font-semibold">Description</h2>
-            <p className="leading-6 ">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id fuga
-              quas cupiditate impedit, neque debitis voluptatem eaque sint
-              dolorem. Quibusdam explicabo voluptas nobis accusantium tenetur
-              vel itaque animi est deserunt?
-            </p>
+            <p className="leading-6 ">{getTaskQuery.data.task.description}</p>
             <Separator className="my-3" />
             <div className="flex flex-col gap-4">
               <div className="flex justify-between items-center">
@@ -121,7 +133,7 @@ export const TaskPage = () => {
                 </div>
                 <div className="flex gap-1 items-center">
                   <Siren className="size-4" />
-                  <p>High</p>
+                  <p>{getTaskQuery.data.task.priority}</p>
                 </div>
               </div>
               <Separator />
@@ -130,7 +142,17 @@ export const TaskPage = () => {
                   <Calendar className="size-4" />
                   <p>Due date</p>
                 </div>
-                <p>Tue, Jul 28, 2026</p>
+                <p className="font-semibold">
+                  {new Date(getTaskQuery.data.task.dueDate).toLocaleDateString(
+                    "en-US",
+                    {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    },
+                  )}
+                </p>
               </div>
               <Separator />
               <div className="flex justify-between  py-2">
@@ -138,7 +160,15 @@ export const TaskPage = () => {
                   <Clock className="size-4" />
                   <p>Due time</p>
                 </div>
-                <p>4:30 PM</p>
+                <p className="font-semibold">
+                  {new Date(getTaskQuery.data.task.dueDate).toLocaleTimeString(
+                    "en-US",
+                    {
+                      hour: "2-digit",
+                      minute: "numeric",
+                    },
+                  )}
+                </p>
               </div>
               <Separator />
               <div className="py-2">
@@ -147,11 +177,11 @@ export const TaskPage = () => {
                   <p>Tags</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-4">
-                  <Badge variant={"outline"}>UI</Badge>
-                  <Badge variant={"outline"}>UX</Badge>
-                  <Badge variant={"outline"}>Feature</Badge>
-                  <Badge variant={"outline"}>CSS</Badge>
-                  <Badge variant={"outline"}>Security</Badge>
+                  {getTaskQuery.data.task.tags.map((tag) => (
+                    <Badge key={tag} variant={"outline"}>
+                      {tag}
+                    </Badge>
+                  ))}
                 </div>
               </div>
             </div>

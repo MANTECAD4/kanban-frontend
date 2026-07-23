@@ -1,6 +1,9 @@
 import { createTaskAction } from "@/actions/task/create-task.action";
-import { FormTaskSchema, type FormTaskState } from "@/dtos/task.dto";
-import { TaskPriority } from "@/interfaces/project.interface";
+import {
+  FormTaskSchema,
+  TaskPriority,
+  type FormTaskState,
+} from "@/dtos/task.dto";
 import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";

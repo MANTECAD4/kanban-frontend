@@ -54,7 +54,7 @@ export const ManageSubtasksForm = () => {
         </EmptyHeader>
       </Empty> */}
 
-      <div className="flex flex-col gap-1.5 pr-1 max-h-40 overflow-y-scroll custom-scrollbar ">
+      <div className="flex flex-col gap-1.5 pr-1 max-h-50 overflow-y-scroll custom-scrollbar ">
         {subtasks.map((subtask) => (
           <div
             key={subtask}

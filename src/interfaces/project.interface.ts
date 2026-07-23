@@ -1,11 +1,5 @@
 import type { ProjectEntity } from "@/dtos/project.dto";
 
-export enum TaskPriority {
-  Low = "LOW",
-  Medium = "MEDIUM",
-  High = "HIGH",
-  Urgent = "URGENT",
-}
 export interface CreateProjectResponse {
   ok: boolean;
   message: string;

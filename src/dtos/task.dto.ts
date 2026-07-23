@@ -1,4 +1,3 @@
-import { TaskPriority } from "@/interfaces/project.interface";
 import z from "zod";
 export enum TaskTag {
   UI = "UI",
@@ -26,6 +25,13 @@ export enum TaskTag {
   Cleanup = "Cleanup",
 }
 
+export enum TaskPriority {
+  Low = "Low",
+  Medium = "Medium",
+  High = "High",
+  Urgent = "Urgent",
+}
+
 export const TaskSchema = z.object({
   id: z.int().min(1),
   title: z.string().min(3),
@@ -36,6 +42,7 @@ export const TaskSchema = z.object({
   order: z.int().min(0),
   tags: z.array(z.enum(TaskTag)),
   categoryId: z.int().min(1),
+  createdAt: z.date(),
 });
 
 export const FormTaskSchema = z.object({
@@ -61,6 +68,11 @@ export type SubmitTaskState = {
 
 // RESPONSES
 export type CreateTaskResponse = {
+  ok: boolean;
+  message: string;
+  task: TaskEntity;
+};
+export type GetTaskBySlugResponse = {
   ok: boolean;
   message: string;
   task: TaskEntity;
