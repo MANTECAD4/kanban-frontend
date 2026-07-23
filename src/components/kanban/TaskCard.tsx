@@ -12,6 +12,7 @@ import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import type { TaskEntity } from "@/dtos/task.dto";
 import { useTaskCard } from "@/hooks/kanban/useTaskCard";
+import { Link } from "react-router";
 
 interface Props {
   category: { name: string; categoryId: number };
@@ -20,7 +21,11 @@ interface Props {
 }
 
 export const TaskCard: FC<Props> = ({ task, index, category }) => {
-  const { handleRef, ref } = useTaskCard({ task, category, index });
+  const { handleRef, ref, boardSlug, projectSlug } = useTaskCard({
+    task,
+    category,
+    index,
+  });
   return (
     <div
       ref={ref}
@@ -28,7 +33,6 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
         "flex flex-col p-3 bg-background border border-gray-200 dark:border-gray-700 rounded-xl",
       )}
     >
-      {index}
       <div className="flex justify-between my-2">
         <div className="flex gap-2">
           {task.tags.map((tag) => (
@@ -77,12 +81,13 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
             <span className="text-xs">5</span>
           </div>
         </div>
-        <AddTaskDialog category={category}>
+        <Link
+          to={`/projects/${projectSlug}/boards/${boardSlug}/tasks/${task.slug}`}
+        >
           <Button size="icon-lg" variant="outline" className="">
             <ChevronRight />
-            {/* Inspect */}
           </Button>
-        </AddTaskDialog>
+        </Link>
       </div>
     </div>
   );

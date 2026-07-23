@@ -28,30 +28,28 @@ export const BoardPage = () => {
   if (!getProjectQuery.data || !getBoardQuery.data) return;
   return (
     <div className="flex flex-col h-dvh pl-2 pr-4 pt-4.5 pb-1 ">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2 mb-3">
-          <SidebarTrigger className="" />
+      <div className="flex items-center gap-2 mb-3">
+        <SidebarTrigger className="" />
 
-          <Separator orientation="vertical" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <Link to={`/projects/${projectSlug}`} className="text-gray-400">
-                  {getProjectQuery.data.project.name}
-                </Link>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{getBoardQuery.data.board.name}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
+        <Separator orientation="vertical" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <Link to={`/projects/${projectSlug}`} className="text-gray-400">
+                {getProjectQuery.data.project.name}
+              </Link>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{getBoardQuery.data.board.name}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
 
       <div className="flex flex-col items-start gap-2 pb-8 group/header">
         <div className="flex gap-2 items-center">
-          <h1 title="Edit board" className="text-2xl font-semibold text-start ">
+          <h1 title="Edit board" className="text-3xl font-semibold text-start ">
             {getBoardQuery.data.board.name}
           </h1>
           <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity focus-within:opacity-100">

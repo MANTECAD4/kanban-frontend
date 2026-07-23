@@ -181,7 +181,7 @@ export const KanbanColumn: FC<Props> = ({
         <div className="absolute top-1/2 left-1/2 -z-10 -translate-1/2 flex flex-col items-center gap-3 text-muted-foreground">
           <Kanban className=" size-20 stroke-muted-foreground" />
         </div>
-        <div className="flex flex-col gap-3 max-h-10 pr-1">
+        <div className="flex flex-col gap-3 max-h-10 pr-1 ">
           {tasks.map((task, i) => (
             <TaskCard
               key={task.id}

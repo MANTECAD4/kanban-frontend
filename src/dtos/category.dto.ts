@@ -15,6 +15,7 @@ export const SubmitCategorySchema = CategorySchema.omit({
   id: true,
   boardId: true,
   tasks: true,
+  order: true,
 });
 
 export type SubmitCategoryState = z.infer<typeof SubmitCategorySchema>;

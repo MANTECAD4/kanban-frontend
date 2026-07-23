@@ -9,11 +9,14 @@ import {
 } from "@/components/shared/ui/empty";
 import { Input } from "@/components/shared/ui/input";
 import { Separator } from "@/components/shared/ui/separator";
+import { Checkbox } from "@/components/shared/ui/checkbox";
 import { Pencil, Plus, Save, StickyNoteX, Trash } from "lucide-react";
 const subtasks = [
   "Fix z-index issue in modal",
   "Change add task form presentation",
   "Add animations",
+  "Improve performance",
+  "Implement task query",
 ];
 export const ManageSubtasksForm = () => {
   return (
@@ -51,17 +54,18 @@ export const ManageSubtasksForm = () => {
         </EmptyHeader>
       </Empty> */}
 
-      <div className="flex flex-col gap-2 pr-1 max-h-50 overflow-y-scroll custom-scrollbar ">
+      <div className="flex flex-col gap-1.5 pr-1 max-h-40 overflow-y-scroll custom-scrollbar ">
         {subtasks.map((subtask) => (
           <div
             key={subtask}
-            className="flex justify-between gap-2 items-center rounded-md py-1.5 text-sm"
+            className="flex gap-2 items-center rounded-md py-1 text-sm "
           >
-            {/* <Checkbox */}
+            <Checkbox />
             <Input
               value={subtask}
               readOnly
-              className="text-xs font-semibold text-foreground/80"
+              className=" font-semibold text-foreground/80  bg-transparent! border-0"
+              // disabled
             />
 
             <ButtonGroup>

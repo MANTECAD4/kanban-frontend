@@ -5,6 +5,7 @@ import { useDraggingStore } from "@/providers/store/dragging.store";
 import { useSortable } from "@dnd-kit/react/sortable";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useParams } from "react-router";
 
 interface Props {
   category: { name: string; categoryId: number };
@@ -28,6 +29,8 @@ export const useTaskCard = ({
       easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
     },
   });
+
+  const { projectSlug = "", boardSlug = "" } = useParams();
 
   const updateTaskCategoryMutation = useMutation({
     mutationFn: updateTaskCategoryAction,
@@ -56,5 +59,7 @@ export const useTaskCard = ({
   return {
     handleRef,
     ref,
+    projectSlug,
+    boardSlug,
   };
 };

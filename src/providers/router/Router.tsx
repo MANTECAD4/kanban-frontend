@@ -9,6 +9,7 @@ import { PublicRoute } from "@/providers/router/PublicRoute";
 import { BoardPage } from "@/pages/BoardPage";
 import { ProjectPage } from "@/pages/ProjectPage";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
+import { TaskPage } from "@/pages/TaskPage";
 
 export const appRouter = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "projects/:projectSlug/boards/:boardSlug",
         element: <BoardPage />,
+      },
+      {
+        path: "projects/:projectSlug/boards/:boardSlug/tasks/:taskSlug",
+        element: <TaskPage />,
       },
     ],
   },
