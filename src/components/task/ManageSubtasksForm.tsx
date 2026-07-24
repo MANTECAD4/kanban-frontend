@@ -8,9 +8,8 @@ import {
   EmptyTitle,
 } from "@/components/shared/ui/empty";
 import { Input } from "@/components/shared/ui/input";
-import { Separator } from "@/components/shared/ui/separator";
 import { Checkbox } from "@/components/shared/ui/checkbox";
-import { Pencil, Plus, Save, StickyNoteX, Trash } from "lucide-react";
+import { Pencil, Plus, StickyNoteX, Trash } from "lucide-react";
 const subtasks = [
   "Fix z-index issue in modal",
   "Change add task form presentation",
@@ -54,7 +53,7 @@ export const ManageSubtasksForm = () => {
         </EmptyHeader>
       </Empty> */}
 
-      <div className="flex flex-col gap-1.5 pr-1 max-h-50 overflow-y-scroll custom-scrollbar ">
+      <div className="flex flex-col gap-1.5 pr-1 max-h-40 overflow-y-scroll custom-scrollbar ">
         {subtasks.map((subtask) => (
           <div
             key={subtask}

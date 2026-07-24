@@ -77,3 +77,8 @@ export type GetTaskBySlugResponse = {
   message: string;
   task: TaskEntity;
 };
+export type UpdateTaskResponse = {
+  ok: boolean;
+  message: string;
+  task: TaskEntity;
+};

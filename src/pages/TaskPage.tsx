@@ -10,10 +10,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/shared/ui/breadcrumb";
 import { Button } from "@/components/shared/ui/button";
-import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Progress } from "@/components/shared/ui/progress";
 import { Separator } from "@/components/shared/ui/separator";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
+import { AddTaskDialog } from "@/components/task/AddTaskDialog";
+import { EditTaskDialog } from "@/components/task/EditTaskDialog";
 import { ManageSubtasksForm } from "@/components/task/ManageSubtasksForm";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -21,13 +22,10 @@ import {
   Clock,
   Flag,
   ListTodo,
-  Paperclip,
   Pencil,
   Siren,
   Tags,
-  Trash,
 } from "lucide-react";
-import { DynamicIcon } from "lucide-react/dynamic";
 import { Link, useParams } from "react-router";
 
 export const TaskPage = () => {
@@ -52,7 +50,6 @@ export const TaskPage = () => {
 
   if (!getBoardQuery.data || !getProjectQuery.data || !getTaskQuery.data)
     return;
-
   return (
     <div className="flex flex-col min-h-dvh pl-2 pr-4 py-4.5  max-w-7xl mx-auto">
       <div className="flex items-center gap-2 mb-6">
@@ -83,26 +80,33 @@ export const TaskPage = () => {
         </Breadcrumb>
       </div>
       <div className="px-8">
-        <div className="flex flex-col items-start gap-2 pb-8 group/header">
-          {/* <div className="flex items-center gap-1 border border-primary text-primary bg-primary/20 py-1 px-2 rounded-full">
-            <DynamicIcon name={"loader"} className="size-3.5" />
-            <p className="text-xs">In progress</p>
-          </div> */}
-          <h1 title="Edit board" className="text-3xl font-semibold text-start ">
-            {getTaskQuery.data.task.title}
-          </h1>
-          <p className="text-xs text-muted-foreground">
-            Created at{" "}
-            {new Date(getTaskQuery.data.task.createdAt).toLocaleDateString(
-              "en-US",
-              {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              },
-            )}
-          </p>
+        <div className="flex justify-between pb-8">
+          <div className="flex flex-col  gap-2  group/header ">
+            <h1
+              title="Edit board"
+              className="text-3xl font-semibold text-start "
+            >
+              {getTaskQuery.data.task.title}
+            </h1>
+            <p className="text-xs text-muted-foreground">
+              Created at{" "}
+              {new Date(getTaskQuery.data.task.createdAt).toLocaleDateString(
+                "en-US",
+                {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                },
+              )}
+            </p>
+          </div>
+          <EditTaskDialog task={getTaskQuery.data.task}>
+            <Button variant={"outline"}>
+              <Pencil />
+              Edit task information
+            </Button>
+          </EditTaskDialog>
         </div>
         <div className="grid gap-8" style={{ gridTemplateColumns: "8fr 4fr" }}>
           <div className=" flex flex-col gap-4 ">

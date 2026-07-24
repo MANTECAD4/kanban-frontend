@@ -7,7 +7,7 @@ import {
 import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { add, milliseconds, set } from "date-fns";
+import { set, addDays } from "date-fns";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,7 +23,7 @@ export const useAddTask = (categoryId: number) => {
     defaultValues: {
       title: "",
       description: "",
-      dueDay: new Date(),
+      dueDay: addDays(new Date(), 7),
       dueTime: "23:59:00",
       priority: TaskPriority.Medium,
       tags: [],
@@ -32,7 +32,7 @@ export const useAddTask = (categoryId: number) => {
 
   const createTaskQuery = useMutation({
     mutationFn: createTaskAction,
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success(`Task created successfully`);
     },
   });

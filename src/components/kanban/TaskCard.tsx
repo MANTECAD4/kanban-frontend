@@ -9,7 +9,6 @@ import { Progress } from "@/components/shared/ui/progress";
 import { CalendarClock, ChevronRight, Grip, Paperclip } from "lucide-react";
 
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
-import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import type { TaskEntity } from "@/dtos/task.dto";
 import { useTaskCard } from "@/hooks/kanban/useTaskCard";
 import { Link } from "react-router";

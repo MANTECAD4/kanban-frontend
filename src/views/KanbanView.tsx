@@ -20,6 +20,7 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
     queryFn: () => getCategoriesAction(boardId),
     queryKey: ["in-board", boardId, "categories"],
     staleTime: 0,
+    refetchOnWindowFocus: false,
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
