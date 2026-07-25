@@ -50,7 +50,7 @@ export const useEditTask = (task: TaskEntity) => {
           `/projects/${projectSlug}/boards/${boardSlug}/tasks/${data.task.slug}`,
         );
       }
-      toast.success(`Task ${task.title} updated successfully`);
+      toast.success(`Task "${task.title}" updated successfully`);
       kanbanQueryClient.invalidateQueries({
         queryKey: ["tasks", data.task.slug],
       });

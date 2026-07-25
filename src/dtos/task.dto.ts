@@ -82,3 +82,8 @@ export type UpdateTaskResponse = {
   message: string;
   task: TaskEntity;
 };
+export type DeleteTaskResponse = {
+  ok: boolean;
+  message: string;
+  task: TaskEntity;
+};

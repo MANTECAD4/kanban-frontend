@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const useTaskCard = ({
-  task: { id: taskId },
+  task: { id: taskId, order, categoryId: originalCategoryId },
   category: { categoryId, name: categoryName },
   index,
 }: Props) => {
@@ -42,19 +42,19 @@ export const useTaskCard = ({
   const isDraggingGlobal = useDraggingStore((state) => state.isDraggingColumn);
 
   useEffect(() => {
-    if (!isDragging) {
+    if (!isDragging && originalCategoryId !== categoryId) {
       updateTaskCategoryMutation.mutate({
         taskId: taskId,
         categoryId: categoryId,
       });
     }
-  }, [isDragging, categoryId, taskId]);
+  }, [isDragging, categoryId, taskId, originalCategoryId]);
 
   useEffect(() => {
-    if (!isDraggingGlobal) {
+    if (!isDraggingGlobal && index !== order) {
       updateTaskOrderMutation.mutate({ taskId, order: index });
     }
-  }, [isDraggingGlobal, index, taskId]);
+  }, [isDraggingGlobal, index, taskId, order]);
 
   return {
     handleRef,

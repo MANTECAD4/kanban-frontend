@@ -26,6 +26,7 @@ export const BoardPage = () => {
   const [tasksView, setTasksView] = useState<string>("kanban");
 
   if (!getProjectQuery.data || !getBoardQuery.data) return;
+  if (getBoardQuery.isFetching) return <p>Loading</p>;
   return (
     <div className="flex flex-col h-dvh pl-2 pr-4 pt-4.5 pb-1 ">
       <div className="flex items-center gap-2 mb-3">

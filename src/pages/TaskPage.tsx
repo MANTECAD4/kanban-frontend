@@ -1,3 +1,4 @@
+import { Link, useParams } from "react-router";
 import { getBoardBySlugAction } from "@/actions/boards/get-board-by-slug.action";
 import { getProjectBySlugAction } from "@/actions/project/get-project.by-slug.action";
 import { getTaskBySlugAction } from "@/actions/task/get-task-by-slug.action";
@@ -13,7 +14,6 @@ import { Button } from "@/components/shared/ui/button";
 import { Progress } from "@/components/shared/ui/progress";
 import { Separator } from "@/components/shared/ui/separator";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
-import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import { EditTaskDialog } from "@/components/task/EditTaskDialog";
 import { ManageSubtasksForm } from "@/components/task/ManageSubtasksForm";
 import { useQuery } from "@tanstack/react-query";
@@ -25,8 +25,9 @@ import {
   Pencil,
   Siren,
   Tags,
+  Trash,
 } from "lucide-react";
-import { Link, useParams } from "react-router";
+import { DeleteTaskDialog } from "@/components/task/DeleteTaskDialog";
 
 export const TaskPage = () => {
   const { projectSlug = "", boardSlug = "", taskSlug = "" } = useParams();
@@ -53,7 +54,7 @@ export const TaskPage = () => {
   return (
     <div className="flex flex-col min-h-dvh pl-2 pr-4 py-4.5  max-w-7xl mx-auto">
       <div className="flex items-center gap-2 mb-6">
-        <SidebarTrigger className="" />
+        <SidebarTrigger variant={"outline"} className="size-6 " />
 
         <Separator orientation="vertical" />
         <Breadcrumb>
@@ -101,12 +102,24 @@ export const TaskPage = () => {
               )}
             </p>
           </div>
-          <EditTaskDialog task={getTaskQuery.data.task}>
-            <Button variant={"outline"}>
-              <Pencil />
-              Edit task information
-            </Button>
-          </EditTaskDialog>
+          <div className="flex gap-2">
+            <EditTaskDialog task={getTaskQuery.data.task}>
+              <Button variant={"outline"}>
+                <Pencil />
+                Edit information
+              </Button>
+            </EditTaskDialog>
+
+            <DeleteTaskDialog
+              task={getTaskQuery.data.task}
+              boardId={getBoardQuery.data.board.id}
+            >
+              <Button variant={"destructive"}>
+                <Trash />
+                Delete
+              </Button>
+            </DeleteTaskDialog>
+          </div>
         </div>
         <div className="grid gap-8" style={{ gridTemplateColumns: "8fr 4fr" }}>
           <div className=" flex flex-col gap-4 ">

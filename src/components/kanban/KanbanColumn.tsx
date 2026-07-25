@@ -72,13 +72,13 @@ export const KanbanColumn: FC<Props> = ({
     mutationFn: updateCategoryOrderAction,
   });
   useEffect(() => {
-    if (!insDraggingGlobal) {
+    if (!insDraggingGlobal && index !== category.order) {
       updateCategoryOrderMutation.mutate({
         categoryId: category.id,
         order: index,
       });
     }
-  }, [insDraggingGlobal, index, category.id]);
+  }, [insDraggingGlobal, index, category.id, category.order]);
 
   return (
     <div

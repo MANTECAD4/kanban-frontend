@@ -33,7 +33,7 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
       )}
     >
       <div className="flex justify-between my-2">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {task.tags.map((tag) => (
             <Badge key={tag} variant="outline">
               {tag}

@@ -32,7 +32,7 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
   const [columnOrder, setColumnOrder] = useState<string[]>([]);
 
   useEffect(() => {
-    if (categoriesData) {
+    if (categoriesData && isFetched) {
       const columns: Record<string, any> = {};
       categoriesData.categories.forEach(
         (category) => (columns[category.name] = category.tasks),
@@ -40,11 +40,11 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
       setBoardColumns(columns);
       setColumnOrder(() => Object.keys(columns));
     }
-  }, [categoriesData]);
+  }, [categoriesData, isFetched]);
 
   if (isFetching) return <p>Loading</p>;
 
-  if ((!boardColumns || !categoriesData) && isFetched) return;
+  if (!boardColumns || !categoriesData || isFetching) return;
 
   return (
     <>
