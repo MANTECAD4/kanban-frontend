@@ -15,7 +15,7 @@ import { Progress } from "@/components/shared/ui/progress";
 import { Separator } from "@/components/shared/ui/separator";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { EditTaskDialog } from "@/components/task/EditTaskDialog";
-import { ManageSubtasksForm } from "@/components/task/ManageSubtasksForm";
+import { ManageSubtasksForm } from "@/components/subtask/ManageSubtasksForm";
 import { useQuery } from "@tanstack/react-query";
 import {
   Calendar,
@@ -137,7 +137,7 @@ export const TaskPage = () => {
                 </span>
               </div>
               <Progress value={78} className="h-1.5" />
-              <ManageSubtasksForm />
+              <ManageSubtasksForm taskId={getTaskQuery.data.task.id} />
             </div>
           </div>
           <div className="  rounded-2xl px-4 h-fit ">
