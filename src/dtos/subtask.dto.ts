@@ -28,6 +28,11 @@ export type UpdateSubtaskResponse = {
   message: string;
   subtask: SubtaskEntity;
 };
+export type DeleteSubtaskResponse = {
+  ok: boolean;
+  message: string;
+  subtask: SubtaskEntity;
+};
 export type GetSubtasksResponse = {
   ok: boolean;
   message: string;

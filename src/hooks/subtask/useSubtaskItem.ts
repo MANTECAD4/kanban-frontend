@@ -1,13 +1,25 @@
-// import type { SubtaskEntity } from "@/dtos/subtask.dto";
-// import { useState } from "react";
+import { updateSubtaskStatusAction } from "@/actions/subtask/updateSubtaskStatus.action";
+import type { SubtaskEntity } from "@/dtos/subtask.dto";
+import { useMutation } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
-// export const useSubtaskItem = ({
-//   description,
-//   isCompleted: originalIsCompleted,
-// }: SubtaskEntity) => {
+interface Props {
+  subtask: SubtaskEntity;
+}
 
-//   return {
-//     isCompleted,
-//     setIsCompleted,
-//   };
-// };
+export const useSubtaskItem = ({
+  subtask: { id: subtaskId, isCompleted: originalIsCompleted },
+}: Props) => {
+  const [isCompleted, setIsCompleted] = useState<boolean>(originalIsCompleted);
+  const updateStatusMutation = useMutation({
+    mutationFn: updateSubtaskStatusAction,
+    onError: (_error) => {
+      toast.error("Somethign went wrong");
+    },
+  });
+  useEffect(() => {
+    updateStatusMutation.mutate({ isCompleted, subtaskId });
+  }, [isCompleted, subtaskId]);
+  return { isCompleted, setIsCompleted };
+};

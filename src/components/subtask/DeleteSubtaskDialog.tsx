@@ -12,17 +12,16 @@ import {
   DialogTrigger,
 } from "@/components/shared/ui/dialog";
 import { Separator } from "@/components/shared/ui/separator";
-import type { TaskEntity } from "@/dtos/task.dto";
-import { useDeleteTask } from "@/hooks/tasks/useDeleteTask";
+import { useDeleteSubtask } from "@/hooks/subtask/useDeleteSubtask";
+import type { SubtaskEntity } from "@/dtos/subtask.dto";
 
 interface Props {
   children: ReactNode;
-  task: TaskEntity;
-  boardId: number;
+  subtask: SubtaskEntity;
 }
 
-export const DeleteTaskDialog: FC<Props> = ({ children, task, boardId }) => {
-  const { submitTaskDeletion } = useDeleteTask(boardId);
+export const DeleteSubtaskDialog: FC<Props> = ({ children, subtask }) => {
+  const { handleSubtaskDeletion } = useDeleteSubtask();
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -32,11 +31,11 @@ export const DeleteTaskDialog: FC<Props> = ({ children, task, boardId }) => {
             <TriangleAlert className="stroke-destructive" />
           </div>
           <DialogTitle className="text-lg px-7 text-center my-4">
-            Delete "{task.title}" task
+            Delete subtask
           </DialogTitle>
           <DialogDescription className="px-5">
-            This action cannot be undone. You'll lose access to the subtasks &
-            attatchments in this task.
+            You're about to delete "{subtask.description}" subtask. This action
+            cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <Separator className="mb-2" />
@@ -49,9 +48,9 @@ export const DeleteTaskDialog: FC<Props> = ({ children, task, boardId }) => {
           <Button
             size="lg"
             variant={"destructive"}
-            onClick={() => submitTaskDeletion(task.id)}
+            onClick={() => handleSubtaskDeletion(subtask.id)}
           >
-            Yes, Delete task.
+            Yes, Delete subtask.
           </Button>
         </DialogFooter>
       </DialogContent>
