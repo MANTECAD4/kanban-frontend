@@ -23,3 +23,13 @@ export type CreateSubtaskResponse = {
   message: string;
   subtask: SubtaskEntity;
 };
+export type UpdateSubtaskResponse = {
+  ok: boolean;
+  message: string;
+  subtask: SubtaskEntity;
+};
+export type GetSubtasksResponse = {
+  ok: boolean;
+  message: string;
+  subtasks: SubtaskEntity[];
+};

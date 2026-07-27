@@ -128,8 +128,8 @@ export const TaskPage = () => {
             <Separator className="my-3" />
             <div className="flex flex-col gap-4">
               <div className="flex justify-between items-center">
-                <div className="flex gap-2">
-                  <ListTodo />
+                <div className="flex gap-2 items-center">
+                  <ListTodo className="size-5" />
                   <h2 className="font-semibold">Subtasks</h2>
                 </div>
                 <span className="text-sm font-semibold text-muted-foreground">

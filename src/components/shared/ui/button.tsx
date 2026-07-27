@@ -44,10 +44,12 @@ function Button({
   variant = "default",
   size = "default",
   asChild = false,
+  disabled = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    disabled?: boolean;
   }) {
   const Comp = asChild ? Slot.Root : "button";
 
