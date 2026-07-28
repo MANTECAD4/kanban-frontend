@@ -1,6 +1,6 @@
 import { Button } from "@/components/shared/ui/button";
 import { Input } from "@/components/shared/ui/input";
-import { Plus, StickyNoteX } from "lucide-react";
+import { ListTodo, Plus, StickyNoteX } from "lucide-react";
 import { useSubtasksForm } from "@/hooks/subtask/useSubtasksForm";
 import type { FC } from "react";
 import { Field, FieldDescription } from "@/components/shared/ui/field";
@@ -14,6 +14,7 @@ import {
   EmptyTitle,
 } from "@/components/shared/ui/empty";
 import { SubtaskItem } from "@/components/subtask/SubtaskItem";
+import { Progress } from "@/components/shared/ui/progress";
 
 interface Props {
   taskId: number;
@@ -31,13 +32,26 @@ export const ManageSubtasksForm: FC<Props> = ({ taskId }) => {
   if (!getSubtasksQuery.data) return;
 
   const {
-    data: { subtasks },
+    data: {
+      subtasks,
+      meta: { completed, total },
+    },
     isFetching,
   } = getSubtasksQuery;
 
   if (isFetching) return;
   return (
     <>
+      <div className="flex justify-between items-center">
+        <div className="flex gap-2 items-center">
+          <ListTodo className="size-5" />
+          <h2 className="font-semibold">Subtasks</h2>
+        </div>
+        <span className="text-sm font-semibold text-muted-foreground">
+          {completed}/{total} done
+        </span>
+      </div>
+      <Progress value={(completed / total) * 100} className="h-1.5" />
       <div className="grid gap-4  w-full">
         <div className="space-y-2">
           <form onSubmit={submitSubtask}>

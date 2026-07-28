@@ -1,3 +1,6 @@
+import React, { type FC } from "react";
+import { Link } from "react-router";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,9 +10,6 @@ import {
 } from "@/components/shared/ui/breadcrumb";
 import { Separator } from "@/components/shared/ui/separator";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
-import type { FC } from "react";
-import React from "react";
-import { Link as BreadcrumbLink } from "react-router";
 
 export type BreadcrumbLink = { label: string; route: string };
 
@@ -21,7 +21,7 @@ interface Props {
 export const PageBreadcrumbs: FC<Props> = ({ links, currentPage }) => {
   return (
     <div className="flex items-center gap-2 mb-6">
-      <SidebarTrigger variant={"outline"} className="size-6 " />
+      <SidebarTrigger variant={"outline"} className="size-6" />
 
       <Separator orientation="vertical" />
       <Breadcrumb>
@@ -29,9 +29,9 @@ export const PageBreadcrumbs: FC<Props> = ({ links, currentPage }) => {
           {links.map(({ label, route }) => (
             <React.Fragment key={label}>
               <BreadcrumbItem>
-                <BreadcrumbLink to={route} className="text-gray-400">
+                <Link to={route} className="text-muted-foreground">
                   {label}
-                </BreadcrumbLink>
+                </Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
             </React.Fragment>
