@@ -37,4 +37,5 @@ export type GetSubtasksResponse = {
   ok: boolean;
   message: string;
   subtasks: SubtaskEntity[];
+  meta: { total: number; completed: number };
 };

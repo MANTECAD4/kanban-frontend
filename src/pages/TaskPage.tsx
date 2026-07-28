@@ -1,22 +1,9 @@
-import { Link, useParams } from "react-router";
-import { getBoardBySlugAction } from "@/actions/boards/get-board-by-slug.action";
-import { getProjectBySlugAction } from "@/actions/project/get-project.by-slug.action";
-import { getTaskBySlugAction } from "@/actions/task/get-task-by-slug.action";
 import { Badge } from "@/components/shared/ui/badge";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/shared/ui/breadcrumb";
 import { Button } from "@/components/shared/ui/button";
 import { Progress } from "@/components/shared/ui/progress";
 import { Separator } from "@/components/shared/ui/separator";
-import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { EditTaskDialog } from "@/components/task/EditTaskDialog";
 import { ManageSubtasksForm } from "@/components/subtask/ManageSubtasksForm";
-import { useQuery } from "@tanstack/react-query";
 import {
   Calendar,
   Clock,
@@ -28,58 +15,46 @@ import {
   Trash,
 } from "lucide-react";
 import { DeleteTaskDialog } from "@/components/task/DeleteTaskDialog";
+import {
+  PageBreadcrumbs,
+  type BreadcrumbLink,
+} from "@/components/shared/custom/PageBreadcrumb";
+import { useGetProjectQuery } from "@/hooks/queries/useGetProjectQuery";
+import { useGetBoardQuery } from "@/hooks/queries/useGetBoardQuery";
+import { useGetTaskQuery } from "@/hooks/queries/useGetTaskQuery";
 
 export const TaskPage = () => {
-  const { projectSlug = "", boardSlug = "", taskSlug = "" } = useParams();
-  const getProjectQuery = useQuery({
-    queryFn: () => getProjectBySlugAction(projectSlug),
-    queryKey: ["projects", projectSlug],
-    enabled: projectSlug !== "",
-  });
-  const getBoardQuery = useQuery({
-    queryFn: () =>
-      getBoardBySlugAction(boardSlug, getProjectQuery.data?.project.id ?? 0),
-    queryKey: ["boards", boardSlug],
-    enabled: boardSlug !== "" && getProjectQuery.data !== undefined,
-  });
-  const getTaskQuery = useQuery({
-    queryFn: () =>
-      getTaskBySlugAction(getBoardQuery.data?.board.id ?? 0, taskSlug),
-    queryKey: ["tasks", taskSlug],
-    enabled: projectSlug !== "" && getBoardQuery.data !== undefined,
-  });
+  const getProjectQuery = useGetProjectQuery();
+  const getBoardQuery = useGetBoardQuery(getProjectQuery.data?.project.id);
+  const getTaskQuery = useGetTaskQuery(getBoardQuery.data?.board.id);
 
   if (!getBoardQuery.data || !getProjectQuery.data || !getTaskQuery.data)
     return;
+
+  const {
+    data: { project },
+  } = getProjectQuery;
+  const {
+    data: { board },
+  } = getBoardQuery;
+  const {
+    data: { task },
+  } = getTaskQuery;
+
+  const breadcrumbLinks: BreadcrumbLink[] = [
+    {
+      label: project.name,
+      route: `/projects/${project.slug}`,
+    },
+    {
+      label: board.name,
+      route: `/projects/${project.slug}/boards/${board.slug}`,
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-dvh pl-2 pr-4 py-4.5  max-w-7xl mx-auto">
-      <div className="flex items-center gap-2 mb-6">
-        <SidebarTrigger variant={"outline"} className="size-6 " />
-
-        <Separator orientation="vertical" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <Link to={`/projects/${projectSlug}`} className="text-gray-400">
-                {getProjectQuery.data.project.name}
-              </Link>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <Link
-                to={`/projects/${projectSlug}/boards/${boardSlug}`}
-                className="text-gray-400"
-              >
-                {getBoardQuery.data.board.name}
-              </Link>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{getTaskQuery.data.task.title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
+      <PageBreadcrumbs links={breadcrumbLinks} currentPage={task.title} />
       <div className="px-8">
         <div className="flex justify-between pb-8">
           <div className="flex flex-col  gap-2  group/header ">
