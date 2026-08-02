@@ -8,7 +8,7 @@ const boards = [
 ];
 export const RecentActivityCard = () => {
   return (
-    <div className="w-full flex flex-col gap-4 rounded-lg bg-background ring-1 ring-foreground/10 p-4">
+    <div className="w-full flex flex-col gap-4 rounded-lg bg-background  ring-foreground/10 p-4">
       <div className="flex items-center gap-2">
         <ClockArrowDown className="size-5" />
         <h2 className="text-sm font-semibold">Upcoming dates</h2>

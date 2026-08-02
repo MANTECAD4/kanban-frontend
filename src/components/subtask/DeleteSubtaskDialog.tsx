@@ -34,8 +34,11 @@ export const DeleteSubtaskDialog: FC<Props> = ({ children, subtask }) => {
             Delete subtask
           </DialogTitle>
           <DialogDescription className="px-5">
-            You're about to delete "{subtask.description}" subtask. This action
-            cannot be undone.
+            You're about to delete the following subtask:
+            <p className="pl-3  text-sm  text-foreground my-3">
+              ~ {subtask.description}
+            </p>{" "}
+            This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <Separator className="mb-2" />

@@ -61,7 +61,7 @@ export function TasksChart() {
   }, []);
 
   return (
-    <Card className="relative w-full flex flex-col bg-background">
+    <Card className="relative w-full flex flex-col bg-background ring-0">
       <CardHeader className="items-center pb-0">
         <CardTitle>Pie Chart - Donut with Text</CardTitle>
         <CardDescription>January - June 2024</CardDescription>

@@ -44,14 +44,14 @@ export const ManageSubtasksForm: FC<Props> = ({ taskId }) => {
     <>
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <ListTodo className="size-5" />
+          <ListTodo className="size-4" />
           <h2 className="font-semibold">Subtasks</h2>
         </div>
         <span className="text-sm font-semibold text-muted-foreground">
           {completed}/{total} done
         </span>
       </div>
-      <Progress value={(completed / total) * 100} className="h-1.5" />
+      <Progress value={(completed / total) * 100} className="h-1" />
       <div className="grid gap-4  w-full">
         <div className="space-y-2">
           <form onSubmit={submitSubtask}>

@@ -26,6 +26,7 @@ export const useSubtasksForm = (taskId: number) => {
 
   const submitSubtask = handleSubmit(({ description }) => {
     createSubtaskMutation.mutate({ taskId, description });
+    clearErrors();
     reset();
   });
 

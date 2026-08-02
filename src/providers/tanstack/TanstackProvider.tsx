@@ -18,7 +18,11 @@ type Props = {
 export const kanbanQueryClient = new QueryClient({
   defaultOptions: {
     mutations: { retry: false },
-    queries: { staleTime: 1000 * 60 * 60, retry: false },
+    queries: {
+      staleTime: 1000 * 60 * 60,
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
   },
   queryCache: new QueryCache({
     onError: (error) => {

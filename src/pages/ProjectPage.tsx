@@ -21,25 +21,22 @@ export const ProjectPage = () => {
   } = useProject();
   if (!data) return;
   return (
-    <div className=" flex flex-col h-full pl-2 pr-4  pb-10">
-      <div className="bg-background backdrop-blur-xs pt-4">
+    <div className=" flex flex-col min-h-dvh pl-2 pr-4  pb-10">
+      <div className="bg-background backdrop-blur-xs pt-4 mb-8">
         <SidebarTrigger className="" />
         <div className="flex justify-between items-center mb-4">
-          <div className="flex gap-4 items-center">
-            <div
-              className={cn(
-                colors[data.project.iconColor].bg,
-                colors[data.project.iconColor].border,
-                "flex justify-center items-center size-12 border rounded-lg",
-              )}
-            >
-              <DynamicIcon
-                name={data.project.icon}
-                className={cn(colors[data.project.iconColor].stroke)}
-              />
-            </div>
+          <div className="flex gap-2 items-center">
             <div className="flex flex-col gap-2">
-              <h1 className="text-3xl font-semibold">{data.project.name}</h1>
+              <div className="flex gap-1 items-center">
+                <DynamicIcon
+                  name={data.project.icon}
+                  className={cn(
+                    colors[data.project.iconColor].stroke,
+                    "size-6",
+                  )}
+                />
+                <h1 className="text-3xl font-semibold">{data.project.name}</h1>
+              </div>
               <p className="text-sm text-muted-foreground">
                 {data.project.description}
               </p>
@@ -67,11 +64,13 @@ export const ProjectPage = () => {
           </div>
         </div>
       </div>
-      <Separator className="mt-3 mb-8" />
+      {/* <Separator className="mt-3 mb-8" /> */}
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="flex gap-3">
         <TasksChart />
+        <Separator orientation="vertical" />
         <UpcomingDates />
+        <Separator orientation="vertical" />
         <RecentActivityCard />
       </div>
 
