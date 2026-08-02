@@ -32,13 +32,24 @@ import {
   AttachmentTitle,
 } from "@/components/shared/ui/attachment";
 import { AddAttatchmentsDialog } from "@/components/subtask/AddAttatchmentsDialog";
+import { useQuery } from "@tanstack/react-query";
+import { getAttachmentsAction } from "@/actions/attachments/get-attachments.action";
 
 export const TaskPage = () => {
   const getProjectQuery = useGetProjectQuery();
   const getBoardQuery = useGetBoardQuery(getProjectQuery.data?.project.id);
   const getTaskQuery = useGetTaskQuery(getBoardQuery.data?.board.id);
+  const loadAttachmentsQuery = useQuery({
+    queryKey: ["in-task", getTaskQuery.data?.task.id, "attachments"],
+    queryFn: () => getAttachmentsAction(getTaskQuery.data!.task.id),
+  });
 
-  if (!getBoardQuery.data || !getProjectQuery.data || !getTaskQuery.data)
+  if (
+    !getBoardQuery.data ||
+    !getProjectQuery.data ||
+    !getTaskQuery.data ||
+    !loadAttachmentsQuery.data
+  )
     return;
 
   const {
@@ -50,6 +61,9 @@ export const TaskPage = () => {
   const {
     data: { task },
   } = getTaskQuery;
+  const {
+    data: { attachments },
+  } = loadAttachmentsQuery;
 
   const breadcrumbLinks: BreadcrumbLink[] = [
     {
@@ -140,98 +154,36 @@ export const TaskPage = () => {
             </AddAttatchmentsDialog>
           </div>
           <div className="grid grid-cols-3 gap-x-4 gap-y-3">
-            <Attachment state="idle" className="w-full border-muted">
-              <AttachmentMedia variant={"image"}>
-                <ClockIcon />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>selected-file.pdf</AttachmentTitle>
-                <AttachmentDescription>2 MB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <Download />
-                </AttachmentAction>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <XIcon />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-            <Attachment state="idle" className="w-full border-muted">
-              <AttachmentMedia>
-                <ClockIcon />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>
-                  {/* <a
-                    href="https://tnycxpiqvqledensbquj.supabase.co/storage/v1/object/sign/kanban-app/react.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81Y2EzOTc5Ny1kM2JjLTQzYTEtYjFjZS0xZjUzMDM5MjU1NmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJrYW5iYW4tYXBwL3JlYWN0LnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODU1NDA2ODksImV4cCI6MTc4NjE0NTQ4OX0.ByIsd6ATCZ9eTJhiQ6eaXdWzVhLEBfsBjyP0Y8ebmb4&download"
-                    target="_blank"
-                  > */}
-                  selected-file.pdf
-                  {/* </a> */}
-                </AttachmentTitle>
-                <AttachmentDescription>2 MB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <Download />
-                </AttachmentAction>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <XIcon />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-            <Attachment state="idle" className="w-full border-muted">
-              <AttachmentMedia>
-                <ClockIcon />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>selected-file.pdf</AttachmentTitle>
-                <AttachmentDescription>2 MB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <Download />
-                </AttachmentAction>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <XIcon />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-            <Attachment state="idle" className="w-full border-muted">
-              <AttachmentMedia>
-                <ClockIcon />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>selected-file.pdf</AttachmentTitle>
-                <AttachmentDescription>2 MB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <Download />
-                </AttachmentAction>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <XIcon />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-            <Attachment state="idle" className="w-full border-muted">
-              <AttachmentMedia>
-                <ClockIcon />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>selected-file.pdf</AttachmentTitle>
-                <AttachmentDescription>2 MB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <Download />
-                </AttachmentAction>
-                <AttachmentAction aria-label="Remove selected-file.pdf">
-                  <XIcon />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
+            {attachments.map((attachment) => (
+              <Attachment
+                key={attachment.id}
+                state="idle"
+                className="w-full border-muted"
+              >
+                <AttachmentMedia variant={"image"}>
+                  <ClockIcon />
+                </AttachmentMedia>
+                <AttachmentContent>
+                  <AttachmentTitle>{attachment.originalName}</AttachmentTitle>
+                  <AttachmentDescription>
+                    {(attachment.size / (1024 * 1024)).toFixed(2)} MB
+                  </AttachmentDescription>
+                </AttachmentContent>
+                <AttachmentActions>
+                  <AttachmentAction aria-label="Remove selected-file.pdf">
+                    <a
+                      href={`${attachment.sourceUrl}?download=${attachment.originalName}`}
+                      target="_blank"
+                    >
+                      <Download />
+                    </a>
+                  </AttachmentAction>
+                  <AttachmentAction aria-label="Remove selected-file.pdf">
+                    <XIcon />
+                  </AttachmentAction>
+                </AttachmentActions>
+              </Attachment>
+            ))}
           </div>
         </div>
       </div>

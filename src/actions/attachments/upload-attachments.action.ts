@@ -1,7 +1,7 @@
 import { kanbanApplicationApi } from "@/api/kanban-application.api";
 import type {
   SubmitAttachmentsState,
-  UploadAttachmentsResponse,
+  LoadAttachmentsResponse,
 } from "@/dtos/attatchment.dto";
 
 interface Props {
@@ -18,7 +18,7 @@ export const uploadAttachmentsAction = async ({
     formData.append("attachments", attachment),
   );
 
-  const { data } = await kanbanApplicationApi.post<UploadAttachmentsResponse>(
+  const { data } = await kanbanApplicationApi.post<LoadAttachmentsResponse>(
     `/attachments/in-task/${taskId}`,
     formData,
   );

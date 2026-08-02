@@ -55,10 +55,12 @@ export const AddAttatchmentsDialog: FC<Props> = ({ children, task }) => {
 
   const uploadAttachmentsMutation = useMutation({
     mutationFn: uploadAttachmentsAction,
+
     onSuccess: () => {
       toast.success(`Files uploaded successfully`);
       reset();
     },
+
     onError: (error) => {
       console.log({ error });
       toast.error(`File upload failed`);
@@ -90,8 +92,8 @@ export const AddAttatchmentsDialog: FC<Props> = ({ children, task }) => {
               name="attachments"
               render={({ field: { ref, value, onBlur, onChange } }) => (
                 <FileUpload
-                  maxFiles={3}
-                  maxSize={25 * 1024 * 1024}
+                  // maxFiles={3}
+                  // maxSize={25 * 1024 * 1024}
                   className="w-full"
                   value={value}
                   onBlur={onBlur}

@@ -2,7 +2,7 @@ import z from "zod";
 
 const FileSchema = z
   .file()
-  .max(1024 * 1024 * 25, "Max file size is 25MB")
+  .max(1024 * 1024 * 5, "Max file size is 5MB")
   .mime(
     [
       // IMAGES
@@ -52,7 +52,7 @@ export const AttachmentSchema = z.object({
 
 export type AttachmentEntity = z.infer<typeof AttachmentSchema>;
 
-export interface UploadAttachmentsResponse {
+export interface LoadAttachmentsResponse {
   ok: boolean;
   message: string;
   attachments: AttachmentEntity[];
