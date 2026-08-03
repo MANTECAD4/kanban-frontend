@@ -1,30 +1,40 @@
 import z from "zod";
 
+export const imageMimeTypes: z.core.util.MimeTypes[] = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+];
+export const docMimeTypes: z.core.util.MimeTypes[] = [
+  "application/pdf",
+  "text/plain",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
+export const excelMimeTypes: z.core.util.MimeTypes[] = [
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "text/csv",
+];
+export const compressedMimeTypes: z.core.util.MimeTypes[] = [
+  "application/zip",
+  "application/x-7z-compressed",
+  "application/x-rar-compressed",
+];
+
 const FileSchema = z
   .file()
   .max(1024 * 1024 * 5, "Max file size is 5MB")
   .mime(
     [
       // IMAGES
-      "image/jpeg",
-      "image/png",
-      "image/webp",
+      ...imageMimeTypes,
       // DOCS
-      "application/pdf",
-      "text/plain",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ...docMimeTypes,
       // EXCEL
-      "application/vnd.ms-excel",
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "text/csv",
-      // PRESENTATIONS
-      "application/vnd.ms-powerpoint",
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      ...excelMimeTypes,
       // COMPRESSED FILES
-      "application/zip",
-      "application/x-7z-compressed",
-      "application/x-rar-compressed",
+      ...compressedMimeTypes,
     ],
     "File type not supported",
   );

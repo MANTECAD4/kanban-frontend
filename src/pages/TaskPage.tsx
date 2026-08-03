@@ -2,16 +2,7 @@ import { Button } from "@/components/shared/ui/button";
 import { Separator } from "@/components/shared/ui/separator";
 import { EditTaskDialog } from "@/components/task/EditTaskDialog";
 import { ManageSubtasksForm } from "@/components/subtask/ManageSubtasksForm";
-import {
-  ArrowLeft,
-  ClockIcon,
-  Paperclip,
-  Pencil,
-  Plus,
-  Download,
-  Trash,
-  XIcon,
-} from "lucide-react";
+import { ArrowLeft, Paperclip, Pencil, Plus, Trash } from "lucide-react";
 import { DeleteTaskDialog } from "@/components/task/DeleteTaskDialog";
 import {
   PageBreadcrumbs,
@@ -22,34 +13,15 @@ import { useGetBoardQuery } from "@/hooks/queries/useGetBoardQuery";
 import { useGetTaskQuery } from "@/hooks/queries/useGetTaskQuery";
 import { TaskProperties } from "@/components/task/task-page/TaskProperties";
 import { Link } from "react-router";
-import {
-  Attachment,
-  AttachmentAction,
-  AttachmentActions,
-  AttachmentContent,
-  AttachmentDescription,
-  AttachmentMedia,
-  AttachmentTitle,
-} from "@/components/shared/ui/attachment";
 import { AddAttatchmentsDialog } from "@/components/subtask/AddAttatchmentsDialog";
-import { useQuery } from "@tanstack/react-query";
-import { getAttachmentsAction } from "@/actions/attachments/get-attachments.action";
+import { TaskAttachments } from "@/components/task/task-page/TaskAttachments";
 
 export const TaskPage = () => {
   const getProjectQuery = useGetProjectQuery();
   const getBoardQuery = useGetBoardQuery(getProjectQuery.data?.project.id);
   const getTaskQuery = useGetTaskQuery(getBoardQuery.data?.board.id);
-  const loadAttachmentsQuery = useQuery({
-    queryKey: ["in-task", getTaskQuery.data?.task.id, "attachments"],
-    queryFn: () => getAttachmentsAction(getTaskQuery.data!.task.id),
-  });
 
-  if (
-    !getBoardQuery.data ||
-    !getProjectQuery.data ||
-    !getTaskQuery.data ||
-    !loadAttachmentsQuery.data
-  )
+  if (!getBoardQuery.data || !getProjectQuery.data || !getTaskQuery.data)
     return;
 
   const {
@@ -61,9 +33,6 @@ export const TaskPage = () => {
   const {
     data: { task },
   } = getTaskQuery;
-  const {
-    data: { attachments },
-  } = loadAttachmentsQuery;
 
   const breadcrumbLinks: BreadcrumbLink[] = [
     {
@@ -153,37 +122,8 @@ export const TaskPage = () => {
               </Button>
             </AddAttatchmentsDialog>
           </div>
-          <div className="grid grid-cols-3 gap-x-4 gap-y-3">
-            {attachments.map((attachment) => (
-              <Attachment
-                key={attachment.id}
-                state="idle"
-                className="w-full border-muted"
-              >
-                <AttachmentMedia variant={"image"}>
-                  <ClockIcon />
-                </AttachmentMedia>
-                <AttachmentContent>
-                  <AttachmentTitle>{attachment.originalName}</AttachmentTitle>
-                  <AttachmentDescription>
-                    {(attachment.size / (1024 * 1024)).toFixed(2)} MB
-                  </AttachmentDescription>
-                </AttachmentContent>
-                <AttachmentActions>
-                  <AttachmentAction aria-label="Remove selected-file.pdf">
-                    <a
-                      href={`${attachment.sourceUrl}?download=${attachment.originalName}`}
-                      target="_blank"
-                    >
-                      <Download />
-                    </a>
-                  </AttachmentAction>
-                  <AttachmentAction aria-label="Remove selected-file.pdf">
-                    <XIcon />
-                  </AttachmentAction>
-                </AttachmentActions>
-              </Attachment>
-            ))}
+          <div className="grid grid-cols-3 gap-4 ">
+            <TaskAttachments taskId={task.id} />
           </div>
         </div>
       </div>
