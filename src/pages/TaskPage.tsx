@@ -13,7 +13,7 @@ import { useGetBoardQuery } from "@/hooks/queries/useGetBoardQuery";
 import { useGetTaskQuery } from "@/hooks/queries/useGetTaskQuery";
 import { TaskProperties } from "@/components/task/task-page/TaskProperties";
 import { Link } from "react-router";
-import { AddAttatchmentsDialog } from "@/components/subtask/AddAttatchmentsDialog";
+import { AddAttatchmentsDialog } from "@/components/attachment/AddAttatchmentsDialog";
 import { TaskAttachments } from "@/components/task/task-page/TaskAttachments";
 
 export const TaskPage = () => {

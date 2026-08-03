@@ -68,6 +68,11 @@ export interface LoadAttachmentsResponse {
   attachments: AttachmentEntity[];
   meta: Meta;
 }
+export interface DeleteAttachmentResponse {
+  ok: boolean;
+  message: string;
+  attachment: AttachmentEntity;
+}
 
 export interface Meta {
   total: number;

@@ -1,3 +1,4 @@
+import { DeleteAttachmentDialog } from "@/components/attachment/DeleteAttachmentDialog";
 import {
   Attachment,
   AttachmentAction,
@@ -22,6 +23,7 @@ export const TaskAttachments: FC<Props> = ({ taskId = 0 }) => {
   const {
     data: { attachments },
   } = getAttachmentsQuery;
+
   return (
     <>
       {attachments.map((attachment) => (
@@ -52,17 +54,22 @@ export const TaskAttachments: FC<Props> = ({ taskId = 0 }) => {
             </AttachmentDescription>
           </AttachmentContent>
           <AttachmentActions>
-            <AttachmentAction aria-label="Remove selected-file.pdf">
+            <AttachmentAction>
               <a
                 href={`${attachment.sourceUrl}?download=${attachment.originalName}`}
                 target="_blank"
+                aria-label={`Inspect ${attachment.originalName} attachment`}
               >
                 <Download />
               </a>
             </AttachmentAction>
-            <AttachmentAction aria-label="Remove selected-file.pdf">
-              <XIcon />
-            </AttachmentAction>
+            <DeleteAttachmentDialog attachment={attachment}>
+              <AttachmentAction
+                aria-label={`Remove ${attachment.originalName} attachment`}
+              >
+                <XIcon />
+              </AttachmentAction>
+            </DeleteAttachmentDialog>
           </AttachmentActions>
         </Attachment>
       ))}
