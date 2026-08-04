@@ -1,33 +1,27 @@
 import { DeleteBoardDialog } from "@/components/board/DeleteBoardDialog";
 import { EditBoardDialog } from "@/components/board/EditBoardDialog";
 import { AddCategoryPopover } from "@/components/category/AddCategoryPopover";
+import { CustomDragDropProvider } from "@/components/shared/custom/CustomDragDropProvider";
 import {
   PageBreadcrumbs,
   type BreadcrumbLink,
 } from "@/components/shared/custom/PageBreadcrumb";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/shared/ui/breadcrumb";
 import { Button } from "@/components/shared/ui/button";
 import { ButtonGroup } from "@/components/shared/ui/button-group";
-import { Separator } from "@/components/shared/ui/separator";
-import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/ui/tabs";
 
 import { useBoard } from "@/hooks/boards/useBoard";
+import { useBoardContentManagement } from "@/hooks/task-management/useBoardContentManagement";
 import { KanbanView } from "@/views/KanbanView";
 import { ListView } from "@/views/ListView";
 import { Kanban, ListTree, Pencil, Plus, Trash } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
 
 export const BoardPage = () => {
   const { projectSlug, getProjectQuery, getBoardQuery } = useBoard();
   const [tasksView, setTasksView] = useState<string>("kanban");
+  const { setColumnOrder, setBoardColumns, ...restProps } =
+    useBoardContentManagement(getBoardQuery.data?.board.id ?? 0);
 
   if (!getProjectQuery.data || !getBoardQuery.data) return;
 
@@ -112,11 +106,16 @@ export const BoardPage = () => {
         </div>
       </div>
       <div className="h-full p-2">
-        {tasksView === "kanban" ? (
-          <KanbanView boardId={getBoardQuery.data.board.id} />
-        ) : (
-          <ListView />
-        )}
+        <CustomDragDropProvider
+          setBoardColumns={setBoardColumns}
+          setColumnOrder={setColumnOrder}
+        >
+          {tasksView === "kanban" ? (
+            <KanbanView {...restProps} />
+          ) : (
+            <ListView {...restProps} />
+          )}
+        </CustomDragDropProvider>
       </div>
     </div>
   );

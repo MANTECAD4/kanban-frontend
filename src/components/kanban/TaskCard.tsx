@@ -12,9 +12,10 @@ import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
 import type { TaskEntity } from "@/dtos/task.dto";
 import { useTaskCard } from "@/hooks/kanban/useTaskCard";
 import { Link } from "react-router";
+import type { CategoryEntity } from "@/dtos/category.dto";
 
 interface Props {
-  category: { name: string; categoryId: number };
+  category: CategoryEntity;
   index: number;
   task: TaskEntity;
 }

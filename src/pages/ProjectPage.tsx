@@ -9,12 +9,8 @@ import { PageBreadcrumbs } from "@/components/shared/custom/PageBreadcrumb";
 import { Button } from "@/components/shared/ui/button";
 import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Separator } from "@/components/shared/ui/separator";
-import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { useProject } from "@/hooks/project/useProject";
-import { cn } from "@/lib/utils";
-import { colors } from "@/utils/icon-colors";
 import { Pencil, Plus, Trash } from "lucide-react";
-import { DynamicIcon } from "lucide-react/dynamic";
 
 export const ProjectPage = () => {
   const {

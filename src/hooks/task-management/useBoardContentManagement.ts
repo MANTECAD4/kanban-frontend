@@ -2,7 +2,7 @@ import { getCategoriesAction } from "@/actions/category/get-categories.action";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 
-export const useTaskManagement = (boardId: number) => {
+export const useBoardContentManagement = (boardId: number) => {
   const {
     data: categoriesData,
     isFetching,
