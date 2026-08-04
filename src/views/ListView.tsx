@@ -8,7 +8,7 @@ import {
 import { Badge } from "@/components/shared/ui/badge";
 import { Button } from "@/components/shared/ui/button";
 import { Progress } from "@/components/shared/ui/progress";
-import { Ellipsis, Plus } from "lucide-react";
+import { Ellipsis, Grip, Plus, Siren } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import { PriorityBadge } from "@/components/shared/custom/PriorityBadge";
@@ -70,7 +70,7 @@ export const ListView = () => {
               <div className="flex gap-2 items-center">
                 <DynamicIcon
                   name={category.icon}
-                  className="size-3.5 stroke-2 stroke-primary"
+                  className="size-4 stroke-2 stroke-primary"
                 />
                 <h2 className="text-sm font-semibold">{category.title}</h2>
               </div>
@@ -93,60 +93,48 @@ export const ListView = () => {
               </div>
             </div>
             <div
-              className="text-sm p-3"
+              className="grid  p-2 gap-3 items-center text-xs text-muted-foreground"
               style={{
                 display: "grid",
-                gridTemplateColumns: "5fr 40fr 12.5fr 12.5fr 12.5fr 12.5fr",
+                gridTemplateColumns: "5fr 60fr 8fr 12fr 15fr 8fr",
               }}
             >
-              <div className="text-xs text-muted-foreground">Id</div>
-              <div className="text-xs text-muted-foreground">Name</div>
-              <div className="text-xs text-muted-foreground">Priority</div>
-              <div className="text-xs text-muted-foreground">Progress</div>
-              <div className="text-xs text-muted-foreground">Due date</div>
-              <div className="text-xs text-muted-foreground">Assignees</div>
+              <div />
+              <div className="">Name</div>
+              <div className="text-xs text-muted-foreground ">Priority</div>
+              <div className="text-xs text-muted-foreground ">Progress</div>
+              <div className="text-xs text-muted-foreground ">Due Day</div>
+              <div className="text-xs text-muted-foreground ">Due Time</div>
             </div>
 
             {category.tasks.map((task) => (
               <div
-                className="text-sm p-3 hover:bg-foreground/5 transition-colors items-center rounded-lg"
+                className="grid text-xs p-2 gap-3 items-center "
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "5fr 40fr 12.5fr 12.5fr 12.5fr 12.5fr",
+                  gridTemplateColumns: "5fr 60fr 8fr 12fr 15fr 8fr",
+                  // gridTemplateColumns: "5fr 40fr 12.5fr 12.5fr 12.5fr 12.5fr",
                 }}
               >
-                <p className="uppercase">{task.id.slice(0, 5)}</p>
-                <p>{task.title}</p>
-                <PriorityBadge priority={TaskPriority.Low} />
-                <div className="flex items-center gap-2">
-                  <Progress className="w-6/10" value={66} />
-                  <span>66%</span>
+                <div className=" ">
+                  <Button
+                    variant="ghost"
+                    size={"icon-sm"}
+                    className="cursor-grab"
+                  >
+                    <Grip />
+                  </Button>
                 </div>
-                <p>Mon, 15 May 2026</p>
-                <AvatarGroup className="grayscale">
-                  <Avatar size="sm">
-                    <AvatarImage
-                      src="https://github.com/shadcn.png"
-                      alt="@shadcn"
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <Avatar size="sm">
-                    <AvatarImage
-                      src="https://github.com/maxleiter.png"
-                      alt="@maxleiter"
-                    />
-                    <AvatarFallback>LR</AvatarFallback>
-                  </Avatar>
-                  <Avatar size="sm">
-                    <AvatarImage
-                      src="https://github.com/evilrabbit.png"
-                      alt="@evilrabbit"
-                    />
-                    <AvatarFallback>ER</AvatarFallback>
-                  </Avatar>
-                  <AvatarGroupCount>+3</AvatarGroupCount>
-                </AvatarGroup>
+                <p className="">{task.title}</p>
+                <div className="flex gap-2 items-center text-destructive ">
+                  <Siren className="size-4" />
+                  <p>High</p>
+                </div>
+                <div className="flex items-center gap-2 ">
+                  <Progress className="" value={66} />
+                  {/* <span>66%</span> */}
+                </div>
+                <p className="">Mon, 15 May 2026</p>
+                <p className="">11:59 P.M.</p>
               </div>
             ))}
           </div>

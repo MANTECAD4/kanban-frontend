@@ -1,67 +1,32 @@
-import { useEffect, useRef, useState, type FC } from "react";
-import { DragDropProvider } from "@dnd-kit/react";
-import { useQuery } from "@tanstack/react-query";
-import { move } from "@dnd-kit/helpers";
+import { type FC } from "react";
 
 import { KanbanColumn } from "@/components/kanban/KanbanColumn";
-import { getCategoriesAction } from "@/actions/category/get-categories.action";
 import type { TaskEntity } from "@/dtos/task.dto";
-import { useDraggingStore } from "@/providers/store/dragging.store";
+import { CustomDragDropProvider } from "@/components/shared/custom/CustomDragDropProvider";
+import { useTaskManagement } from "@/hooks/useTaskManagement";
 
 interface Props {
   boardId: number;
 }
 export const KanbanView: FC<Props> = ({ boardId }) => {
   const {
-    data: categoriesData,
     isFetching,
-    isFetched,
-  } = useQuery({
-    queryFn: () => getCategoriesAction(boardId),
-    queryKey: ["in-board", boardId, "categories"],
-    staleTime: 0,
-    refetchOnWindowFocus: false,
-  });
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const setIsDraggingGlobal = useDraggingStore(
-    (state) => state.setIsDraggingColumn,
-  );
-  const [boardColumns, setBoardColumns] = useState<Record<string, any>>({});
-  const [columnOrder, setColumnOrder] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (categoriesData && isFetched) {
-      const columns: Record<string, any> = {};
-      categoriesData.categories.forEach(
-        (category) => (columns[category.name] = category.tasks),
-      );
-      setBoardColumns(columns);
-      setColumnOrder(() => Object.keys(columns));
-    }
-  }, [categoriesData, isFetched]);
-
+    boardColumns,
+    categoriesData,
+    setBoardColumns,
+    setColumnOrder,
+    columnOrder,
+    containerRef,
+  } = useTaskManagement(boardId);
   if (isFetching) return <p>Loading</p>;
 
   if (!boardColumns || !categoriesData || isFetching) return;
 
   return (
     <>
-      <DragDropProvider
-        onDragOver={(event) => {
-          const { source } = event.operation;
-          setBoardColumns((items) => move(items, event));
-          if (!source || source.type !== "column") return;
-
-          setColumnOrder((columns) => move(columns, event));
-        }}
-        onDragStart={() => {
-          setIsDraggingGlobal(true);
-        }}
-        onDragEnd={(event) => {
-          setIsDraggingGlobal(false);
-        }}
+      <CustomDragDropProvider
+        setBoardColumns={setBoardColumns}
+        setColumnOrder={setColumnOrder}
       >
         <div
           ref={containerRef}
@@ -85,7 +50,7 @@ export const KanbanView: FC<Props> = ({ boardId }) => {
             })}
           </div>
         </div>
-      </DragDropProvider>
+      </CustomDragDropProvider>
     </>
   );
 };

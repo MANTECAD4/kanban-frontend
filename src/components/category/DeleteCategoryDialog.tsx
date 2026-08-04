@@ -18,13 +18,11 @@ import { useDeleteCategory } from "@/hooks/category/useDeleteCategory";
 interface Props {
   children: ReactNode;
   category: CategoryEntity;
-  boardId: number;
 }
 
 export const DeleteCategoryDialog: FC<Props> = ({
   children,
-  category: { name, id: categoryId },
-  boardId,
+  category: { name, id: categoryId, boardId },
 }) => {
   const { submitCategoryDeletion } = useDeleteCategory(boardId);
   return (

@@ -1,43 +1,20 @@
-import { useEffect, type FC, type ReactNode, type RefObject } from "react";
-import { useDroppable } from "@dnd-kit/react";
+import { useEffect, type FC, type RefObject } from "react";
 import { CollisionPriority } from "@dnd-kit/abstract";
-import {
-  Copy,
-  Ellipsis,
-  EllipsisVertical,
-  Grip,
-  Heart,
-  Kanban,
-  Pencil,
-  Plus,
-  Share2,
-  Trash,
-} from "lucide-react";
+import { Grip, Kanban } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { Badge } from "@/components/shared/ui/badge";
-import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import { Button } from "@/components/shared/ui/button";
-import { ButtonGroup } from "@/components/shared/ui/button-group";
 import type { CategoryEntity } from "@/dtos/category.dto";
 import type { TaskEntity } from "@/dtos/task.dto";
 import { TaskCard } from "@/components/kanban/TaskCard";
-import { DeleteCategoryDialog } from "@/components/category/DeleteCategoryDialog";
-import { EditCategoryPopover } from "@/components/category/EditCategoryPopover";
-import {
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialContent,
-  SpeedDialItem,
-  SpeedDialLabel,
-  SpeedDialTrigger,
-} from "@/components/shared/ui/speed-dial";
 import { useSortable } from "@dnd-kit/react/sortable";
 import { RestrictToHorizontalAxis } from "@dnd-kit/abstract/modifiers";
 import { RestrictToElement } from "@dnd-kit/dom/modifiers";
 import { useDraggingStore } from "@/providers/store/dragging.store";
 import { useMutation } from "@tanstack/react-query";
 import { updateCategoryOrderAction } from "@/actions/category/update-category-order.action";
+import { CategorySpeedDial } from "@/components/category/CategorySpeedDial";
 
 interface Props {
   category: CategoryEntity;
@@ -97,80 +74,11 @@ export const KanbanColumn: FC<Props> = ({
           </h2>
         </div>
         <div className="flex items-center gap-1">
-          {/* <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity">
-            <EditCategoryPopover category={category}>
-              <Button size="icon-sm" variant={"outline"}>
-                <Pencil />
-              </Button>
-            </EditCategoryPopover>
-            <DeleteCategoryDialog
-              category={category}
-              boardId={category.boardId}
-            >
-              <Button size="icon-sm" variant={"outline"}>
-                <Trash />
-              </Button>
-            </DeleteCategoryDialog>
-          </ButtonGroup> */}
           <Badge variant={"outline"}>{tasks.length} Tasks</Badge>
           <Button ref={handleRef} variant="outline" className="cursor-grab">
             <Grip />
           </Button>
-          {/* <AddTaskDialog
-            category={{ name: category.name, categoryId: category.id }}
-          >
-            <Button
-              size="icon"
-              className="flex justify-center items-center"
-              variant={"ghost"}
-            >
-              <Plus className="size-4" />
-            </Button>
-          </AddTaskDialog> */}
-          <SpeedDial side="bottom">
-            <SpeedDialTrigger
-              variant="ghost"
-              className="transition-transform duration-200 ease-out data-[state=closed]:rotate-0 data-[state=open]:rotate-90 size-8"
-            >
-              <EllipsisVertical />
-            </SpeedDialTrigger>
-            <SpeedDialContent forceMount>
-              <SpeedDialItem>
-                <SpeedDialLabel className="text-xs">Add task</SpeedDialLabel>
-                <AddTaskDialog
-                  category={{ name: category.name, categoryId: category.id }}
-                >
-                  <SpeedDialAction variant="default" className="size-9 ">
-                    <Plus />
-                  </SpeedDialAction>
-                </AddTaskDialog>
-              </SpeedDialItem>
-              <SpeedDialItem>
-                <SpeedDialLabel className="text-xs">
-                  Edit category
-                </SpeedDialLabel>
-                <EditCategoryPopover category={category}>
-                  <SpeedDialAction variant="default" className="size-9 ">
-                    <Pencil />
-                  </SpeedDialAction>
-                </EditCategoryPopover>
-              </SpeedDialItem>
-              <SpeedDialItem>
-                <SpeedDialLabel className="text-xs">
-                  Delete category
-                </SpeedDialLabel>
-
-                <DeleteCategoryDialog
-                  category={category}
-                  boardId={category.boardId}
-                >
-                  <SpeedDialAction variant="default" className="size-9 ">
-                    <Trash />
-                  </SpeedDialAction>
-                </DeleteCategoryDialog>
-              </SpeedDialItem>
-            </SpeedDialContent>
-          </SpeedDial>
+          <CategorySpeedDial category={category} />
         </div>
       </div>
       <div

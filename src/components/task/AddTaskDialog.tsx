@@ -36,13 +36,11 @@ import {
 } from "@/components/shared/ui/popover";
 import { format } from "date-fns";
 import { Calendar } from "@/components/shared/ui/calendar";
+import type { CategoryEntity } from "@/dtos/category.dto";
 
 interface Props {
   children: ReactNode;
-  category: {
-    name: string;
-    categoryId: number;
-  };
+  category: CategoryEntity;
 }
 
 type AddTaskDIalogProps = Props;
@@ -52,7 +50,7 @@ export const AddTaskDialog: FC<AddTaskDIalogProps> = ({
   category,
 }) => {
   const { register, control, errors, reset, handleSubmitForm } = useAddTask(
-    category.categoryId,
+    category.id,
   );
   return (
     <Dialog onOpenChange={() => reset()}>

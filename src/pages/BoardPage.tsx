@@ -2,6 +2,10 @@ import { DeleteBoardDialog } from "@/components/board/DeleteBoardDialog";
 import { EditBoardDialog } from "@/components/board/EditBoardDialog";
 import { AddCategoryPopover } from "@/components/category/AddCategoryPopover";
 import {
+  PageBreadcrumbs,
+  type BreadcrumbLink,
+} from "@/components/shared/custom/PageBreadcrumb";
+import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
@@ -26,27 +30,23 @@ export const BoardPage = () => {
   const [tasksView, setTasksView] = useState<string>("kanban");
 
   if (!getProjectQuery.data || !getBoardQuery.data) return;
-  if (getBoardQuery.isFetching) return <p>Loading</p>;
-  return (
-    <div className="flex flex-col h-dvh pl-2 pr-4 pt-4.5 pb-1 ">
-      <div className="flex items-center gap-2 mb-3">
-        <SidebarTrigger className="" />
 
-        <Separator orientation="vertical" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <Link to={`/projects/${projectSlug}`} className="text-gray-400">
-                {getProjectQuery.data.project.name}
-              </Link>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{getBoardQuery.data.board.name}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
+  if (getBoardQuery.isFetching) return <p>Loading</p>;
+  const {
+    data: { project },
+  } = getProjectQuery;
+  const {
+    data: { board },
+  } = getBoardQuery;
+  const breadcrumbLinks: BreadcrumbLink[] = [
+    {
+      label: project.name,
+      route: `/projects/${project.slug}`,
+    },
+  ];
+  return (
+    <div className="flex flex-col h-dvh min-h-dvh pl-2 pr-4 pt-4.5 pb-8  max-w-7xl mx-auto">
+      <PageBreadcrumbs links={breadcrumbLinks} currentPage={board.name} />
 
       <div className="flex flex-col items-start gap-2 pb-8 group/header">
         <div className="flex gap-2 items-center">

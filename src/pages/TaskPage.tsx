@@ -122,9 +122,8 @@ export const TaskPage = () => {
               </Button>
             </AddAttatchmentsDialog>
           </div>
-          <div className="grid grid-cols-3 gap-4 ">
-            <TaskAttachments taskId={task.id} />
-          </div>
+
+          <TaskAttachments task={task} />
         </div>
       </div>
     </div>

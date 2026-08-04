@@ -5,6 +5,7 @@ import { EditProjectDialog } from "@/components/project/EditProjectDialog";
 import { RecentActivityCard } from "@/components/project/RecentActivityCard";
 import { TasksChart } from "@/components/project/TasksChart";
 import { UpcomingDates } from "@/components/project/UpcomingDates";
+import { PageBreadcrumbs } from "@/components/shared/custom/PageBreadcrumb";
 import { Button } from "@/components/shared/ui/button";
 import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Separator } from "@/components/shared/ui/separator";
@@ -21,20 +22,20 @@ export const ProjectPage = () => {
   } = useProject();
   if (!data) return;
   return (
-    <div className=" flex flex-col min-h-dvh pl-2 pr-4  pb-10">
-      <div className="bg-background backdrop-blur-xs pt-4 mb-8">
-        <SidebarTrigger className="" />
+    <div className="flex flex-col min-h-dvh pl-2 pr-4 pt-4.5 pb-8  max-w-6xl mx-auto">
+      <PageBreadcrumbs links={[]} currentPage={data.project.name} />
+      <div className=" mb-8">
         <div className="flex justify-between items-center mb-4">
           <div className="flex gap-2 items-center">
             <div className="flex flex-col gap-2">
               <div className="flex gap-1 items-center">
-                <DynamicIcon
+                {/* <DynamicIcon
                   name={data.project.icon}
                   className={cn(
                     colors[data.project.iconColor].stroke,
                     "size-6",
                   )}
-                />
+                /> */}
                 <h1 className="text-3xl font-semibold">{data.project.name}</h1>
               </div>
               <p className="text-sm text-muted-foreground">
@@ -71,12 +72,12 @@ export const ProjectPage = () => {
         <Separator orientation="vertical" />
         <UpcomingDates />
         <Separator orientation="vertical" />
-        <RecentActivityCard />
+        {/* <RecentActivityCard /> */}
       </div>
 
-      <div className=" mt-10">
+      {/* <div className=" mt-10">
         <BoardGrid projectId={data.project.id} />
-      </div>
+      </div> */}
     </div>
   );
 };

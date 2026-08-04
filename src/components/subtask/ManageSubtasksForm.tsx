@@ -87,7 +87,7 @@ export const ManageSubtasksForm: FC<Props> = ({ taskId }) => {
               <EmptyMedia variant="icon">
                 <StickyNoteX />
               </EmptyMedia>
-              <EmptyTitle>No Subtasks Yet</EmptyTitle>
+              <EmptyTitle>No Subtasks</EmptyTitle>
               <EmptyDescription>
                 You haven&apos;t created any subtasks yet. Get started by
                 creating some of them.
