@@ -2,11 +2,16 @@ import { CategorySpeedDial } from "@/components/category/CategorySpeedDial";
 import { TaskRow } from "@/components/list-view/TaskRow";
 import { Badge } from "@/components/shared/ui/badge";
 import { Button } from "@/components/shared/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/shared/ui/hover-card";
 import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 import type { CategoryEntity } from "@/dtos/category.dto";
 import type { TaskEntity } from "@/dtos/task.dto";
 import { useTaskCategory } from "@/hooks/task-management/useTaskCategory";
-import { Ellipsis, Grip } from "lucide-react";
+import { Ellipsis, Grip, Info } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
 import type { FC, RefObject } from "react";
 

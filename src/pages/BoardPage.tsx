@@ -12,6 +12,10 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/shared/ui/tabs";
 
 import { useBoard } from "@/hooks/boards/useBoard";
 import { useBoardContentManagement } from "@/hooks/task-management/useBoardContentManagement";
+import {
+  useBoardModeStore,
+  type Mode,
+} from "@/providers/store/board-mode.store";
 import { KanbanView } from "@/views/KanbanView";
 import { ListView } from "@/views/ListView";
 import { Kanban, ListTree, Pencil, Plus, Trash } from "lucide-react";
@@ -19,9 +23,10 @@ import { useState } from "react";
 
 export const BoardPage = () => {
   const { projectSlug, getProjectQuery, getBoardQuery } = useBoard();
-  const [tasksView, setTasksView] = useState<string>("kanban");
+  const boardMode = useBoardModeStore((state) => state.boardMode);
+  const setBoardMode = useBoardModeStore((state) => state.setBoardMode);
   const { setColumnOrder, setBoardColumns, ...restProps } =
-    useBoardContentManagement(getBoardQuery.data?.board.id ?? 0);
+    useBoardContentManagement(getBoardQuery.data?.board.id);
 
   if (!getProjectQuery.data || !getBoardQuery.data) return;
 
@@ -71,9 +76,9 @@ export const BoardPage = () => {
       <div className="flex items-center justify-between">
         <Tabs
           className=""
-          value={tasksView}
+          value={boardMode}
           onValueChange={(value) => {
-            setTasksView(value);
+            setBoardMode(value as Mode);
           }}
         >
           <TabsList variant={"line"}>
@@ -110,7 +115,7 @@ export const BoardPage = () => {
           setBoardColumns={setBoardColumns}
           setColumnOrder={setColumnOrder}
         >
-          {tasksView === "kanban" ? (
+          {boardMode === "kanban" ? (
             <KanbanView {...restProps} />
           ) : (
             <ListView {...restProps} />

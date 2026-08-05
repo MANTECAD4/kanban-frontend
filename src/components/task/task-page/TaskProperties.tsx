@@ -39,7 +39,7 @@ export const TaskProperties: FC<Props> = ({ task }) => {
           </p>
         </div>
         <Separator />
-        <div className="flex justify-between  py-2">
+        <div className="flex justify-between  py-2 ">
           <div className="flex gap-1 items-center">
             <Clock className="size-4" />
             <p>Due time</p>

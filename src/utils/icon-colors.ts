@@ -1,3 +1,5 @@
+import type { TaskPriority } from "@/dtos/task.dto";
+
 export interface IconColorComponents {
   bg: string;
   stroke: string;
@@ -55,4 +57,11 @@ export const colors: Record<string, IconColorComponents> = {
     stroke: "stroke-gray-600",
     border: "border-gray-600",
   },
+};
+
+export const PriorityColors: Record<TaskPriority, string> = {
+  Low: "text-success",
+  Medium: "text-blue-600",
+  High: "text-yellow-600",
+  Urgent: "text-destructive",
 };
