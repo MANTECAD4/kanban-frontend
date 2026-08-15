@@ -9,7 +9,7 @@ import type { CategoryEntity } from "@/dtos/category.dto";
 import type { TaskEntity } from "@/dtos/task.dto";
 import { useTaskCard } from "@/hooks/kanban/useTaskCard";
 import { cn } from "@/lib/utils";
-import { PriorityColors } from "@/utils/icon-colors";
+import { PriorityColorsText } from "@/utils/icon-colors";
 import { Grip, Info, Siren } from "lucide-react";
 import type { FC } from "react";
 import { Link } from "react-router";
@@ -20,7 +20,7 @@ interface Props {
   category: CategoryEntity;
 }
 export const TaskRow: FC<Props> = ({ task, category, index }) => {
-  const { handleRef, ref, boardSlug, projectSlug } = useTaskCard({
+  const { handleRef, ref, boardSlug } = useTaskCard({
     task,
     category,
     index,
@@ -45,7 +45,7 @@ export const TaskRow: FC<Props> = ({ task, category, index }) => {
       </div>
       <div className="flex gap-1 items-center">
         <Link
-          to={`/projects/${projectSlug}/boards/${boardSlug}/tasks/${task.slug}`}
+          to={`/boards/${boardSlug}/tasks/${task.slug}`}
           className="text-sm group-hover/task-row:underline"
         >
           {task.title}
@@ -72,7 +72,10 @@ export const TaskRow: FC<Props> = ({ task, category, index }) => {
         </HoverCard>
       </div>
       <div
-        className={cn(PriorityColors[task.priority], "flex gap-2 items-center")}
+        className={cn(
+          PriorityColorsText[task.priority],
+          "flex gap-2 items-center",
+        )}
       >
         <Siren className="size-4" />
         <p>{task.priority}</p>

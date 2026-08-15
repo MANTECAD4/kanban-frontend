@@ -2,18 +2,12 @@ import { kanbanApplicationApi } from "@/api/kanban-application.api";
 import type { SubmitBoardState } from "@/dtos/board.dtos";
 import type { CreateBoardResponse } from "@/interfaces/board.interface";
 
-type CreateBoardSubmitData = SubmitBoardState & {
-  projectId: number;
-  slug: string;
-};
+type CreateBoardSubmitData = SubmitBoardState & { slug: string };
 
-export const createBoardAction = async ({
-  projectId,
-  ...boardData
-}: CreateBoardSubmitData) => {
+export const createBoardAction = async (submitData: CreateBoardSubmitData) => {
   const { data } = await kanbanApplicationApi.post<CreateBoardResponse>(
-    `boards/in-project/${projectId}`,
-    boardData,
+    `/boards/`,
+    submitData,
   );
   return data;
 };

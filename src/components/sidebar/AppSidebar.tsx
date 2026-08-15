@@ -10,30 +10,21 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/shared/ui/sidebar";
 import { Header } from "@/components/sidebar/Header";
 import { NavUser } from "@/components/sidebar/NavUser";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/shared/ui/collapsible";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { ChevronRight } from "lucide-react";
-import { Button } from "@/components/shared/ui/button";
-import { SidebarSubmenu } from "@/components/sidebar/SidebarSubmenu";
-import { useQuery } from "@tanstack/react-query";
-import { getUserProjectsAction } from "@/actions/project/get-user-projects.action";
+import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data, isError } = useQuery({
-    queryKey: ["projects"],
-    queryFn: getUserProjectsAction,
-  });
-  if (isError || data === undefined) return;
+  const { data, isError } = useGetBoardsQuery();
+  const navigate = useNavigate();
+  if (isError || !data?.boards) return;
+  console.log({ boards: data.boards });
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -42,44 +33,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="tracking-wide">
-            Projects
+            Boards
           </SidebarGroupLabel>
           <SidebarMenu>
-            {data.projects.map((project) => (
-              <Collapsible
-                key={project.id}
-                asChild
-                // defaultOpen={item.isActive}
-                className="group/collapsible"
+            {data.boards.map((board) => (
+              <SidebarMenuButton
+                onClick={() => navigate(`/boards/${board.slug}`)}
               >
                 <SidebarMenuItem>
                   <div className="flex justify-between  text-xs font-semibold px-2 py-1">
                     <div className="flex gap-2 items-center">
-                      <DynamicIcon name={project.icon} className="size-5" />
-                      <Link
+                      <DynamicIcon name={board.icon} className="size-5" />
+                      {/* <Link
                         to={`projects/${project.slug}`}
                         className="hover:underline cursor-pointer"
-                      >
-                        {project.name}
-                      </Link>
+                      > */}
+                      {board.name}
+                      {/* </Link> */}
                     </div>
-                    <CollapsibleTrigger asChild>
-                      <Button
-                        variant={"ghost"}
-                        className="aspect-square size-6 rounded-full"
-                      >
-                        <ChevronRight className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                      </Button>
-                    </CollapsibleTrigger>
                   </div>
-                  <CollapsibleContent>
-                    <SidebarSubmenu
-                      projectId={project.id}
-                      projectSlug={project.slug}
-                    />
-                  </CollapsibleContent>
                 </SidebarMenuItem>
-              </Collapsible>
+              </SidebarMenuButton>
             ))}
           </SidebarMenu>
         </SidebarGroup>

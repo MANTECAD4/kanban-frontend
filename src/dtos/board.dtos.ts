@@ -1,4 +1,4 @@
-import { IconColor } from "@/dtos/project.dto";
+import { IconColorKeys } from "@/dtos/project.dto";
 import { iconNames } from "lucide-react/dynamic";
 import z from "zod";
 
@@ -16,7 +16,7 @@ export const BoardSchema = z.object({
     .nonempty()
     .transform((value) => value.replace(/\s+/g, " ")),
   icon: z.enum(iconNames, { error: "Select a valid icon" }),
-  iconColor: z.enum(IconColor, { error: "Pick a valid color" }),
+  iconColor: z.enum(IconColorKeys, { error: "Pick a valid color" }),
 
   projectId: z.number().int().min(1),
 });

@@ -8,7 +8,6 @@ import {
   PageBreadcrumbs,
   type BreadcrumbLink,
 } from "@/components/shared/custom/PageBreadcrumb";
-import { useGetProjectQuery } from "@/hooks/queries/useGetProjectQuery";
 import { useGetBoardQuery } from "@/hooks/queries/useGetBoardQuery";
 import { useGetTaskQuery } from "@/hooks/queries/useGetTaskQuery";
 import { TaskProperties } from "@/components/task/task-page/TaskProperties";
@@ -17,16 +16,10 @@ import { AddAttatchmentsDialog } from "@/components/attachment/AddAttatchmentsDi
 import { TaskAttachments } from "@/components/task/task-page/TaskAttachments";
 
 export const TaskPage = () => {
-  const getProjectQuery = useGetProjectQuery();
-  const getBoardQuery = useGetBoardQuery(getProjectQuery.data?.project.id);
+  const getBoardQuery = useGetBoardQuery();
   const getTaskQuery = useGetTaskQuery(getBoardQuery.data?.board.id);
 
-  if (!getBoardQuery.data || !getProjectQuery.data || !getTaskQuery.data)
-    return;
-
-  const {
-    data: { project },
-  } = getProjectQuery;
+  if (!getBoardQuery.data || !getTaskQuery.data) return;
   const {
     data: { board },
   } = getBoardQuery;
@@ -36,12 +29,8 @@ export const TaskPage = () => {
 
   const breadcrumbLinks: BreadcrumbLink[] = [
     {
-      label: project.name,
-      route: `/projects/${project.slug}`,
-    },
-    {
       label: board.name,
-      route: `/projects/${project.slug}/boards/${board.slug}`,
+      route: `/boards/${board.slug}`,
     },
   ];
 
@@ -69,7 +58,7 @@ export const TaskPage = () => {
           </div>
           <div className="flex gap-2">
             {/* ACTIONS */}
-            <Link to={`/projects/${project.slug}/boards/${board.slug}`}>
+            <Link to={`/boards/${board.slug}`}>
               <Button variant={"link"}>
                 <ArrowLeft />
                 Go back to board

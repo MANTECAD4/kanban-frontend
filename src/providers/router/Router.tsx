@@ -7,9 +7,9 @@ import { NotFound } from "@/pages/NotFound";
 import { PrivateRoute } from "@/providers/router/PrivateRoute";
 import { PublicRoute } from "@/providers/router/PublicRoute";
 import { BoardPage } from "@/pages/BoardPage";
-import { ProjectPage } from "@/pages/ProjectPage";
 import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { TaskPage } from "@/pages/TaskPage";
+import { Dashboard } from "@/pages/Dashboard";
 
 export const appRouter = createBrowserRouter([
   {
@@ -28,24 +28,18 @@ export const appRouter = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <div>
-            {" "}
-            <SidebarTrigger />
-            dashboard
-          </div>
-        ),
+        element: <Dashboard />,
       },
+      // {
+      //   path: "projects/:projectSlug",
+      //   element: <ProjectPage />,
+      // },
       {
-        path: "projects/:projectSlug",
-        element: <ProjectPage />,
-      },
-      {
-        path: "projects/:projectSlug/boards/:boardSlug",
+        path: "boards/:boardSlug",
         element: <BoardPage />,
       },
       {
-        path: "projects/:projectSlug/boards/:boardSlug/tasks/:taskSlug",
+        path: "boards/:boardSlug/tasks/:taskSlug",
         element: <TaskPage />,
       },
     ],

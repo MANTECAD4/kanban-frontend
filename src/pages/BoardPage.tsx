@@ -22,30 +22,21 @@ import { Kanban, ListTree, Pencil, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 
 export const BoardPage = () => {
-  const { projectSlug, getProjectQuery, getBoardQuery } = useBoard();
+  const { getBoardQuery } = useBoard();
   const boardMode = useBoardModeStore((state) => state.boardMode);
   const setBoardMode = useBoardModeStore((state) => state.setBoardMode);
   const { setColumnOrder, setBoardColumns, ...restProps } =
     useBoardContentManagement(getBoardQuery.data?.board.id);
 
-  if (!getProjectQuery.data || !getBoardQuery.data) return;
+  if (!getBoardQuery.data) return;
 
   if (getBoardQuery.isFetching) return <p>Loading</p>;
   const {
-    data: { project },
-  } = getProjectQuery;
-  const {
     data: { board },
   } = getBoardQuery;
-  const breadcrumbLinks: BreadcrumbLink[] = [
-    {
-      label: project.name,
-      route: `/projects/${project.slug}`,
-    },
-  ];
   return (
-    <div className="flex flex-col h-dvh min-h-dvh pl-2 pr-4 pt-4.5 pb-8  max-w-7xl mx-auto">
-      <PageBreadcrumbs links={breadcrumbLinks} currentPage={board.name} />
+    <div className="flex flex-col h-dvh min-h-dvh pl-2 pr-4 pt-4.5 pb-8  max-w-6xl mx-auto">
+      <PageBreadcrumbs links={[]} currentPage={board.name} />
 
       <div className="flex flex-col items-start gap-2 pb-8 group/header">
         <div className="flex gap-2 items-center">
@@ -58,10 +49,7 @@ export const BoardPage = () => {
                 <Pencil />
               </Button>
             </EditBoardDialog>
-            <DeleteBoardDialog
-              board={getBoardQuery.data.board}
-              projectSlug={projectSlug}
-            >
+            <DeleteBoardDialog board={getBoardQuery.data.board}>
               <Button variant="outline" size="icon-sm">
                 <Trash />
               </Button>

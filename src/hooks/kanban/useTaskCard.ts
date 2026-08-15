@@ -11,12 +11,11 @@ interface Props {
 
 export const useTaskCard = (props: Props) => {
   const { handleRef, ref } = useTaskItem(props);
-  const { projectSlug = "", boardSlug = "" } = useParams();
+  const { boardSlug = "" } = useParams();
 
   return {
     handleRef,
     ref,
-    projectSlug,
     boardSlug,
   };
 };

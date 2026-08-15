@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const TaskCard: FC<Props> = ({ task, index, category }) => {
-  const { handleRef, ref, boardSlug, projectSlug } = useTaskCard({
+  const { handleRef, ref, boardSlug } = useTaskCard({
     task,
     category,
     index,
@@ -81,9 +81,7 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
             <span className="text-xs">5</span>
           </div>
         </div>
-        <Link
-          to={`/projects/${projectSlug}/boards/${boardSlug}/tasks/${task.slug}`}
-        >
+        <Link to={`/boards/${boardSlug}/tasks/${task.slug}`}>
           <Button size="icon-lg" variant="outline" className="">
             <ChevronRight />
           </Button>

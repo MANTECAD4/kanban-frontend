@@ -61,11 +61,11 @@ export function TasksChart() {
   }, []);
 
   return (
-    <Card className="relative w-full flex flex-col bg-background ring-0">
-      <CardHeader className="items-center pb-0">
+    <Card className="relative w-full flex flex-col ring">
+      {/* <CardHeader className="items-center pb-0">
         <CardTitle>Pie Chart - Donut with Text</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
+      </CardHeader> */}
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
@@ -105,7 +105,7 @@ export function TasksChart() {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Tasks
                         </tspan>
                       </text>
                     );
@@ -118,10 +118,10 @@ export function TasksChart() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Busy days, aren't they?
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing 79 tasks status from 7 boards
         </div>
       </CardFooter>
     </Card>

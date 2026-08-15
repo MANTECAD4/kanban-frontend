@@ -66,6 +66,22 @@ export type SubmitTaskState = {
   tags: TaskTag[];
 };
 
+export const UpcomingTaskSchema = z.object({
+  task: z.object({
+    id: z.int().min(1),
+    title: z.string(),
+    slug: z.string(),
+    dueDate: z.date(),
+  }),
+  board: z.object({
+    id: z.int().min(1),
+    name: z.string(),
+    slug: z.string(),
+  }),
+});
+
+export type UpcomingTaskDto = z.infer<typeof UpcomingTaskSchema>;
+
 // RESPONSES
 export type CreateTaskResponse = {
   ok: boolean;
@@ -86,4 +102,10 @@ export type DeleteTaskResponse = {
   ok: boolean;
   message: string;
   task: TaskEntity;
+};
+
+export type GetUpcomingTasksResponse = {
+  ok: boolean;
+  message: string;
+  tasks: UpcomingTaskDto[];
 };

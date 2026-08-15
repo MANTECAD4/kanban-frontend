@@ -1,7 +1,7 @@
 import { iconNames } from "lucide-react/dynamic";
 import z from "zod";
 
-export enum IconColor {
+export enum IconColorKeys {
   RED = "RED",
   ORANGE = "ORANGE",
   YELLOW = "YELLOW",
@@ -29,7 +29,7 @@ export const ProjectSchema = z.object({
     .nonempty()
     .transform((value) => value.replace(/\s+/g, " ")),
   icon: z.enum(iconNames, { error: "Select a valid icon" }),
-  iconColor: z.enum(IconColor, { error: "Pick a valid color" }),
+  iconColor: z.enum(IconColorKeys, { error: "Pick a valid color" }),
 });
 
 export type ProjectEntity = z.infer<typeof ProjectSchema>;

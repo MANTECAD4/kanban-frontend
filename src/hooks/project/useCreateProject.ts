@@ -1,7 +1,7 @@
 import { createProjectAction } from "@/actions/project/create-project.action";
 import {
   SubmitProjectSchema,
-  IconColor,
+  IconColorKeys,
   type SubmitProjectState,
 } from "@/dtos/project.dto";
 import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
@@ -25,7 +25,7 @@ export const useCreateProject = () => {
       name: "",
       description: "",
       icon: "folder",
-      iconColor: IconColor.RED,
+      iconColor: IconColorKeys.RED,
     },
   });
 

@@ -21,25 +21,22 @@ import {
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
-import { colors } from "@/utils/icon-colors";
+import { iconColors } from "@/utils/icon-colors";
 import { Palette, Save } from "lucide-react";
 import { useCreateBoard } from "@/hooks/boards/useCreateBoard";
 import { Controller } from "react-hook-form";
 
 interface Props {
   children: ReactNode;
-  projectId: number;
 }
 
 type AddProjectDialogProps = Props & React.ComponentProps<typeof Dialog>;
 
 export const AddBoardDialog: FC<AddProjectDialogProps> = ({
   children,
-  projectId,
   ...props
 }) => {
-  const { register, control, errors, onSumbitForm, reset } =
-    useCreateBoard(projectId);
+  const { register, control, errors, onSumbitForm, reset } = useCreateBoard();
 
   return (
     <Dialog {...props} onOpenChange={() => reset()}>
@@ -130,7 +127,7 @@ export const AddBoardDialog: FC<AddProjectDialogProps> = ({
                       value={value}
                       aria-invalid={Boolean(errors.iconColor)}
                     >
-                      {Object.entries(colors).map(([name, color]) => (
+                      {Object.entries(iconColors).map(([name, color]) => (
                         <ToggleGroupItem
                           key={name}
                           className={cn(

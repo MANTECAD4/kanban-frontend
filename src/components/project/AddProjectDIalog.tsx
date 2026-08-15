@@ -22,9 +22,9 @@ import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
 import { useCreateProject } from "@/hooks/project/useCreateProject";
 import { Palette } from "lucide-react";
-import { IconColor } from "@/dtos/project.dto";
+import { IconColorKeys } from "@/dtos/project.dto";
 import { Controller } from "react-hook-form";
-import { colors } from "@/utils/icon-colors";
+import { iconColors } from "@/utils/icon-colors";
 
 interface Props {
   children: ReactNode;
@@ -128,8 +128,8 @@ export const AddProjectDialog: FC<AddProjectDialogProps> = ({
                       ref={ref}
                       aria-invalid={Boolean(errors.iconColor)}
                     >
-                      {Object.keys(IconColor).map((color) => {
-                        color as IconColor;
+                      {Object.keys(IconColorKeys).map((color) => {
+                        color as IconColorKeys;
                         return (
                           <ToggleGroupItem
                             key={color}
@@ -143,9 +143,9 @@ export const AddProjectDialog: FC<AddProjectDialogProps> = ({
                           >
                             <Palette
                               className={cn(
-                                colors[color].bg,
-                                colors[color].stroke,
-                                colors[color].border,
+                                iconColors[color].bg,
+                                iconColors[color].stroke,
+                                iconColors[color].border,
                                 "border-2, size-7 p-1 rounded-full",
                               )}
                             />

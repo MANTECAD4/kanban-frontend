@@ -21,7 +21,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
-import { colors } from "@/utils/icon-colors";
+import { iconColors } from "@/utils/icon-colors";
 import { Palette, Save } from "lucide-react";
 import { useCreateBoard } from "@/hooks/boards/useCreateBoard";
 import { Controller } from "react-hook-form";
@@ -135,7 +135,7 @@ export const EditBoardDialog: FC<AddProjectDialogProps> = ({
                       value={value}
                       aria-invalid={Boolean(errors.iconColor)}
                     >
-                      {Object.entries(colors).map(([name, color]) => (
+                      {Object.entries(iconColors).map(([name, color]) => (
                         <ToggleGroupItem
                           key={name}
                           className={cn(

@@ -13,7 +13,7 @@ import {
 import type { BoardEntity } from "@/dtos/board.dtos";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { cn } from "@/lib/utils";
-import { colors } from "@/utils/icon-colors";
+import { iconColors } from "@/utils/icon-colors";
 import { EditBoardDialog } from "@/components/board/EditBoardDIalog";
 import { Link } from "react-router";
 
@@ -32,12 +32,15 @@ export const BoardItemCard: FC<Props> = ({ board }) => {
         <div className="flex items-center gap-2">
           <div
             className={cn(
-              colors[iconColor].bg,
-              colors[iconColor].border,
+              iconColors[iconColor].bg,
+              iconColors[iconColor].border,
               "flex justify-center items-center size-12 p-3 aspect-square rounded-full",
             )}
           >
-            <DynamicIcon name={icon} className={cn(colors[iconColor].stroke)} />
+            <DynamicIcon
+              name={icon}
+              className={cn(iconColors[iconColor].stroke)}
+            />
           </div>
           <h3 className="hover:underline cursor-pointer">
             <Link to={`/boards/${board.slug}`}>{name}</Link>

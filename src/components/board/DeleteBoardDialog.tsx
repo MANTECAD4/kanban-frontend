@@ -18,15 +18,10 @@ import { useDeleteBoard } from "@/hooks/boards/useDeleteBoard";
 interface Props {
   children: ReactNode;
   board: BoardEntity;
-  projectSlug: string;
 }
 
-export const DeleteBoardDialog: FC<Props> = ({
-  children,
-  projectSlug,
-  board,
-}) => {
-  const { submitBoardDeletion } = useDeleteBoard(projectSlug);
+export const DeleteBoardDialog: FC<Props> = ({ children, board }) => {
+  const { submitBoardDeletion } = useDeleteBoard();
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
