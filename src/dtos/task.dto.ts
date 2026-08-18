@@ -109,3 +109,17 @@ export type GetUpcomingTasksResponse = {
   message: string;
   tasks: UpcomingTaskDto[];
 };
+
+export interface GetTasksMetaByPriorityResponse {
+  ok: boolean;
+  message: string;
+  meta: Meta;
+}
+
+export interface Meta {
+  total: number;
+  low: number;
+  medium: number;
+  high: number;
+  urgent: number;
+}

@@ -1,4 +1,5 @@
-import { TasksChart } from "@/components/board/TasksChart";
+import { AddBoardDialog } from "@/components/board/AddBoardDialog";
+import { TasksCharts } from "@/components/board/task-charts/TasksCharts";
 import { UpcomingDates } from "@/components/board/UpcomingDates";
 import { BoardSummaryItem } from "@/components/dashboard/BoardSummaryItem";
 import {
@@ -44,23 +45,25 @@ export const Dashboard = () => {
               </p>
             </div>
           </div>
-          <Button>
-            <Plus />
-            Create Board
-          </Button>
+          <AddBoardDialog>
+            <Button>
+              <Plus />
+              Create Board
+            </Button>
+          </AddBoardDialog>
         </div>
 
-        <div className="flex gap-4 ">
-          <TasksChart />
+        <div className="grid grid-cols-2 gap-4">
+          <TasksCharts />
           {/* <Separator orientation="vertical" /> */}
           <UpcomingDates />
           {/* <RecentActivityCard /> */}
         </div>
         {/* <Separator /> */}
-        <div className="flex flex-col  gap-4 bg-card ring ring-muted rounded-lg p-3">
+        <div className="flex flex-col  gap-4 bg-card ring ring-muted rounded-lg p-5">
           <div className="flex gap-2 items-center">
             <Kanban className="size-4.5" />
-            <h2 className="font-semibold">Boards - (8)</h2>
+            <h2 className="text-sm font-semibold">Boards - (8)</h2>
           </div>
 
           <div className="flex items-center gap-4 flex-wrap ">
@@ -90,26 +93,3 @@ export const Dashboard = () => {
     </div>
   );
 };
-
-{
-  /* <div className="grid grid-cols-2 gap-3 p-4 w-full ring ring-muted rounded-lg bg-sidebar">
-          <div className="flex justify-around items-center bg-background rounded-lg p-4">
-            <div className="flex flex-col gap-2 items-center">
-              <h2 className="text-sm font-semibold">Total boards</h2>
-              <span className="text-2xl font-semibold">7</span>
-            </div>
-            <div className="bg-muted size-12 aspect-square rounded-full flex justify-center items-center">
-              <Presentation className="size-6" />
-            </div>
-          </div>
-          <div className="flex justify-around items-center bg-background rounded-lg p-4">
-            <div className="flex flex-col gap-2 items-center">
-              <h2 className="text-sm font-semibold">Total tasks</h2>
-              <span className="text-2xl font-semibold">78</span>
-            </div>
-            <div className="bg-muted size-12 aspect-square rounded-full flex justify-center items-center">
-              <StickyNote className="size-6" />
-            </div>
-          </div>
-        </div> */
-}
