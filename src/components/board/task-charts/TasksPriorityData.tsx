@@ -4,6 +4,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/shared/ui/chart";
+import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
 import { useGetTasksMetaByPriority } from "@/hooks/queries/useGetTasksMetaByPriority";
 import { Label, Pie, PieChart } from "recharts";
 
@@ -42,13 +43,17 @@ const chartConfig = {
 } satisfies ChartConfig;
 export const TasksPriorityData = () => {
   const getTasksMetaByPriorityQuery = useGetTasksMetaByPriority();
-  if (!getTasksMetaByPriorityQuery.data) return;
+  const getBoardsQuery = useGetBoardsQuery();
+
+  if (!getTasksMetaByPriorityQuery.data || !getBoardsQuery.data) return;
 
   const {
     data: {
       meta: { total, ...rest },
     },
   } = getTasksMetaByPriorityQuery;
+
+  const numBoards = getBoardsQuery.data.meta.total;
   const totalTasks = total;
 
   const chartData = Object.entries(rest).map(([key, value], index) => ({
@@ -112,7 +117,7 @@ export const TasksPriorityData = () => {
       <div className="flex flex-col  gap-2 text-sm text-center">
         <p className="leading-none font-medium">Busy days, aren't they?</p>
         <p className="leading-none text-muted-foreground">
-          Showing {totalTasks} tasks from 7 boards
+          Showing {totalTasks} tasks from {numBoards} boards
         </p>
       </div>
     </>

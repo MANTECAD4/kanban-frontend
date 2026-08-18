@@ -60,7 +60,7 @@ export function TasksCharts() {
   }, []);
   return (
     <div className="flex flex-col gap-4 rounded-lg bg-card ring ring-muted p-5">
-      <Tabs defaultValue="overview" className="w-full">
+      <Tabs defaultValue="priority" className="w-full">
         <div className="flex justify-between">
           <div>
             <div className="flex gap-2 items-center">
@@ -69,14 +69,14 @@ export function TasksCharts() {
             </div>
           </div>
           <TabsList>
-            <TabsTrigger value="analytics">Completion Status</TabsTrigger>
-            <TabsTrigger value="overview">Task Priority</TabsTrigger>
+            <TabsTrigger value="status">Completion Status</TabsTrigger>
+            <TabsTrigger value="priority">Task Priority</TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="overview">
+        <TabsContent value="priority">
           <TasksPriorityData />
         </TabsContent>
-        <TabsContent value="analytics">
+        <TabsContent value="status">
           <div className="flex-1 pb-0">
             <ChartContainer
               config={chartConfig}
