@@ -86,11 +86,11 @@ export const PriorityColorsText: Record<TaskPriority, string> = {
   Low: "text-success",
   Medium: "text-blue-600",
   High: "text-yellow-600",
-  Urgent: "text-destructive",
+  Urgent: "text-red-600",
 };
 export const PriorityColorsBg: Record<TaskPriority, string> = {
   Low: "bg-success",
   Medium: "bg-blue-600",
   High: "bg-yellow-600",
-  Urgent: "bg-destructive",
+  Urgent: "bg-red-600",
 };

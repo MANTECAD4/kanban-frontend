@@ -113,13 +113,26 @@ export type GetUpcomingTasksResponse = {
 export interface GetTasksMetaByPriorityResponse {
   ok: boolean;
   message: string;
-  meta: Meta;
+  meta: MetaByPriority;
 }
 
-export interface Meta {
+export interface MetaByPriority {
   total: number;
   low: number;
   medium: number;
   high: number;
   urgent: number;
+}
+
+export interface GetTasksMetaByCompletionResponse {
+  ok: boolean;
+  message: string;
+  meta: MetaByCompletion;
+}
+export interface MetaByCompletion {
+  total: number;
+  notApplicable: number;
+  started: number;
+  notStarted: number;
+  completed: number;
 }

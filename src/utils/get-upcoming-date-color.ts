@@ -6,6 +6,10 @@ export const getUpcomingDateColor = (d: Date) => {
 
   const now = new Date();
 
+  if (date < now) {
+    return "bg-purple-800";
+  }
+
   if (date <= add(now, { days: 3 })) {
     return PriorityColorsBg.Urgent;
   }

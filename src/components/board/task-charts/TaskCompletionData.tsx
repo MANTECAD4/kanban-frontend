@@ -4,46 +4,50 @@ import {
   ChartTooltipContent,
 } from "@/components/shared/ui/chart";
 import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
-import { useGetTasksMetaByPriority } from "@/hooks/queries/useGetTasksMetaByPriority";
+import { useGetTasksMetaByCompletionQuery } from "@/hooks/queries/useGetTasksMetaByCompletionQuery";
 import { useMemo } from "react";
 import { Label, Pie, PieChart } from "recharts";
-
-export const TasksPriorityData = () => {
-  const getTasksMetaByPriorityQuery = useGetTasksMetaByPriority();
+export const TasksCompletionData = () => {
   const getBoardsQuery = useGetBoardsQuery();
+  const getTasksMetaByCompletionQuery = useGetTasksMetaByCompletionQuery();
 
   const [totalTasks, chartData, chartConfig] = useMemo(() => {
     let totalTasks;
     let chartData;
     let chartConfig: Record<string, { label: string; color: string }> = {};
-    if (getTasksMetaByPriorityQuery.data) {
+    if (getTasksMetaByCompletionQuery.data) {
       const {
         data: {
           meta: { total, ...rest },
         },
-      } = getTasksMetaByPriorityQuery;
+      } = getTasksMetaByCompletionQuery;
       totalTasks = total;
-      chartData = Object.entries(rest).map(([key, value], index) => ({
-        priorityLevel: key,
-        numTasks: value,
-        fill: `var(--chart-${index})`,
-      }));
-      Object.keys(rest).forEach((key, index) => {
-        chartConfig[key] = {
-          label: key.toUpperCase(),
+      chartData = Object.entries(rest).map(
+        ([completionCategory, numTasks], index) => ({
+          completionCategory,
+          numTasks,
+          fill: `var(--chart-${index})`,
+        }),
+      );
+      Object.keys(rest).forEach((completionCategory, index) => {
+        console.log({ completionCategory, index });
+        chartConfig[completionCategory] = {
+          label:
+            completionCategory === "notApplicable"
+              ? "N/A"
+              : completionCategory.toUpperCase(),
           color: `var(--chart-${index})`,
         };
       });
     }
     return [totalTasks, chartData, chartConfig];
-  }, [getTasksMetaByPriorityQuery.data]);
+  }, [getTasksMetaByCompletionQuery.data]);
 
   const numBoards = getBoardsQuery.data?.meta.total;
-
   if (
+    numBoards === undefined ||
     totalTasks === undefined ||
     !chartData ||
-    numBoards === undefined ||
     !chartConfig
   )
     return;
@@ -63,7 +67,7 @@ export const TasksPriorityData = () => {
             <Pie
               data={chartData}
               dataKey="numTasks"
-              nameKey="priorityLevel"
+              nameKey="completionCategory"
               innerRadius={60}
               strokeWidth={5}
             >
