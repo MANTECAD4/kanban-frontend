@@ -18,11 +18,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/shared/ui/sidebar";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { LogoutIcon } from "@hugeicons/core-free-icons";
 import { useAuthStore } from "@/providers/store/auth.store";
-import { Moon, Settings, Sun } from "lucide-react";
+import { LogOut, Moon, Settings, Sun } from "lucide-react";
 import { useThemeStore } from "@/providers/store/theme.store";
+import { LogoutOption } from "@/components/sidebar/nav-user/LogoutOption";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -30,6 +29,7 @@ export function NavUser() {
   const email = useAuthStore((state) => state.email);
   const setTheme = useThemeStore((state) => state.setTheme);
   const theme = useThemeStore((state) => state.theme);
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -57,6 +57,7 @@ export function NavUser() {
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
+            forceMount
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
@@ -96,10 +97,7 @@ export function NavUser() {
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />
-              Log out
-            </DropdownMenuItem>
+            <LogoutOption />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

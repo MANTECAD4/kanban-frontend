@@ -15,7 +15,7 @@
   "menuColor": "default",
   "menuAccent": "subtle",
   "aliases": {
-    "components": "@/compponents/shared",
+    "components": "@/components/shared",
     "utils": "@/lib/utils",
     "ui": "@/components/shared/ui",
     "lib": "@/lib",

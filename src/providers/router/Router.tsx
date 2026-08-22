@@ -7,7 +7,6 @@ import { NotFound } from "@/pages/NotFound";
 import { PrivateRoute } from "@/providers/router/PrivateRoute";
 import { PublicRoute } from "@/providers/router/PublicRoute";
 import { BoardPage } from "@/pages/BoardPage";
-import { SidebarTrigger } from "@/components/shared/ui/sidebar";
 import { TaskPage } from "@/pages/TaskPage";
 import { Dashboard } from "@/pages/Dashboard";
 

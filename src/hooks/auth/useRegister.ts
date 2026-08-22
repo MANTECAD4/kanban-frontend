@@ -36,16 +36,16 @@ export const useRegister = () => {
     },
   });
 
-  const onSubmitForm: SubmitHandler<RegisterState> = (data) => {
+  const handleSubmitForm = handleSubmit((data) => {
     submitRegisterMutation.mutate(data);
-  };
+  });
 
   return {
     showPassword,
     setShowPassword,
     register,
     errors,
-    handleSubmit,
-    onSubmitForm,
+
+    handleSubmitForm,
   };
 };

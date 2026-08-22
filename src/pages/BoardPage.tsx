@@ -2,10 +2,7 @@ import { DeleteBoardDialog } from "@/components/board/DeleteBoardDialog";
 import { EditBoardDialog } from "@/components/board/EditBoardDialog";
 import { AddCategoryPopover } from "@/components/category/AddCategoryPopover";
 import { CustomDragDropProvider } from "@/components/shared/custom/CustomDragDropProvider";
-import {
-  PageBreadcrumbs,
-  type BreadcrumbLink,
-} from "@/components/shared/custom/PageBreadcrumb";
+import { PageBreadcrumbs } from "@/components/shared/custom/PageBreadcrumb";
 import { Button } from "@/components/shared/ui/button";
 import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/ui/tabs";
@@ -19,7 +16,6 @@ import {
 import { KanbanView } from "@/views/KanbanView";
 import { ListView } from "@/views/ListView";
 import { Kanban, ListTree, Pencil, Plus, Trash } from "lucide-react";
-import { useState } from "react";
 
 export const BoardPage = () => {
   const { getBoardQuery } = useBoard();

@@ -35,16 +35,15 @@ export const useLogin = () => {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const onSubmitForm: SubmitHandler<LoginState> = (data) => {
+  const handleSubmitForm = handleSubmit((data) => {
     submitLoginMutation.mutate(data);
-  };
+  });
 
   return {
     showPassword,
     setShowPassword,
     register,
-    handleSubmit,
-    onSubmitForm,
+    handleSubmitForm,
     errors,
   };
 };

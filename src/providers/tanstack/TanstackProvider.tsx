@@ -7,8 +7,6 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { toast } from "sonner";
-import axios from "axios";
 import { getApiError } from "@/utils/getApiError";
 
 type Props = {
@@ -27,15 +25,15 @@ export const kanbanQueryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
       const { title, message, code } = getApiError(error);
-      console.log({ error: code });
-      toast.error(title, { description: message });
+      console.log({ error: code, message, title });
+      // toast.error(title, { description: message });
     },
   }),
   mutationCache: new MutationCache({
     onError: (error) => {
       const { title, message, code } = getApiError(error);
-      console.log({ error: code });
-      toast.error(title, { description: message });
+      console.log({ error: code, message, title });
+      // toast.error(title, { description: message });
     },
   }),
 });

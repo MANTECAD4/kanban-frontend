@@ -6,114 +6,117 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSet,
+  FieldSeparator,
 } from "@/components/shared/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "@/components/shared/ui/input-group";
 import { Button } from "@/components/shared/ui/button";
-import { ArrowRight, Eye, EyeOff, KeyRound, Mail } from "lucide-react";
+import { Eye, EyeOff, Kanban, Key, Mail } from "lucide-react";
+import { Input } from "@/components/shared/ui/input";
 
 export const Login = () => {
-  const {
-    setShowPassword,
-    showPassword,
-    errors,
-    handleSubmit,
-    onSubmitForm,
-    register,
-  } = useLogin();
+  const { setShowPassword, showPassword, errors, handleSubmitForm, register } =
+    useLogin();
 
   return (
     <>
-      <div className="flex flex-col gap-2 mb-7 md:mb-13">
-        <h1 className="text-center text-[clamp(1.8rem,4vw,2.25rem)] font-semibold">
-          Login
-        </h1>
-        <p className="text-center text-xs text-gray-700 dark:text-gray-100">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
-          molestiae omnis quos.
-        </p>
-      </div>
-      <FieldSet>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <FieldGroup className="flex flex-col gap-6">
-            <Field data-invalid={Boolean(errors.email)}>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  {...register("email")}
-                  className="placeholder:text-gray-500 "
-                  // id="email"
-                  autoComplete="email"
-                  type="email"
-                  placeholder="example@gmail.com"
-                  aria-invalid={Boolean(errors.email)}
-                />
-                <InputGroupAddon>
-                  <Mail className="text-foreground/60" />
-                </InputGroupAddon>
-              </InputGroup>
-              {errors.email && (
-                <FieldDescription className="text-xs font-semibold text-destructive">
-                  {errors.email.message}
-                </FieldDescription>
-              )}
-            </Field>
-
-            <Field data-invalid={Boolean(errors.password)}>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  {...register("password")}
-                  className="placeholder:text-gray-500 "
-                  placeholder="**********"
-                  autoComplete="current-password"
-                  aria-invalid={Boolean(errors.password)}
-                  type={showPassword ? "text" : "password"}
-                />
-                <InputGroupAddon>
-                  <KeyRound className="text-foreground/60" />
-                </InputGroupAddon>
-                <InputGroupAddon align="inline-end">
-                  <InputGroupButton
-                    aria-label={"Show password toggle"}
-                    title={!showPassword ? "Show password" : "Hide password"}
-                    size="icon-xs"
-                    className="cursor-pointer"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? (
-                      <Eye className="text-foreground" />
-                    ) : (
-                      <EyeOff className="text-foreground" />
-                    )}
-                  </InputGroupButton>
-                </InputGroupAddon>
-              </InputGroup>
-              {errors.password && (
-                <FieldDescription className="text-xs font-semibold text-destructive">
-                  {errors.password.message}
-                </FieldDescription>
-              )}
-            </Field>
-          </FieldGroup>
-          <div className="mt-10 flex flex-col gap-3 items-center">
-            <Button size="lg" className="w-10/12" type="submit">
-              Sumbit
-            </Button>
-            <Link to="/auth/register" className="w-10/12 ">
-              <Button size="lg" className="w-full" variant={"outline"}>
-                Create an account
-                <ArrowRight className="" />
-              </Button>
-            </Link>
+      <form onSubmit={handleSubmitForm}>
+        <FieldGroup>
+          <div className="flex flex-col items-center gap-2 text-center">
+            <a
+              href="#"
+              className="flex flex-col items-center gap-2 font-medium"
+            >
+              <div className="flex size-8 items-center justify-center rounded-md">
+                <Kanban className="size-6" />
+              </div>
+              <span className="sr-only">Kanbi Inc.</span>
+            </a>
+            <h1 className="text-xl font-bold">Welcome to Kanbi Inc.</h1>
+            <FieldDescription>
+              Don&apos;t have an account?{" "}
+              <Link to="/auth/register">Sign up</Link>
+            </FieldDescription>
           </div>
-        </form>
-      </FieldSet>
+          <Field data-invalid={Boolean(errors.email)}>
+            <div className="flex gap-1.5 items-center">
+              <Mail className="size-2.5" />
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+            </div>
+            <Input
+              aria-invalid={Boolean(errors.email)}
+              {...register("email")}
+              type="email"
+              placeholder="my-email@example.com"
+              required
+            />
+            {errors.email && (
+              <FieldDescription>{errors.email.message}</FieldDescription>
+            )}
+          </Field>
+          <Field
+            className="group/password-field"
+            data-invalid={Boolean(errors.password)}
+          >
+            <div className="flex gap-1 items-center">
+              <div className="flex gap-1.5 items-center">
+                <Key className="size-2.5" />
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+              </div>
+              <Button
+                type="button"
+                variant={"ghost"}
+                size="icon-xs"
+                className="opacity-0 group-hover/password-field:opacity-100 transition-opacity focus-within:opacity-100"
+                onClick={() => setShowPassword((s) => !s)}
+              >
+                {showPassword ? <Eye /> : <EyeOff />}
+              </Button>
+            </div>
+            <Input
+              aria-invalid={Boolean(errors.password)}
+              {...register("password")}
+              type={showPassword ? "text" : "password"}
+              placeholder="**********"
+              required
+            />
+            {errors.password && (
+              <FieldDescription>{errors.password?.message}</FieldDescription>
+            )}
+          </Field>
+          <Field>
+            <Button type="submit" size="lg">
+              Login
+            </Button>
+          </Field>
+          <FieldSeparator>Or</FieldSeparator>
+          <Field className="grid gap-4 sm:grid-cols-2">
+            <Button variant="outline" type="button">
+              <svg viewBox="0 0 1024 1024" fill="none">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
+                  transform="scale(64)"
+                  fill="#ffff"
+                />
+              </svg>
+              Continue with Github
+            </Button>
+            <Button variant="outline" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                  fill="currentColor"
+                />
+              </svg>
+              Continue with Google
+            </Button>
+          </Field>
+        </FieldGroup>
+      </form>
+      <FieldDescription className="px-6 text-center">
+        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
+        and <a href="#">Privacy Policy</a>.
+      </FieldDescription>
     </>
   );
 };

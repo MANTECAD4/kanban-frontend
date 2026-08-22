@@ -8,21 +8,12 @@ import {
   AvatarImage,
 } from "@/components/shared/ui/avatar";
 import { Button } from "@/components/shared/ui/button";
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/shared/ui/empty";
 import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
-import { cn } from "@/lib/utils";
-import { iconColors } from "@/utils/icon-colors";
-import { CopyPlus, Kanban, Plus } from "lucide-react";
-import { DynamicIcon } from "lucide-react/dynamic";
+import { useAuthStore } from "@/providers/store/auth.store";
+import { Kanban, Plus } from "lucide-react";
 
 export const Dashboard = () => {
+  const name = useAuthStore((state) => state.name);
   const getBoardsQuery = useGetBoardsQuery();
   if (!getBoardsQuery.data) return;
   return (
@@ -39,7 +30,7 @@ export const Dashboard = () => {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div className="flex flex-col justify-center">
-              <h1 className="font-semibold">Welcome, Daniel ✌</h1>
+              <h1 className="font-semibold">Welcome, {name} ✌</h1>
               <p className="text-sm text-muted-foreground">
                 Create and manage your tasks.
               </p>
