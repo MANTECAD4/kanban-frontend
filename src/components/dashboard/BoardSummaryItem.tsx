@@ -1,7 +1,12 @@
 import type { BoardEntity } from "@/dtos/board.dtos";
 import { cn } from "@/lib/utils";
-import { iconColors, type IconColorComponents } from "@/utils/icon-colors";
-import { CircleCheck, CircleDashed, CircleDot } from "lucide-react";
+import { iconColors } from "@/utils/icon-colors";
+import {
+  CircleCheck,
+  CircleDashed,
+  CircleDot,
+  CircleQuestionMark,
+} from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
 import type { FC } from "react";
 import { useNavigate } from "react-router";
@@ -10,60 +15,63 @@ interface Props {
   board: BoardEntity;
 }
 
-export const BoardSummaryItem: FC<Props> = ({ board }) => {
+export const BoardSummaryItem: FC<Props> = ({
+  board: { description, icon, iconColor, name, slug, meta },
+}) => {
   const navigate = useNavigate();
   return (
     <div
       className={cn(
-        iconColors[board.iconColor].bg,
+        iconColors[iconColor].bg,
         "flex flex-col gap-2 p-1 pb-2 rounded-2xl min-w-55 flex-1 max-w-60 cursor-pointer hover:-translate-y-1 opacity-90 hover:opacity-100 transition-transform overflow-hidden",
       )}
-      onClick={() => navigate(`/boards/${board.slug}`)}
-      title={`Go to ${board.name} board`}
+      onClick={() => navigate(`/boards/${slug}`)}
+      title={`Go to ${name} board`}
     >
       <div
         className={cn(
-          iconColors[board.iconColor].shadow,
+          iconColors[iconColor].shadow,
           "flex flex-col gap-2 bg-background/85 p-4 rounded-xl ",
         )}
       >
         <div
-          className={cn(
-            iconColors[board.iconColor].bg,
-            " p-2 rounded-full w-fit",
-          )}
+          className={cn(iconColors[iconColor].bg, " p-2 rounded-full w-fit")}
         >
           <DynamicIcon
-            name={board.icon}
-            className={cn(iconColors[board.iconColor].stroke, "size-5.5")}
+            name={icon}
+            className={cn(iconColors[iconColor].stroke, "size-5.5")}
           />
         </div>
         <div>
-          <h3 className="text-sm font-semibold">{board.name}</h3>
-          <p className="text-xs text-muted-foreground">{board.description}</p>
+          <h3 className="text-sm font-semibold">{name}</h3>
+          <p className="text-xs text-muted-foreground">{description}</p>
         </div>
         <div className="flex gap-2 text-xs text-muted-foreground">
           <div className="flex gap-1 items-center">
             <CircleCheck className="size-4" />
-            <span>6</span>
+            <span>{meta?.numCompletedTasks ?? -1}</span>
           </div>
           <div className="flex gap-1 items-center">
             <CircleDashed className="size-4" />
-            <span>6</span>
+            <span>{meta?.numStartedTasks ?? -1}</span>
           </div>
           <div className="flex gap-1 items-center">
             <CircleDot className="size-4" />
-            <span>6</span>
+            <span>{meta?.numNotStartedTasks ?? -1}</span>
+          </div>
+          <div className="flex gap-1 items-center">
+            <CircleQuestionMark className="size-4" />
+            <span>{meta?.numNotApplicableTasks ?? -1}</span>
           </div>
         </div>
       </div>
       <p
         className={cn(
-          iconColors[board.iconColor].text,
+          iconColors[iconColor].text,
           "text-sm font-semibold text-center",
         )}
       >
-        5 TASKS
+        {meta?.total ?? -1} TASKS
       </p>
     </div>
   );

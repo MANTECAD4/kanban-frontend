@@ -2,6 +2,16 @@ import { IconColorKeys } from "@/dtos/project.dto";
 import { iconNames } from "lucide-react/dynamic";
 import z from "zod";
 
+export const BoardMetaSchema = z
+  .object({
+    total: z.int(),
+    numNotApplicableTasks: z.int(),
+    numCompletedTasks: z.int(),
+    numStartedTasks: z.int(),
+    numNotStartedTasks: z.int(),
+  })
+  .nullable();
+
 export const BoardSchema = z.object({
   id: z.number().int().min(1),
   slug: z.string().nonempty(),
@@ -17,11 +27,13 @@ export const BoardSchema = z.object({
     .transform((value) => value.replace(/\s+/g, " ")),
   icon: z.enum(iconNames, { error: "Select a valid icon" }),
   iconColor: z.enum(IconColorKeys, { error: "Pick a valid color" }),
+  meta: BoardMetaSchema,
 });
 
 export const SubmitBoardSchema = BoardSchema.omit({
   id: true,
   slug: true,
+  meta: true,
 });
 
 export type BoardEntity = z.infer<typeof BoardSchema>;
