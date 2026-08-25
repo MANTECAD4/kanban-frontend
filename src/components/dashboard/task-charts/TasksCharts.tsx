@@ -1,23 +1,14 @@
 "use client";
 
-import * as React from "react";
-import { StickyNote, Summary, TrendingUp } from "lucide-react";
-import { Label, Pie, PieChart } from "recharts";
-
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/shared/ui/chart";
+import { Summary } from "lucide-react";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/shared/ui/tabs";
-import { TasksPriorityData } from "@/components/board/task-charts/TasksPriorityData";
-import { TasksCompletionData } from "@/components/board/task-charts/TaskCompletionData";
+import { TasksPriorityData } from "@/components/dashboard/task-charts/TasksPriorityData";
+import { TasksCompletionData } from "@/components/dashboard/task-charts/TaskCompletionData";
 
 export const description = "A donut chart with text";
 

@@ -17,14 +17,11 @@ export const BoardSchema = z.object({
     .transform((value) => value.replace(/\s+/g, " ")),
   icon: z.enum(iconNames, { error: "Select a valid icon" }),
   iconColor: z.enum(IconColorKeys, { error: "Pick a valid color" }),
-
-  projectId: z.number().int().min(1),
 });
 
 export const SubmitBoardSchema = BoardSchema.omit({
   id: true,
   slug: true,
-  projectId: true,
 });
 
 export type BoardEntity = z.infer<typeof BoardSchema>;

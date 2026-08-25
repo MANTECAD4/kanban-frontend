@@ -1,24 +1,18 @@
 import { AddBoardDialog } from "@/components/board/AddBoardDialog";
-import { TasksCharts } from "@/components/board/task-charts/TasksCharts";
-import { UpcomingDates } from "@/components/board/UpcomingDates";
-import { BoardSummaryItem } from "@/components/dashboard/BoardSummaryItem";
-import {
-  Avatar,
-  AvatarFallback,
-  // AvatarImage,
-} from "@/components/shared/ui/avatar";
+import { TasksCharts } from "@/components/dashboard/task-charts/TasksCharts";
+import { UpcomingDates } from "@/components/dashboard/UpcomingDates";
+import { Avatar, AvatarFallback } from "@/components/shared/ui/avatar";
 import { Button } from "@/components/shared/ui/button";
-import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/providers/store/auth.store";
 import { getNameAbreviation } from "@/utils/get-name-abrev";
-import { Kanban, Plus } from "lucide-react";
+import { ClockArrowDown, Kanban, Plus } from "lucide-react";
+import { BoardGrid } from "@/components/dashboard/BoardGrid";
 
 export const Dashboard = () => {
   const userName = useAuthStore((s) => s.name);
   const name = useAuthStore((state) => state.name);
-  const getBoardsQuery = useGetBoardsQuery();
-  if (!getBoardsQuery.data) return;
+
   return (
     <div className="min-h-dvh p-5">
       <div className="flex flex-col gap-4 m-auto max-w-5xl">
@@ -31,7 +25,6 @@ export const Dashboard = () => {
                 className="grayscale"
               /> */}
               <AvatarFallback>
-                {" "}
                 {getNameAbreviation(userName ?? "")}
               </AvatarFallback>
             </Avatar>
@@ -53,7 +46,13 @@ export const Dashboard = () => {
         <div className="grid grid-cols-2 gap-4">
           <TasksCharts />
           {/* <Separator orientation="vertical" /> */}
-          <UpcomingDates />
+          <div className="relative z-50  w-full flex flex-col gap-6 max-h-95 overflow-y-scroll custom-scrollbar rounded-lg bg-card ring ring-muted p-5">
+            <div className="sticky top-0 left-0 flex items-center gap-2 ">
+              <ClockArrowDown className="size-5" />
+              <h2 className="text-sm font-semibold">Upcoming dates</h2>
+            </div>
+            <UpcomingDates />
+          </div>
           {/* <RecentActivityCard /> */}
         </div>
         {/* <Separator /> */}
@@ -62,29 +61,7 @@ export const Dashboard = () => {
             <Kanban className="size-4.5" />
             <h2 className="text-sm font-semibold">Boards - (8)</h2>
           </div>
-
-          <div className="flex items-center gap-4 flex-wrap ">
-            {getBoardsQuery.data.boards.map((board) => (
-              <BoardSummaryItem key={board.id} board={board} />
-            ))}
-            {/* <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <CopyPlus />
-              </EmptyMedia>
-              <EmptyTitle>Ready to add your first board?</EmptyTitle>
-              <EmptyDescription>
-                A summary of your boards will appear here
-              </EmptyDescription>
-            </EmptyHeader>
-            <EmptyContent className="flex-row justify-center gap-2">
-              <Button>
-                <Plus />
-                Create Board
-              </Button>
-            </EmptyContent>
-          </Empty> */}
-          </div>
+          <BoardGrid />
         </div>
       </div>
     </div>

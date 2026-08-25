@@ -29,7 +29,7 @@ export const useUpdateBoard = (board: BoardEntity) => {
 
   useEffect(() => {
     if (board) {
-      const { id, slug, projectId, ...rest } = board;
+      const { id, slug, ...rest } = board;
       reset(rest);
     }
   }, [board]);
@@ -44,7 +44,7 @@ export const useUpdateBoard = (board: BoardEntity) => {
 
       toast.success(message);
       kanbanQueryClient.invalidateQueries({
-        queryKey: ["in-project", board.projectId, "boards"],
+        queryKey: ["boards"],
       });
       if (board.slug === newSlug) {
         kanbanQueryClient.invalidateQueries({ queryKey: ["boards", newSlug] });
