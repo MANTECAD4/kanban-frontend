@@ -9,10 +9,10 @@ import {
   FieldSeparator,
 } from "@/components/shared/ui/field";
 import { Button } from "@/components/shared/ui/button";
-import { Eye, EyeOff, Kanban, Key, Mail } from "lucide-react";
+import { Eye, EyeOff, Kanban, Key, LogIn, Mail } from "lucide-react";
 import { Input } from "@/components/shared/ui/input";
 
-export const Login = () => {
+export const LoginPage = () => {
   const { setShowPassword, showPassword, errors, handleSubmitForm, register } =
     useLogin();
 
@@ -84,7 +84,8 @@ export const Login = () => {
           </Field>
           <Field>
             <Button type="submit" size="lg">
-              Login
+              <LogIn />
+              Log in
             </Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>

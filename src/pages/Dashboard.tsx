@@ -5,14 +5,17 @@ import { BoardSummaryItem } from "@/components/dashboard/BoardSummaryItem";
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage,
+  // AvatarImage,
 } from "@/components/shared/ui/avatar";
 import { Button } from "@/components/shared/ui/button";
 import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
+import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/providers/store/auth.store";
+import { getNameAbreviation } from "@/utils/get-name-abrev";
 import { Kanban, Plus } from "lucide-react";
 
 export const Dashboard = () => {
+  const userName = useAuthStore((s) => s.name);
   const name = useAuthStore((state) => state.name);
   const getBoardsQuery = useGetBoardsQuery();
   if (!getBoardsQuery.data) return;
@@ -22,12 +25,15 @@ export const Dashboard = () => {
         <div className="flex items-center justify-between p-4 w-full ring ring-muted rounded-lg bg-card">
           <div className="flex gap-3  ">
             <Avatar size="lg">
-              <AvatarImage
+              {/* <AvatarImage
                 src="https://github.com/shadcn.png"
                 alt="@shadcn"
                 className="grayscale"
-              />
-              <AvatarFallback>CN</AvatarFallback>
+              /> */}
+              <AvatarFallback>
+                {" "}
+                {getNameAbreviation(userName ?? "")}
+              </AvatarFallback>
             </Avatar>
             <div className="flex flex-col justify-center">
               <h1 className="font-semibold">Welcome, {name} ✌</h1>
@@ -84,3 +90,61 @@ export const Dashboard = () => {
     </div>
   );
 };
+
+{
+  /* {Object.entries(iconColors).map(([key, value]) => (
+                <div
+                  className={cn(
+                    iconColors[key].bg,
+                    "flex flex-col gap-2 p-1 pb-2 rounded-2xl min-w-55 flex-1 max-w-60 cursor-pointer hover:-translate-y-1 opacity-90 hover:opacity-100 transition-transform overflow-hidden",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      iconColors[key].shadow,
+                      "flex flex-col gap-2 bg-background/85 p-4 rounded-xl ",
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        iconColors[key].bg,
+                        " p-2 rounded-full w-fit",
+                      )}
+                    >
+                      <DynamicIcon
+                        name={"folder"}
+                        className={cn(iconColors[key].stroke, "size-5.5")}
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold">{key}</h3>
+                      <p className="text-xs text-muted-foreground">
+                        Some description
+                      </p>
+                    </div>
+                    <div className="flex gap-2 text-xs text-muted-foreground">
+                      <div className="flex gap-1 items-center">
+                        <CircleCheck className="size-4" />
+                        <span>6</span>
+                      </div>
+                      <div className="flex gap-1 items-center">
+                        <CircleDashed className="size-4" />
+                        <span>6</span>
+                      </div>
+                      <div className="flex gap-1 items-center">
+                        <CircleDot className="size-4" />
+                        <span>6</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p
+                    className={cn(
+                      iconColors[key].text,
+                      "text-sm font-semibold text-center",
+                    )}
+                  >
+                    5 TASKS
+                  </p>
+                </div>
+              ))} */
+}

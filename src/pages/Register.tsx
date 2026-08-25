@@ -8,7 +8,7 @@ import {
 } from "@/components/shared/ui/field";
 
 import { Button } from "@/components/shared/ui/button";
-import { Eye, EyeOff, Kanban, Key, Mail, User } from "lucide-react";
+import { Contact, Eye, EyeOff, Kanban, Key, Mail, User } from "lucide-react";
 import { useRegister } from "@/hooks/auth/useRegister";
 import { Input } from "@/components/shared/ui/input";
 // import styles from "../styles/Register.module.css";
@@ -99,6 +99,7 @@ export const Register = () => {
           </Field>
           <Field>
             <Button type="submit" size="lg">
+              <Contact />
               Register
             </Button>
           </Field>

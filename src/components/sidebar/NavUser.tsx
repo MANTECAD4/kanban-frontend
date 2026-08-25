@@ -22,6 +22,7 @@ import { useAuthStore } from "@/providers/store/auth.store";
 import { LogOut, Moon, Settings, Sun } from "lucide-react";
 import { useThemeStore } from "@/providers/store/theme.store";
 import { LogoutOption } from "@/components/sidebar/nav-user/LogoutOption";
+import { getNameAbreviation } from "@/utils/get-name-abrev";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -42,7 +43,7 @@ export function NavUser() {
               <Avatar className="h-8 w-8 rounded-lg">
                 {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
                 <AvatarFallback className="rounded-lg text-foreground/80">
-                  CN
+                  {getNameAbreviation(userName ?? "")}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -64,7 +65,7 @@ export function NavUser() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={"user.avatar"} alt={"nanel"} />
                   <AvatarFallback className="rounded-lg text-foreground/80">
-                    CN
+                    {getNameAbreviation(userName ?? "")}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

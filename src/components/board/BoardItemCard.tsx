@@ -14,7 +14,7 @@ import type { BoardEntity } from "@/dtos/board.dtos";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { cn } from "@/lib/utils";
 import { iconColors } from "@/utils/icon-colors";
-import { EditBoardDialog } from "@/components/board/EditBoardDIalog";
+import { EditBoardDialog } from "@/components/board/EditBoardDialog";
 import { Link } from "react-router";
 
 interface Props {

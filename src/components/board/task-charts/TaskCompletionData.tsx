@@ -1,56 +1,66 @@
+import { Button } from "@/components/shared/ui/button";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/shared/ui/chart";
-import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
-import { useGetTasksMetaByCompletionQuery } from "@/hooks/queries/useGetTasksMetaByCompletionQuery";
-import { useMemo } from "react";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/shared/ui/empty";
+import { Skeleton } from "@/components/shared/ui/skeleton";
+import { useTaskMetaByCompletion } from "@/hooks/dashboard/useTaskMetaByCompletion";
+import { RotateCcw, XCircle } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 export const TasksCompletionData = () => {
-  const getBoardsQuery = useGetBoardsQuery();
-  const getTasksMetaByCompletionQuery = useGetTasksMetaByCompletionQuery();
+  const {
+    chartConfig,
+    chartData,
+    numBoards = 0,
+    totalTasks = 0,
+    isFetchingBoards,
+    isFetchingTasksMeta,
+    isErrorBoards,
+    isErrorTasksMeta,
+    refetchQuery,
+  } = useTaskMetaByCompletion();
 
-  const [totalTasks, chartData, chartConfig] = useMemo(() => {
-    let totalTasks;
-    let chartData;
-    let chartConfig: Record<string, { label: string; color: string }> = {};
-    if (getTasksMetaByCompletionQuery.data) {
-      const {
-        data: {
-          meta: { total, ...rest },
-        },
-      } = getTasksMetaByCompletionQuery;
-      totalTasks = total;
-      chartData = Object.entries(rest).map(
-        ([completionCategory, numTasks], index) => ({
-          completionCategory,
-          numTasks,
-          fill: `var(--chart-${index})`,
-        }),
-      );
-      Object.keys(rest).forEach((completionCategory, index) => {
-        console.log({ completionCategory, index });
-        chartConfig[completionCategory] = {
-          label:
-            completionCategory === "notApplicable"
-              ? "N/A"
-              : completionCategory.toUpperCase(),
-          color: `var(--chart-${index})`,
-        };
-      });
-    }
-    return [totalTasks, chartData, chartConfig];
-  }, [getTasksMetaByCompletionQuery.data]);
+  if (isFetchingBoards || isFetchingTasksMeta)
+    return (
+      <div className="flex flex-col gap-4 items-center mt-3">
+        <Skeleton className="size-50 rounded-full" />
+        <div className="flex flex-col gap-3 w-full items-center">
+          <Skeleton className="w-6/10 h-5 " />
+          <Skeleton className="w-8/10 h-5 " />
+        </div>
+      </div>
+    );
 
-  const numBoards = getBoardsQuery.data?.meta.total;
-  if (
-    numBoards === undefined ||
-    totalTasks === undefined ||
-    !chartData ||
-    !chartConfig
-  )
-    return;
+  if (isErrorBoards || isErrorTasksMeta || !chartData)
+    return (
+      <Empty className="mt-3">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <XCircle />
+          </EmptyMedia>
+          <EmptyTitle>Error</EmptyTitle>
+          <EmptyDescription>
+            Something went wrong while fetching tasks's completion meta-data.
+            Try again later.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent className="flex-row justify-center gap-2">
+          <Button variant="outline" onClick={() => refetchQuery()}>
+            <RotateCcw />
+            Retry
+          </Button>
+        </EmptyContent>
+      </Empty>
+    );
 
   return (
     <>

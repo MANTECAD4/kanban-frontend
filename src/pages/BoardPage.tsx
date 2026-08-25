@@ -5,6 +5,7 @@ import { CustomDragDropProvider } from "@/components/shared/custom/CustomDragDro
 import { PageBreadcrumbs } from "@/components/shared/custom/PageBreadcrumb";
 import { Button } from "@/components/shared/ui/button";
 import { ButtonGroup } from "@/components/shared/ui/button-group";
+import { Separator } from "@/components/shared/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/ui/tabs";
 
 import { useBoard } from "@/hooks/boards/useBoard";
@@ -94,6 +95,7 @@ export const BoardPage = () => {
           </AddCategoryPopover>
         </div>
       </div>
+      <Separator className="mt-5" />
       <div className="h-full p-2">
         <CustomDragDropProvider
           setBoardColumns={setBoardColumns}
