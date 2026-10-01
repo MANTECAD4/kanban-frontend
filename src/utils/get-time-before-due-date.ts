@@ -5,7 +5,6 @@ export const getTimeBeforeDueDate = (d: Date) => {
 
   const daysDifference = differenceInDays(dueDate, new Date());
   const hoursDifference = differenceInHours(dueDate, new Date());
-  console.log({ daysDifference, hoursDifference });
 
   if (daysDifference <= 0 && hoursDifference < 0) {
     return "Due date already expired";

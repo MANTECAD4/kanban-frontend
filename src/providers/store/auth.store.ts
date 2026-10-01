@@ -27,13 +27,15 @@ const storeApi: StateCreator<AuthState, [["zustand/devtools", never]]> = (
   name: null,
   email: null,
 
-  setSession: (sessionProps) =>
-    set({ authStatus: "authenticated", ...sessionProps }, false, "setSession"),
+  setSession: (sessionProps) => {
+    set({ authStatus: "authenticated", ...sessionProps }, false, "setSession");
+  },
 
   setAccessToken: (token: string) =>
     set({ accessToken: token }, false, "setAccessToken"),
 
-  clearSession: () =>
+  clearSession: () => {
+    console.log("zustand cleared");
     set(
       {
         authStatus: "not-authenticated",
@@ -44,7 +46,8 @@ const storeApi: StateCreator<AuthState, [["zustand/devtools", never]]> = (
       },
       false,
       "clearSession",
-    ),
+    );
+  },
 });
 
 export const useAuthStore = create<AuthState>()(devtools(storeApi));

@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/shared/ui/button";
 import { Eye, EyeOff, Kanban, Key, LogIn, Mail } from "lucide-react";
 import { Input } from "@/components/shared/ui/input";
+import { useAuthStore } from "../providers/store/auth.store";
 
 export const LoginPage = () => {
   const { setShowPassword, showPassword, errors, handleSubmitForm, register } =
