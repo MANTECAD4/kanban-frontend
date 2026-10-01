@@ -6,7 +6,8 @@ export const useBoardContentManagement = (boardId: number = 0) => {
   const {
     data: categoriesData,
     isFetching,
-    isFetched,
+    isError,
+    refetch,
   } = useQuery({
     queryFn: () => getCategoriesAction(boardId),
     queryKey: ["in-board", boardId, "categories"],
@@ -30,6 +31,8 @@ export const useBoardContentManagement = (boardId: number = 0) => {
   }, [categoriesData, isFetching]);
 
   return {
+    isError,
+    refetch,
     isFetching,
     boardColumns,
     categoriesData,

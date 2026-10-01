@@ -6,6 +6,8 @@ import { PageBreadcrumbs } from "@/components/shared/custom/PageBreadcrumb";
 import { Button } from "@/components/shared/ui/button";
 import { ButtonGroup } from "@/components/shared/ui/button-group";
 import { Separator } from "@/components/shared/ui/separator";
+import { SidebarTrigger } from "@/components/shared/ui/sidebar";
+import { Skeleton } from "@/components/shared/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/shared/ui/tabs";
 
 import { useBoard } from "@/hooks/boards/useBoard";
@@ -24,39 +26,54 @@ export const BoardPage = () => {
   const setBoardMode = useBoardModeStore((state) => state.setBoardMode);
   const { setColumnOrder, setBoardColumns, ...restProps } =
     useBoardContentManagement(getBoardQuery.data?.board.id);
-
-  if (!getBoardQuery.data) return;
-
-  if (getBoardQuery.isFetching) return <p>Loading</p>;
-  const {
-    data: { board },
-  } = getBoardQuery;
+  // if (!getBoardQuery.data) return;
   return (
-    <div className="flex flex-col h-dvh min-h-dvh pl-2 pr-4 pt-4.5 pb-8  max-w-6xl mx-auto">
-      <PageBreadcrumbs links={[]} currentPage={board.name} />
-
-      <div className="flex flex-col items-start gap-2 pb-8 group/header">
-        <div className="flex gap-2 items-center">
-          <h1 title="Edit board" className="text-3xl font-semibold text-start ">
-            {getBoardQuery.data.board.name}
-          </h1>
-          <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity focus-within:opacity-100">
-            <EditBoardDialog board={getBoardQuery.data.board}>
-              <Button variant="outline" size="icon-sm">
-                <Pencil />
-              </Button>
-            </EditBoardDialog>
-            <DeleteBoardDialog board={getBoardQuery.data.board}>
-              <Button variant="outline" size="icon-sm">
-                <Trash />
-              </Button>
-            </DeleteBoardDialog>
-          </ButtonGroup>
+    <div className="flex flex-col h-dvh min-h-dvh pl-2 pr-4 pt-4.5 pb-2  max-w-6xl mx-auto">
+      {getBoardQuery.isFetching ? (
+        <div className="flex gap-2 items-center pb-8">
+          <SidebarTrigger />
+          <Separator orientation="vertical" />
+          <Skeleton className="h-4 w-40" />
         </div>
-        <p className="text-sm text-muted-foreground">
-          {getBoardQuery.data.board.description}
-        </p>
-      </div>
+      ) : getBoardQuery.isError || !getBoardQuery.data ? null : (
+        <PageBreadcrumbs
+          links={[]}
+          currentPage={getBoardQuery.data.board.name ?? ""}
+        />
+      )}
+
+      {getBoardQuery.isFetching ? (
+        <div className="flex flex-col items-start gap-2 pb-8 ">
+          <Skeleton className="h-6 w-40" />
+          <Skeleton className="h-4 w-100" />
+        </div>
+      ) : getBoardQuery.isError || !getBoardQuery.data ? null : (
+        <div className="flex flex-col items-start gap-2 pb-8 group/header">
+          <div className="flex gap-2 items-center">
+            <h1
+              title="Edit board"
+              className="text-3xl font-semibold text-start "
+            >
+              {getBoardQuery.data.board.name}
+            </h1>
+            <ButtonGroup className="opacity-0 group-hover/header:opacity-100 transition-opacity focus-within:opacity-100">
+              <EditBoardDialog board={getBoardQuery.data.board}>
+                <Button variant="outline" size="icon-sm">
+                  <Pencil />
+                </Button>
+              </EditBoardDialog>
+              <DeleteBoardDialog board={getBoardQuery.data.board}>
+                <Button variant="outline" size="icon-sm">
+                  <Trash />
+                </Button>
+              </DeleteBoardDialog>
+            </ButtonGroup>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            {getBoardQuery.data!.board.description}
+          </p>
+        </div>
+      )}
 
       <div className="flex items-center justify-between">
         <Tabs
@@ -84,15 +101,14 @@ export const BoardPage = () => {
           </TabsList>
         </Tabs>
         <div>
-          <AddCategoryPopover
-            className=""
-            boardId={getBoardQuery.data.board.id}
-          >
-            <Button variant="ghost">
-              <Plus />
-              Add category
-            </Button>
-          </AddCategoryPopover>
+          {getBoardQuery.data && (
+            <AddCategoryPopover boardId={getBoardQuery.data.board.id}>
+              <Button variant="ghost">
+                <Plus />
+                Add category
+              </Button>
+            </AddCategoryPopover>
+          )}
         </div>
       </div>
       <Separator className="mt-5" />
@@ -102,7 +118,10 @@ export const BoardPage = () => {
           setColumnOrder={setColumnOrder}
         >
           {boardMode === "kanban" ? (
-            <KanbanView {...restProps} />
+            <KanbanView
+              {...restProps}
+              boardId={getBoardQuery.data?.board.id ?? -1}
+            />
           ) : (
             <ListView {...restProps} />
           )}

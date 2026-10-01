@@ -1,5 +1,12 @@
 import { type FC, type RefObject } from "react";
-import { Grip, Kanban } from "lucide-react";
+import {
+  Grip,
+  Kanban,
+  Plus,
+  RotateCcw,
+  StickyNotePlus,
+  XCircle,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { Badge } from "@/components/shared/ui/badge";
@@ -9,6 +16,15 @@ import type { TaskEntity } from "@/dtos/task.dto";
 import { TaskCard } from "@/components/kanban/TaskCard";
 import { CategorySpeedDial } from "@/components/category/CategorySpeedDial";
 import { useTaskCategory } from "@/hooks/task-management/useTaskCategory";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/shared/ui/empty";
+import { AddTaskDialog } from "@/components/task/AddTaskDialog";
 
 interface Props {
   category: CategoryEntity;
@@ -59,14 +75,41 @@ export const KanbanColumn: FC<Props> = ({
           "relative! mt-3 h-full  overflow-y-scroll custom-scrollbar--transparent",
         )}
       >
-        <div className="absolute top-1/2 left-1/2 -z-10 -translate-1/2 flex flex-col items-center gap-3 text-muted-foreground">
-          <Kanban className=" size-20 stroke-muted-foreground" />
-        </div>
-        <div className="flex flex-col gap-3 max-h-10 pr-1 ">
-          {tasks.map((task, i) => (
-            <TaskCard key={task.id} index={i} task={task} category={category} />
-          ))}
-        </div>
+        {tasks.length === 0 ? (
+          <div className="size-full flex justify-center items-center">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <StickyNotePlus />
+                </EmptyMedia>
+                <EmptyTitle>No tasks</EmptyTitle>
+                <EmptyDescription>
+                  You dont have any tasks here. Create some of them & start
+                  working.
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent className="flex-row justify-center gap-2">
+                <AddTaskDialog category={category}>
+                  <Button variant="outline">
+                    <Plus />
+                    Create task
+                  </Button>
+                </AddTaskDialog>
+              </EmptyContent>
+            </Empty>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3 max-h-10 pr-1 ">
+            {tasks.map((task, i) => (
+              <TaskCard
+                key={task.id}
+                index={i}
+                task={task}
+                category={category}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

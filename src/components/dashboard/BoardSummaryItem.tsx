@@ -31,7 +31,7 @@ export const BoardSummaryItem: FC<Props> = ({
       <div
         className={cn(
           iconColors[iconColor].shadow,
-          "flex flex-col gap-2 bg-background/85 p-4 rounded-xl ",
+          "flex flex-col gap-2 bg-background/85 p-4 rounded-xl min-h-40",
         )}
       >
         <div
@@ -42,7 +42,7 @@ export const BoardSummaryItem: FC<Props> = ({
             className={cn(iconColors[iconColor].stroke, "size-5.5")}
           />
         </div>
-        <div>
+        <div className="flex flex-col gap-1">
           <h3 className="text-sm font-semibold">{name}</h3>
           <p className="text-xs text-muted-foreground">{description}</p>
         </div>

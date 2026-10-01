@@ -26,7 +26,6 @@ import { Controller } from "react-hook-form";
 
 interface Props {
   children: ReactNode;
-  className: string;
   boardId: number;
 }
 
@@ -34,7 +33,6 @@ type AddCategortDialogProps = Props & React.ComponentProps<typeof Popover>;
 
 export const AddCategoryPopover: FC<AddCategortDialogProps> = ({
   children,
-  className,
   boardId,
   ...props
 }) => {
@@ -43,11 +41,7 @@ export const AddCategoryPopover: FC<AddCategortDialogProps> = ({
   return (
     <Popover {...props} onOpenChange={() => reset()}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent
-        className={cn(className, "sm:max-w-sm")}
-        side="left"
-        align="center"
-      >
+      <PopoverContent className={cn("sm:max-w-sm")} side="left" align="center">
         <form className="flex flex-col gap-4" onSubmit={submitForn}>
           <PopoverHeader>
             <PopoverTitle className="text-sm">Add category</PopoverTitle>
