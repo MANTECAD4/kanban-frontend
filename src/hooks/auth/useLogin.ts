@@ -12,22 +12,45 @@ import { loadSession } from "@/actions/auth/load-session.action";
 
 export const useLogin = () => {
   const setSession = useAuthStore((state) => state.setSession);
+  const setAuthStatus = useAuthStore((state) => state.setAuthStatus);
 
-  const { isSuccess, data: sessionData } = useQuery({
-    queryFn: loadSession,
-    queryKey: ["load-session"],
-  });
-
-  useEffect(() => {
-    if (isSuccess) {
+  const getSessionDataMutation = useMutation({
+    mutationFn: loadSession,
+    onSuccess: (sessionData) => {
       const {
         accessToken,
         data: { user },
       } = sessionData;
       setSession({ accessToken, ...user });
-    }
-    return () => {};
-  }, [isSuccess, sessionData]);
+    },
+    onError: () => {
+      setAuthStatus("not-authenticated");
+    },
+  });
+
+  useEffect(() => {
+    toast.promise(getSessionDataMutation.mutateAsync, {
+      loading: "Checking session...",
+      success: "Login Successful",
+      error: "Session closed. Please sign in.",
+    });
+  }, []);
+
+  // const { isSuccess, data: sessionData } = useQuery({
+  //   queryFn: loadSession,
+  //   queryKey: ["load-session"],
+  // });
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     const {
+  //       accessToken,
+  //       data: { user },
+  //     } = sessionData;
+  //     setSession({ accessToken, ...user });
+  //   }
+  //   return () => {};
+  // }, [isSuccess, sessionData]);
 
   const {
     register,

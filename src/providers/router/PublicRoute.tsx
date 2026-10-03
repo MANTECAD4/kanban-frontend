@@ -8,5 +8,8 @@ interface Props {
 
 export const PublicRoute: FC<Props> = ({ element }) => {
   const authStatus = useAuthStore((state) => state.authStatus);
-  return authStatus === "not-authenticated" ? element : <Navigate to="/" />;
+  if (authStatus === "authenticated") {
+    return <Navigate to="/" />;
+  }
+  return element;
 };

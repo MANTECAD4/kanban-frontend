@@ -16,10 +16,11 @@ import { Skeleton } from "@/components/shared/ui/skeleton";
 import { useGetBoardsQuery } from "@/hooks/queries/useGetBoardsQuery";
 import { RotateCcw, XCircle } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export const BoardsMenu = () => {
   const getBoardsQuery = useGetBoardsQuery();
+  const { boardSlug: activeBoard = "" } = useParams();
   const navigate = useNavigate();
   if (getBoardsQuery.isFetching)
     return (
@@ -59,12 +60,14 @@ export const BoardsMenu = () => {
   return (
     <SidebarMenu className="gap-1">
       {getBoardsQuery.data.boards.map((board) => (
-        <SidebarMenuButton onClick={() => navigate(`/boards/${board.slug}`)}>
+        <SidebarMenuButton
+          onClick={() => navigate(`/boards/${board.slug}`)}
+          isActive={board.slug === activeBoard}
+        >
           <SidebarMenuItem>
             <div className="flex justify-between  text-xs font-semibold px-2 py-1">
               <div className="flex gap-2 items-center">
                 <DynamicIcon name={board.icon} className="size-5" />
-
                 {board.name}
               </div>
             </div>

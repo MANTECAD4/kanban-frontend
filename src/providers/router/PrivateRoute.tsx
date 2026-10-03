@@ -8,9 +8,8 @@ interface Props {
 export const PrivateRoute: FC<Props> = ({ element }) => {
   const authStatus = useAuthStore((state) => state.authStatus);
 
-  return authStatus === "authenticated" ? (
-    element
-  ) : (
-    <Navigate to="/auth/login" replace />
-  );
+  if (authStatus === "not-authenticated" || authStatus === "checking-status") {
+    return <Navigate to="/auth/login" replace />;
+  }
+  return element;
 };

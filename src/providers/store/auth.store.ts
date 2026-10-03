@@ -1,6 +1,6 @@
 import { create, type StateCreator } from "zustand";
 import { devtools } from "zustand/middleware";
-type AuthStatus = "authenticated" | "not-authenticated";
+type AuthStatus = "authenticated" | "not-authenticated" | "checking-status";
 
 interface AuthProps {
   authStatus: AuthStatus;
@@ -12,6 +12,7 @@ interface AuthProps {
 
 interface AuthActions {
   setSession: (sessionProps: Omit<AuthProps, "authStatus">) => void;
+  setAuthStatus: (status: AuthStatus) => void;
   setAccessToken: (token: string) => void;
   clearSession: () => void;
 }
@@ -21,7 +22,7 @@ export type AuthState = AuthProps & AuthActions;
 const storeApi: StateCreator<AuthState, [["zustand/devtools", never]]> = (
   set,
 ) => ({
-  authStatus: "not-authenticated",
+  authStatus: "checking-status",
   accessToken: null,
   id: null,
   name: null,
@@ -29,6 +30,10 @@ const storeApi: StateCreator<AuthState, [["zustand/devtools", never]]> = (
 
   setSession: (sessionProps) => {
     set({ authStatus: "authenticated", ...sessionProps }, false, "setSession");
+  },
+
+  setAuthStatus: (status: AuthStatus) => {
+    set({ authStatus: status });
   },
 
   setAccessToken: (token: string) =>
