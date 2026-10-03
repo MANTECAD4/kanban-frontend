@@ -23,18 +23,18 @@ export const kanbanQueryClient = new QueryClient({
     },
   },
   queryCache: new QueryCache({
-    onError: (error) => {
-      const { title, message, code } = getApiError(error);
-      console.log({ error: code, message, title });
-      // toast.error(title, { description: message });
-    },
+    // onError: (error) => {
+    //   const { title, message, code } = getApiError(error);
+    //   console.log({ error: code, message, title });
+    //   // toast.error(title, { description: message });
+    // },
   }),
   mutationCache: new MutationCache({
-    onError: (error) => {
-      const { title, message, code } = getApiError(error);
-      console.log({ error: code, message, title });
-      // toast.error(title, { description: message });
-    },
+    // onError: (error) => {
+    //   const { title, message, code } = getApiError(error);
+    //   console.log({ error: code, message, title });
+    // toast.error(title, { description: message });
+    // },
   }),
 });
 export const TanstackProvider: FC<Props> = ({ children }) => {

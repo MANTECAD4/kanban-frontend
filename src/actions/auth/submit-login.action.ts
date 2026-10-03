@@ -3,6 +3,7 @@ import type { LoginState } from "@/interfaces/auth.interface";
 import type { SessionResponse } from "@/interfaces/session-response.interface";
 
 export const submitLogin = async (loginData: LoginState) => {
+  await new Promise((resolve) => setTimeout(resolve, 4000));
   const { data } = await kanbanApplicationApi.post<SessionResponse>(
     "/auth/login",
     loginData,

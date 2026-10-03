@@ -8,14 +8,12 @@ import { useNavigate } from "react-router";
 
 export const LogoutOption = () => {
   const clearSession = useAuthStore((state) => state.clearSession);
-  const setAuthStatus = useAuthStore((state) => state.setAuthStatus);
   const navigate = useNavigate();
   const logoutMutation = useMutation({
     mutationFn: logoutAction,
     onSettled: () => {
       kanbanQueryClient.clear();
       clearSession();
-      setAuthStatus("not-authenticated");
       navigate("/auth/login");
     },
   });

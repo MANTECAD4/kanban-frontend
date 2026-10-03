@@ -2,34 +2,37 @@ import { useEffect } from "react";
 
 import { useAuthStore } from "@/providers/store/auth.store";
 import { loadSession } from "@/actions/auth/load-session.action";
-import { useQuery } from "@tanstack/react-query";
-
-// const features = [
-//   {
-//     title: "Secure Authentication",
-//     description:
-//       "High-grade security with token-based authentication and encrypted data storage to keep your projects safe.",
-//     icon: <FingerprintPattern className="m-2 text-foreground" />,
-//     className: "",
-//   },
-//   {
-//     title: "Drag & drop",
-//     description:
-//       "Effortlessly move tasks between columns with intuitive drag-and-drop. Reorder priorities in seconds.",
-//     icon: <Grip className="m-2 text-foreground" />,
-//     className: "-translate-y-10",
-//   },
-//   {
-//     title: "Task Management",
-//     description:
-//       "Create, assign, and track tasks with due dates, labels, and progress tracking all in one place.",
-//     icon: <ListTodo className="m-2 text-foreground" />,
-//     className: "-translate-y-20",
-//   },
-// ];
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const useAuthLayout = () => {
   const setSession = useAuthStore((state) => state.setSession);
+  const setAuthStatus = useAuthStore((state) => state.setAuthStatus);
+  const authStatus = useAuthStore((state) => state.authStatus);
+
+  const getSessionDataMutation = useMutation({
+    mutationFn: loadSession,
+    onSuccess: (sessionData) => {
+      const {
+        accessToken,
+        data: { user },
+      } = sessionData;
+      setSession({ accessToken, ...user });
+    },
+    onError: () => {
+      setAuthStatus("not-authenticated");
+    },
+  });
+
+  useEffect(() => {
+    if (authStatus === "checking-status") {
+      toast.promise(getSessionDataMutation.mutateAsync, {
+        loading: "Checking session...",
+        // success: "Login Successful",
+        // error: "Session closed. Please sign in.",
+      });
+    }
+  }, [authStatus]);
 
   return {};
 };
