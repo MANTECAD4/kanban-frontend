@@ -4,13 +4,15 @@ import {
   type BoardEntity,
   type SubmitBoardState,
 } from "@/dtos/board.dtos";
+import { useAuthStore } from "@/providers/store/auth.store";
 import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
+import { getApiError } from "@/utils/getApiError";
 import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 export const useUpdateBoard = (board: BoardEntity) => {
@@ -24,8 +26,9 @@ export const useUpdateBoard = (board: BoardEntity) => {
     resolver: zodResolver(SubmitBoardSchema),
   });
 
+  const userId = useAuthStore((s) => s.id);
+
   const navigate = useNavigate();
-  const { projectSlug = "" } = useParams();
 
   useEffect(() => {
     if (board) {
@@ -44,20 +47,30 @@ export const useUpdateBoard = (board: BoardEntity) => {
 
       toast.success(message);
       kanbanQueryClient.invalidateQueries({
-        queryKey: ["boards"],
+        queryKey: ["user", userId, "boards"],
       });
       if (board.slug === newSlug) {
         kanbanQueryClient.invalidateQueries({ queryKey: ["boards", newSlug] });
       } else {
         kanbanQueryClient.removeQueries({ queryKey: ["boards", board.slug] });
-        navigate(`/projects/${projectSlug}/boards/${newSlug}`);
+        navigate(`/boards/${newSlug}`);
       }
+    },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong, Try again later.",
+      } = getApiError(error);
+      toast.error(title, { description: message });
     },
   });
 
   const onSumbitForm = handleSubmit((data) => {
     const slug = slugify(data.name);
-    updateBoardMutation.mutate({ ...data, slug, boardId: board.id });
+    toast.promise(
+      updateBoardMutation.mutateAsync({ ...data, slug, boardId: board.id }),
+      { loading: "Saving board changes..." },
+    );
   });
 
   return {

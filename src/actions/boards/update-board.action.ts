@@ -11,6 +11,7 @@ export const updateBoardAction = async ({
   boardId,
   ...submitedData
 }: UpdateBoardData) => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const { data } = await kanbanApplicationApi.put<UpdateBoardResponse>(
     `/boards/${boardId}`,
     submitedData,

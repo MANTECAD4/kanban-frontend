@@ -5,7 +5,6 @@ import {
   DialogTrigger,
   Dialog,
 } from "@/components/shared/ui/dialog";
-import { type IconName } from "lucide-react/dynamic";
 import {
   Field,
   FieldDescription,
@@ -23,9 +22,7 @@ import { Separator } from "@/components/shared/ui/separator";
 import { Button } from "@/components/shared/ui/button";
 import { iconColors } from "@/utils/icon-colors";
 import { Palette, Save } from "lucide-react";
-import { useCreateBoard } from "@/hooks/boards/useCreateBoard";
 import { Controller } from "react-hook-form";
-import type { ProjectEntity } from "@/dtos/project.dto";
 import { useUpdateBoard } from "@/hooks/boards/useUpdateBoard";
 import type { BoardEntity } from "@/dtos/board.dtos";
 
