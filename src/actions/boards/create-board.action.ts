@@ -5,6 +5,7 @@ import type { CreateBoardResponse } from "@/interfaces/board.interface";
 type CreateBoardSubmitData = SubmitBoardState & { slug: string };
 
 export const createBoardAction = async (submitData: CreateBoardSubmitData) => {
+  // await new Promise((resolve) => setTimeout(resolve, 4000));
   const { data } = await kanbanApplicationApi.post<CreateBoardResponse>(
     `/boards/`,
     submitData,
