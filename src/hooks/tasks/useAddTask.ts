@@ -4,6 +4,9 @@ import {
   TaskPriority,
   type FormTaskState,
 } from "@/dtos/task.dto";
+import { useCurrentBoardStore } from "@/providers/store/current-board.store";
+import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
+import { getApiError } from "@/utils/getApiError";
 import { slugify } from "@/utils/slugify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -30,10 +33,23 @@ export const useAddTask = (categoryId: number) => {
     },
   });
 
+  const boardId = useCurrentBoardStore((s) => s.board?.id);
+
   const createTaskQuery = useMutation({
     mutationFn: createTaskAction,
     onSuccess: () => {
       toast.success(`Task created successfully`);
+      kanbanQueryClient.invalidateQueries({
+        // TODO: invalidate tasks query
+        queryKey: ["in-board", boardId, "categories"],
+      });
+    },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later",
+      } = getApiError(error);
+      toast.error(title, { description: message });
     },
   });
 
@@ -49,7 +65,10 @@ export const useAddTask = (categoryId: number) => {
       milliseconds: 0,
     });
 
-    createTaskQuery.mutate({ ...rest, slug, dueDate, categoryId });
+    toast.promise(
+      createTaskQuery.mutateAsync({ ...rest, slug, dueDate, categoryId }),
+      { loading: "Creating new task..." },
+    );
   });
 
   return {

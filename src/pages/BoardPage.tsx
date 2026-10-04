@@ -27,6 +27,7 @@ export const BoardPage = () => {
   const { setColumnOrder, setBoardColumns, ...restProps } =
     useBoardContentManagement(getBoardQuery.data?.board.id);
   // if (!getBoardQuery.data) return;
+
   return (
     <div className="flex flex-col h-dvh min-h-dvh pl-2 pr-4 pt-4.5 pb-2  max-w-6xl mx-auto">
       {getBoardQuery.isFetching ? (

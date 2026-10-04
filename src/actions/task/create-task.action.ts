@@ -7,6 +7,7 @@ export const createTaskAction = async ({
   categoryId,
   ...submitData
 }: CreateTaskSubmitData) => {
+  await new Promise((r) => setTimeout(r, 3000));
   const { data } = await kanbanApplicationApi.post<CreateTaskResponse>(
     `/tasks/in-category/${categoryId}`,
     submitData,
