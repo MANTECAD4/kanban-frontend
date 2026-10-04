@@ -3,6 +3,8 @@ import {
   SubmitCategorySchema,
   type SubmitCategoryState,
 } from "@/dtos/category.dto";
+import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
+import { getApiError } from "@/utils/getApiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -24,11 +26,23 @@ export const useAddCategory = (boardId: number) => {
     mutationFn: createCategoryAction,
     onSuccess: (data) => {
       toast.success(data.message);
+      kanbanQueryClient.invalidateQueries({
+        queryKey: ["in-board", boardId, "categories"],
+      });
+    },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later.",
+      } = getApiError(error);
+      toast.error(title, { description: message });
     },
   });
 
   const submitForn = handleSubmit((data) => {
-    createCategoryQuery.mutate({ ...data, boardId });
+    toast.promise(createCategoryQuery.mutateAsync({ ...data, boardId }), {
+      loading: "Creating new category...",
+    });
   });
 
   return {

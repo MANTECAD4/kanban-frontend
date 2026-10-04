@@ -10,6 +10,7 @@ import { type CategoryEntity } from "../../dtos/category.dto";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
+import { getApiError } from "@/utils/getApiError";
 
 export const useEditCategory = (category: CategoryEntity) => {
   const {
@@ -34,10 +35,20 @@ export const useEditCategory = (category: CategoryEntity) => {
         queryKey: ["in-board", category.boardId, "categories"],
       });
     },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later.",
+      } = getApiError(error);
+      toast.error(title, { description: message });
+    },
   });
 
   const submitForm = handleSubmit((data) => {
-    updateCategoryQuery.mutate({ ...data, categoryId: category.id });
+    toast.promise(
+      updateCategoryQuery.mutateAsync({ ...data, categoryId: category.id }),
+      { loading: "Updating category..." },
+    );
   });
 
   return { register, control, submitForm, errors, reset };
