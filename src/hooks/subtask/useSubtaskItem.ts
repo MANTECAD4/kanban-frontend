@@ -1,8 +1,8 @@
 import { updateSubtaskStatusAction } from "@/actions/subtask/updateSubtaskStatus.action";
 import type { SubtaskEntity } from "@/dtos/subtask.dto";
+import { getApiError } from "@/utils/getApiError";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface Props {
   subtask: SubtaskEntity;
@@ -14,8 +14,12 @@ export const useSubtaskItem = ({
   const [isCompleted, setIsCompleted] = useState<boolean>(originalIsCompleted);
   const updateStatusMutation = useMutation({
     mutationFn: updateSubtaskStatusAction,
-    onError: (_error) => {
-      toast.error("Somethign went wrong");
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later.",
+      } = getApiError(error);
+      console.error({ title, message });
     },
   });
   useEffect(() => {

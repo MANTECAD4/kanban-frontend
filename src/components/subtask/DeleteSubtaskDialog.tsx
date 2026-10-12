@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const DeleteSubtaskDialog: FC<Props> = ({ children, subtask }) => {
-  const { handleSubtaskDeletion } = useDeleteSubtask();
+  const { handleSubtaskDeletion } = useDeleteSubtask(subtask);
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>

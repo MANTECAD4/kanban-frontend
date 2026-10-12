@@ -6,7 +6,7 @@ export const useGetUpcomingTasksQuery = () => {
   const userId = useAuthStore((s) => s.id);
 
   return useQuery({
-    queryKey: ["user", userId, "upcoming-tasks"],
+    queryKey: ["upcoming-tasks"],
     queryFn: getUpcomingTasksAction,
     staleTime: 0,
   });

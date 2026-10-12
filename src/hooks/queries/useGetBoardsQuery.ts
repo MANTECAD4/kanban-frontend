@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 export const useGetBoardsQuery = () => {
   const userId = useAuthStore((s) => s.id);
   return useQuery({
-    queryKey: ["user", userId, "boards"],
+    queryKey: ["boards"],
     queryFn: getBoardsAction,
   });
 };

@@ -6,7 +6,7 @@ export const useGetTasksMetaByPriority = () => {
   const userId = useAuthStore((s) => s.id);
 
   return useQuery({
-    queryKey: ["user", userId, "meta-by-priority"],
+    queryKey: ["meta-by-priority"],
     queryFn: getTasksMetaByPriorityAction,
   });
 };

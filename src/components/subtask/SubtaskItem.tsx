@@ -31,9 +31,7 @@ export const SubtaskItem: FC<Props> = ({ subtask }) => {
       </div>
 
       <ButtonGroup>
-        <UpdateSubtaskPopover
-          subtask={{ id: subtask.id, description: subtask.description }}
-        >
+        <UpdateSubtaskPopover subtask={subtask}>
           <Button variant="outline" size="icon">
             <Pencil />
           </Button>

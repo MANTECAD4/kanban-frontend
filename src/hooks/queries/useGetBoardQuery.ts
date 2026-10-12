@@ -9,7 +9,7 @@ export const useGetBoardQuery = () => {
 
   return useQuery({
     queryFn: () => getBoardBySlugAction(boardSlug),
-    queryKey: ["user", userId, "boards", boardSlug],
+    queryKey: ["boards", boardSlug],
     enabled: boardSlug !== "",
   });
 };

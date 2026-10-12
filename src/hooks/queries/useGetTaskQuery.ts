@@ -9,7 +9,7 @@ export const useGetTaskQuery = (boardId: number = 0) => {
 
   return useQuery({
     queryFn: () => getTaskBySlugAction(boardId, taskSlug),
-    queryKey: ["user", userId, "tasks", taskSlug],
+    queryKey: ["tasks", taskSlug],
     enabled: taskSlug !== "" && boardId !== 0,
   });
 };

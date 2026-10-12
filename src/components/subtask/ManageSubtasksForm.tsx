@@ -1,7 +1,6 @@
 import { Button } from "@/components/shared/ui/button";
 import { Input } from "@/components/shared/ui/input";
 import { ListTodo, Plus, StickyNoteX } from "lucide-react";
-import { useSubtasksForm } from "@/hooks/subtask/useSubtasksForm";
 import type { FC } from "react";
 import { Field, FieldDescription } from "@/components/shared/ui/field";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +14,7 @@ import {
 } from "@/components/shared/ui/empty";
 import { SubtaskItem } from "@/components/subtask/SubtaskItem";
 import { Progress } from "@/components/shared/ui/progress";
+import { useSubtasksForm } from "@/hooks/subtask/useSubtasksForm";
 
 interface Props {
   taskId: number;

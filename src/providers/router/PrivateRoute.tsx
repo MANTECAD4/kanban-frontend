@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/providers/store/auth.store";
-import type { FC, ReactNode } from "react";
+import { Suspense, type FC, type ReactNode } from "react";
 import { Navigate } from "react-router";
 
 interface Props {
@@ -11,5 +11,5 @@ export const PrivateRoute: FC<Props> = ({ element }) => {
   if (authStatus === "not-authenticated" || authStatus === "checking-status") {
     return <Navigate to="/auth/login" replace />;
   }
-  return element;
+  return <Suspense fallback={"Loading..."}>{element}</Suspense>;
 };

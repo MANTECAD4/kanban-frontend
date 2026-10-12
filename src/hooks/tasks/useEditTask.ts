@@ -13,6 +13,7 @@ import { set } from "date-fns";
 import { toast } from "sonner";
 import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
 import { useNavigate, useParams } from "react-router";
+import { getApiError } from "@/utils/getApiError";
 
 export const useEditTask = (task: TaskEntity) => {
   const {
@@ -40,20 +41,25 @@ export const useEditTask = (task: TaskEntity) => {
 
   const navigate = useNavigate();
 
-  const { projectSlug = "", boardSlug = "" } = useParams();
+  const { boardSlug = "" } = useParams();
   const updateTaskMutation = useMutation({
     mutationFn: updateTaskDataAction,
     onSuccess: (data) => {
       if (data.task.slug !== task.slug) {
         kanbanQueryClient.removeQueries({ queryKey: ["tasks", task.slug] });
-        navigate(
-          `/projects/${projectSlug}/boards/${boardSlug}/tasks/${data.task.slug}`,
-        );
+        navigate(`/boards/${boardSlug}/tasks/${data.task.slug}`);
       }
       toast.success(`Task "${task.title}" updated successfully`);
       kanbanQueryClient.invalidateQueries({
         queryKey: ["tasks", data.task.slug],
       });
+    },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later.",
+      } = getApiError(error);
+      toast.error(title, { description: message });
     },
   });
 
@@ -68,7 +74,14 @@ export const useEditTask = (task: TaskEntity) => {
       seconds,
       milliseconds: 0,
     });
-    updateTaskMutation.mutate({ ...data, dueDate, slug, taskId: task.id });
+    toast.promise(
+      updateTaskMutation.mutateAsync({
+        ...data,
+        dueDate,
+        slug,
+        taskId: task.id,
+      }),
+    );
   });
 
   return { register, reset, control, errors, handleSubmitForm };

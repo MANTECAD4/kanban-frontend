@@ -5,12 +5,19 @@ import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
 import { useMutation } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export const LogoutOption = () => {
   const clearSession = useAuthStore((state) => state.clearSession);
   const navigate = useNavigate();
   const logoutMutation = useMutation({
     mutationFn: logoutAction,
+    onSuccess: () => {
+      toast.success("Session successfully closed.");
+    },
+    onError: () => {
+      toast.info("Local-session closed.");
+    },
     onSettled: () => {
       kanbanQueryClient.clear();
       clearSession();
@@ -19,7 +26,9 @@ export const LogoutOption = () => {
   });
 
   const handleLogout = () => {
-    logoutMutation.mutate();
+    toast.promise(logoutMutation.mutateAsync(), {
+      loading: "Closing session...",
+    });
   };
   return (
     <DropdownMenuItem onClick={handleLogout}>

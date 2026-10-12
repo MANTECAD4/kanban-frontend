@@ -1,5 +1,7 @@
 import { updateSubtaskDescriptionAction } from "@/actions/subtask/updateSubtaskDescription.action";
-import { SubmitSubtaskSchema } from "@/dtos/subtask.dto";
+import { SubmitSubtaskSchema, type SubtaskEntity } from "@/dtos/subtask.dto";
+import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
+import { getApiError } from "@/utils/getApiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -9,10 +11,8 @@ import { toast } from "sonner";
 export const useUpdateSubtask = ({
   description,
   id,
-}: {
-  description: string;
-  id: number;
-}) => {
+  taskId,
+}: SubtaskEntity) => {
   const {
     register,
     formState: { errors },
@@ -26,6 +26,16 @@ export const useUpdateSubtask = ({
     mutationFn: updateSubtaskDescriptionAction,
     onSuccess: (_data) => {
       toast.success("Subtask updated successfully");
+      kanbanQueryClient.invalidateQueries({
+        queryKey: ["in-task", taskId, "subtasks"],
+      });
+    },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later.",
+      } = getApiError(error);
+      toast.error(title, { description: message });
     },
   });
 
@@ -34,7 +44,10 @@ export const useUpdateSubtask = ({
   }, [description]);
 
   const handleSubmitForm = handleSubmit((data) => {
-    updateSubtaskMutation.mutate({ subtaskId: id, submitData: data });
+    toast.promise(
+      updateSubtaskMutation.mutateAsync({ subtaskId: id, submitData: data }),
+      { loading: "Updating subtask..." },
+    );
   });
 
   return {

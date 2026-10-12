@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App Router > should be configured according to snapshot 1`] = `
+[
+  {
+    "children": [
+      {
+        "element": <Navigate
+          to="login"
+        />,
+        "hasErrorBoundary": false,
+        "id": "0-0",
+        "index": true,
+      },
+      {
+        "children": undefined,
+        "element": <UNDEFINED />,
+        "hasErrorBoundary": false,
+        "id": "0-1",
+        "path": "register",
+      },
+      {
+        "children": undefined,
+        "element": <LoginPage />,
+        "hasErrorBoundary": false,
+        "id": "0-2",
+        "path": "login",
+      },
+      {
+        "children": undefined,
+        "element": <Navigate
+          to="/auth/login"
+        />,
+        "hasErrorBoundary": false,
+        "id": "0-3",
+        "path": "*",
+      },
+    ],
+    "element": <PublicRoute
+      element={<AuthLayout />}
+    />,
+    "hasErrorBoundary": false,
+    "id": "0",
+    "path": "/auth",
+  },
+  {
+    "children": [
+      {
+        "element": <Dashboard />,
+        "hasErrorBoundary": false,
+        "id": "1-0",
+        "index": true,
+      },
+      {
+        "children": undefined,
+        "element": <BoardPage />,
+        "hasErrorBoundary": false,
+        "id": "1-1",
+        "path": "boards/:boardSlug",
+      },
+      {
+        "children": undefined,
+        "element": <TaskPage />,
+        "hasErrorBoundary": false,
+        "id": "1-2",
+        "path": "boards/:boardSlug/tasks/:taskSlug",
+      },
+    ],
+    "element": <PrivateRoute
+      element={<UNDEFINED />}
+    />,
+    "hasErrorBoundary": false,
+    "id": "1",
+    "path": "/",
+  },
+  {
+    "children": undefined,
+    "element": <UNDEFINED />,
+    "hasErrorBoundary": false,
+    "id": "2",
+    "path": "*",
+  },
+]
+`;

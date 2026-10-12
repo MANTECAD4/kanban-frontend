@@ -1,12 +1,12 @@
 import { deleteTaskAction } from "@/actions/task/delete-task.action";
-import { kanbanApplicationApi } from "@/api/kanban-application.api";
 import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
+import { getApiError } from "@/utils/getApiError";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
 export const useDeleteTask = (boardId: number) => {
-  const { projectSlug = "", boardSlug = "" } = useParams();
+  const { boardSlug = "" } = useParams();
 
   const navigate = useNavigate();
   const deleteTaskMutation = useMutation({
@@ -16,12 +16,21 @@ export const useDeleteTask = (boardId: number) => {
       kanbanQueryClient.invalidateQueries({
         queryKey: ["in-board", boardId, "categories"],
       });
-      navigate(`/projects/${projectSlug}/boards/${boardSlug}`);
+      navigate(`/boards/${boardSlug}`);
+    },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later.",
+      } = getApiError(error);
+      toast.error(title, { description: message });
     },
   });
 
   const submitTaskDeletion = (taskId: number) => {
-    deleteTaskMutation.mutate(taskId);
+    toast.promise(deleteTaskMutation.mutateAsync(taskId), {
+      loading: "Deleting task...",
+    });
   };
 
   return {

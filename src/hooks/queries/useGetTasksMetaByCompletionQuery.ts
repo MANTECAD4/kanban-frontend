@@ -6,7 +6,7 @@ export const useGetTasksMetaByCompletionQuery = () => {
   const userId = useAuthStore((s) => s.id);
 
   return useQuery({
-    queryKey: ["user", userId, "meta-by-completion"],
+    queryKey: ["meta-by-completion"],
     queryFn: getTasksMetaByCompletionAction,
   });
 };

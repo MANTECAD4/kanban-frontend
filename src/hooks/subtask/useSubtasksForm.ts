@@ -1,5 +1,7 @@
 import { createSubtaskAction } from "@/actions/subtask/createSubtaskAction";
 import { SubmitSubtaskSchema } from "@/dtos/subtask.dto";
+import { kanbanQueryClient } from "@/providers/tanstack/TanstackProvider";
+import { getApiError } from "@/utils/getApiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -21,11 +23,23 @@ export const useSubtasksForm = (taskId: number) => {
     mutationFn: createSubtaskAction,
     onSuccess: (_data) => {
       toast.success(`Subtask added successfully`);
+      kanbanQueryClient.invalidateQueries({
+        queryKey: ["in-task", taskId, "subtasks"],
+      });
+    },
+    onError: (error) => {
+      const {
+        title = "Server error",
+        message = "Something went wrong. Try again later.",
+      } = getApiError(error);
+      toast.error(title, { description: message });
     },
   });
 
   const submitSubtask = handleSubmit(({ description }) => {
-    createSubtaskMutation.mutate({ taskId, description });
+    toast.promise(createSubtaskMutation.mutateAsync({ taskId, description }), {
+      loading: "Creating subtask...",
+    });
     clearErrors();
     reset();
   });

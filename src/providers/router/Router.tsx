@@ -2,13 +2,16 @@ import { createBrowserRouter, Navigate } from "react-router";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { LoginPage } from "@/pages/LoginPage";
 import { Register } from "@/pages/Register";
-import { AppLayout } from "@/layouts/AppLayout";
-import { NotFound } from "@/pages/NotFound";
+// import { AppLayout } from "@/layouts/AppLayout";
 import { PrivateRoute } from "@/providers/router/PrivateRoute";
 import { PublicRoute } from "@/providers/router/PublicRoute";
 import { BoardPage } from "@/pages/BoardPage";
 import { TaskPage } from "@/pages/TaskPage";
 import { Dashboard } from "@/pages/Dashboard";
+import { lazy } from "react";
+
+const LazyAppLayout = lazy(() => import("@/layouts/AppLayout"));
+const LazyNotFound = lazy(() => import("@/pages/NotFound"));
 
 export const appRouter = createBrowserRouter([
   {
@@ -23,16 +26,12 @@ export const appRouter = createBrowserRouter([
   },
   {
     path: "/",
-    element: <PrivateRoute element={<AppLayout />} />,
+    element: <PrivateRoute element={<LazyAppLayout />} />,
     children: [
       {
         index: true,
         element: <Dashboard />,
       },
-      // {
-      //   path: "projects/:projectSlug",
-      //   element: <ProjectPage />,
-      // },
       {
         path: "boards/:boardSlug",
         element: <BoardPage />,
@@ -45,6 +44,6 @@ export const appRouter = createBrowserRouter([
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: <LazyNotFound />,
   },
 ]);
