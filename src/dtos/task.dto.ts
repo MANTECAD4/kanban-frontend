@@ -32,6 +32,12 @@ export enum TaskPriority {
   Urgent = "Urgent",
 }
 
+const TaskMetaSchema = z.object({
+  totalSubtasks: z.int(),
+  completedSubtasks: z.int(),
+  numAttatchments: z.int(),
+});
+
 export const TaskSchema = z.object({
   id: z.int().min(1),
   title: z.string().min(3),
@@ -43,6 +49,7 @@ export const TaskSchema = z.object({
   tags: z.array(z.enum(TaskTag)),
   categoryId: z.int().min(1),
   createdAt: z.date(),
+  meta: TaskMetaSchema,
 });
 
 export const FormTaskSchema = z.object({

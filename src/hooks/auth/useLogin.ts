@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas/auth/login.schema";
 import type { LoginState } from "@/interfaces/auth.interface";
@@ -28,11 +28,10 @@ export const useLogin = () => {
     onSuccess: (data) => {
       const {
         accessToken,
-        message,
+        message: _message,
         data: { user },
       } = data;
       setSession({ accessToken, ...user });
-      console.log(message);
       toast.success(`Welcome back, ${user.name}`);
       navigate("/");
     },
@@ -44,17 +43,18 @@ export const useLogin = () => {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const handleSubmitForm = handleSubmit((data) => {
+  const onSubmitForm: SubmitHandler<LoginState> = (data) => {
     toast.promise(submitLoginMutation.mutateAsync(data), {
       loading: "Checking credentials...",
     });
-  });
+  };
 
   return {
+    handleSubmit,
     showPassword,
     setShowPassword,
     register,
-    handleSubmitForm,
+    onSubmitForm,
     errors,
   };
 };

@@ -68,17 +68,22 @@ export const TaskCard: FC<Props> = ({ task, index, category }) => {
       <p className="text-sm mt-3">{task.description}</p>
       <Field className="w-full mt-6 ">
         <FieldLabel htmlFor="progress-upload">
-          <span>Subtasks's completion</span>
-          <span className="ml-auto">(2/5)</span>
+          <span>Subtasks completed</span>
+          <span className="ml-auto">
+            ({task.meta.completedSubtasks}/{task.meta.totalSubtasks})
+          </span>
         </FieldLabel>
-        <Progress value={40} id="progress-upload" />
+        <Progress
+          value={(task.meta.completedSubtasks * 100) / task.meta.totalSubtasks}
+          id="progress-upload"
+        />
       </Field>
       <div className="flex justify-between mt-5">
         <div className="flex gap-2 items-center ">
           <PriorityBadge priority={task.priority} />
           <div className="flex items-center gap-1">
             <Paperclip className="size-3" />
-            <span className="text-xs">5</span>
+            <span className="text-xs">{task.meta.numAttatchments}</span>
           </div>
         </div>
         <Link to={`/boards/${boardSlug}/tasks/${task.slug}`}>

@@ -13,12 +13,18 @@ import { Eye, EyeOff, Kanban, Key, LogIn, Mail } from "lucide-react";
 import { Input } from "@/components/shared/ui/input";
 
 export const LoginPage = () => {
-  const { setShowPassword, showPassword, errors, handleSubmitForm, register } =
-    useLogin();
+  const {
+    setShowPassword,
+    showPassword,
+    errors,
+    handleSubmit,
+    onSubmitForm,
+    register,
+  } = useLogin();
 
   return (
     <>
-      <form onSubmit={handleSubmitForm}>
+      <form onSubmit={handleSubmit(onSubmitForm)}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
             <a
@@ -66,7 +72,10 @@ export const LoginPage = () => {
                 variant={"ghost"}
                 size="icon-xs"
                 className="opacity-0 group-hover/password-field:opacity-100 transition-opacity focus-within:opacity-100"
-                onClick={() => setShowPassword((s) => !s)}
+                onClick={() => {
+                  setShowPassword((s) => !s);
+                }}
+                title={showPassword ? "Show password" : "Hide password"}
               >
                 {showPassword ? <Eye /> : <EyeOff />}
               </Button>

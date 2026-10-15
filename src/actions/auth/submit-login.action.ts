@@ -8,5 +8,6 @@ export const submitLogin = async (loginData: LoginState) => {
     "/auth/login",
     loginData,
   );
+
   return data;
 };

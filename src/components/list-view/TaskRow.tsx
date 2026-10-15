@@ -81,7 +81,10 @@ export const TaskRow: FC<Props> = ({ task, category, index }) => {
         <p>{task.priority}</p>
       </div>
       <div className="flex items-center gap-2 ">
-        <Progress className="" value={66} />
+        <Progress
+          className=""
+          value={(task.meta.completedSubtasks * 100) / task.meta.totalSubtasks}
+        />
       </div>
       <p className="">
         {new Date(task.dueDate).toLocaleDateString("en-US", {
