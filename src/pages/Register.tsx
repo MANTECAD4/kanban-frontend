@@ -14,11 +14,17 @@ import { Input } from "@/components/shared/ui/input";
 // import styles from "../styles/Register.module.css";
 
 export const Register = () => {
-  const { register, errors, handleSubmitForm, setShowPassword, showPassword } =
-    useRegister();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    onSubmitForm,
+    setShowPassword,
+    showPassword,
+  } = useRegister();
   return (
     <>
-      <form onSubmit={handleSubmitForm}>
+      <form onSubmit={handleSubmit(onSubmitForm)}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
             <a

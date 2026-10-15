@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/schemas/auth/register.schema";
@@ -20,11 +20,10 @@ export const useRegister = () => {
     onSuccess: (data) => {
       const {
         accessToken,
-        message,
         data: { user: userData },
       } = data;
       setSession({ accessToken, ...userData });
-      toast.success(`Wecolme, ${userData.name}!!!`);
+      toast.success(`Welcome, ${userData.name}!!!`);
       navigate("/");
     },
     onError: (error) => {
@@ -42,18 +41,18 @@ export const useRegister = () => {
     resolver: zodResolver(RegisterSchema),
   });
 
-  const handleSubmitForm = handleSubmit((data) => {
+  const onSubmitForm: SubmitHandler<RegisterState> = (data) => {
     toast.promise(submitRegisterMutation.mutateAsync(data), {
       loading: "Creating user...",
     });
-  });
+  };
 
   return {
     showPassword,
     setShowPassword,
     register,
     errors,
-
-    handleSubmitForm,
+    onSubmitForm,
+    handleSubmit,
   };
 };

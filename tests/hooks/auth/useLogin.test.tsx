@@ -97,24 +97,24 @@ describe("useLogin Custom Hook", () => {
     expect(navigateMock).toHaveBeenCalledWith("/");
   });
 
-  // test("onSUbmitForm should show a toast when an error occurs", async () => {
-  //   vi.mocked(toast.promise).mockRestore();
-  //   vi.mocked(submitLogin).mockImplementation(async () => {
-  //     throw "lol";
-  //   });
+  test("onSUbmitForm should show a toast when an error occurs", async () => {
+    vi.mocked(toast.promise).mockRestore();
+    vi.mocked(submitLogin).mockImplementation(async () => {
+      throw "lol";
+    });
 
-  //   const { result } = renderHook(useLogin, {
-  //     wrapper: testQueryClientProvider,
-  //   });
+    const { result } = renderHook(useLogin, {
+      wrapper: testQueryClientProvider,
+    });
 
-  //   try {
-  //     await act(async () => {
-  //       result.current.onSubmitForm({ email: "", password: "" });
-  //     });
-  //   } catch (error) {
-  //     expect(vi.mocked(toast.error)).toHaveBeenCalledWith(expect.any(String), {
-  //       description: expect.any(String),
-  //     });
-  //   }
-  // });
+    try {
+      await act(async () => {
+        result.current.onSubmitForm({ email: "", password: "" });
+      });
+    } catch (error) {
+      expect(vi.mocked(toast.error)).toHaveBeenCalledWith(expect.any(String), {
+        description: expect.any(String),
+      });
+    }
+  });
 });
