@@ -40,7 +40,6 @@ const storeApi: StateCreator<AuthState, [["zustand/devtools", never]]> = (
     set({ accessToken: token }, false, "setAccessToken"),
 
   clearSession: () => {
-    console.log("zustand cleared");
     set(
       {
         authStatus: "not-authenticated",
