@@ -88,6 +88,7 @@ export const Register = () => {
                 size="icon-xs"
                 className="opacity-0 group-hover/password-field:opacity-100 transition-opacity focus-within:opacity-100"
                 onClick={() => setShowPassword((s) => !s)}
+                title={showPassword ? "Show password" : "Hide password"}
               >
                 {showPassword ? <Eye /> : <EyeOff />}
               </Button>

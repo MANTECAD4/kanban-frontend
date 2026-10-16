@@ -3,7 +3,6 @@ import { useRegister } from "@/hooks/auth/useRegister";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
-import { toast } from "sonner";
 import { afterEach, describe, expect, expectTypeOf, test, vi } from "vitest";
 
 const navigateMock = vi.fn();
@@ -20,13 +19,13 @@ vi.mock("@/providers/store/auth.store", () => ({
   useAuthStore: () => setSessionMock,
 }));
 
-vi.mock("sonner", () => ({
-  toast: {
-    error: vi.fn(),
-    success: vi.fn(),
-    promise: vi.fn(),
-  },
-}));
+// vi.mock("sonner", () => ({
+//   toast: {
+//     error: vi.fn(),
+//     success: vi.fn(),
+//     promise: vi.fn(),
+//   },
+// }));
 
 const testQueryClient = new QueryClient();
 const testQueryProvider = ({ children }: PropsWithChildren) => {
