@@ -9,6 +9,7 @@ interface DraggingProps {
 interface DraggingActions {
   setIsDraggingColumn: (value: boolean) => void;
   setIsDraggingTask: (value: boolean) => void;
+  clearDraggings: () => void;
 }
 
 type DraggingState = DraggingProps & DraggingActions;
@@ -22,6 +23,7 @@ const storeApi: StateCreator<DraggingState, [["zustand/devtools", never]]> = (
     set({ isDraggingColumn: value }, false, "setIsDraggingColumn"),
   setIsDraggingTask: (value: boolean) =>
     set({ isDraggingTask: value }, false, "setIsDraggingTask"),
+  clearDraggings: () => set({ isDraggingColumn: false, isDraggingTask: false }),
 });
 
 export const useDraggingStore = create<DraggingState>()(devtools(storeApi));
